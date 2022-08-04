@@ -1,0 +1,195 @@
+#site-structure {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+#site-header {
+    width: 100%;
+    background-color: var(--color-1);
+    position: sticky;
+    top: 0;
+    z-index: 8888;
+}
+#header-width {
+    height: 50px;
+    margin: auto;
+    align-items: center;
+    width: var(--width-align);
+    display: grid;
+    grid-template-columns: 1fr 500px 1fr;
+    grid-gap: 20px;
+}
+.header__part {
+    height: inherit;
+}
+.header__part--left {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+#header-logo {
+    height: 60%;
+}
+.header__link--redirect {
+    text-decoration: unset;
+    background-color: unset;
+    color: var(--color-4);
+    padding: 10px;
+    font-size: 13px;
+}
+.header__link--redirect:hover {
+    color: var(--color-3);
+    border-bottom: 5px solid var(--color-3);
+}
+.header__part--center {
+    position: relative;
+}
+#header-search {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+#suggest-wrap {
+    position: absolute;
+    height: 0;
+    margin-top: 20px;
+    width: 100%;
+    border-radius: 5px;
+    background-color: white;
+    overflow: hidden;
+    transition: 100ms linear;
+}
+#header-search {
+    display: flex;
+    gap: 5px;
+    padding: 5px;
+    border-radius: 20px;
+    overflow: hidden;
+    color: var(--color-4);
+    border: 2px solid var(--color-4);
+}
+#header-search input {
+    background-color: transparent;
+    outline: unset;
+    border: unset;
+    width: 100%;
+    color: var(--color-4);
+}
+ion-icon[name="search-outline"] {
+    transition: 300ms linear;
+}
+#header-search input:focus ~ ion-icon[name="search-outline"] {
+    display: none;
+    transform: translateX(-100%);
+}
+#tags-wrap {
+    margin: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+#suggest-tag {
+    align-items: center;
+    outline: 1px solid var(--color-2);
+    border-radius: 20px;
+    padding: 0 10px;
+    width: fit-content;
+    margin-bottom: 5px !important;
+    cursor: pointer;
+    transition: 100ms linear;
+}
+#suggest-tag:hover {
+    background-color: var(--color-3);
+}
+.header__part--right {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 20px;
+}
+#wrap-notification {
+    display: flex;
+    gap: 10px;
+}
+#wrap-notification ion-icon {
+    padding: 5px;
+    cursor: pointer;
+    color: var(--color-4);
+}
+#header-user-avatar {
+    height: 60%;
+    cursor: pointer;
+    /* ! not in production */
+}
+#wrap-background {
+    height: 260px;
+    background-image: url(../assets/learning-site-background.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-attachment: fixed;
+    background-position: 0 50px;
+}
+/*--------------------------------- End header  */
+#full-height {
+    flex: 1 0 auto;
+}
+/* ------------------------------ start footer */
+#site-footer {
+    height: 300px;
+    background-color: var(--color-1);
+    padding: 50px;
+}
+#footer-width {
+    width: var(--width-align);
+    margin: auto;
+}
+#footer-part-top {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    color: var(--color-4);
+}
+#footer-part-left {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 20px;
+}
+.footer__part h3 {
+    margin-bottom: 20px;
+}
+.footer__list--info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+}
+.footer__list--info a {
+    text-decoration: unset;
+    color: var(--color-4);
+    width: fit-content;
+}
+.footer__list--info a:hover {
+    text-decoration: underline;
+}
+#footer__left--bottom {
+    margin-top: 40px;
+    padding: 20px 0;
+    border-top: 1px solid var(--color-4);
+}
+#footer-language-wrap {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    background-color: var(--color-4);
+    padding: 5px 10px;
+    border-radius: 5px;
+    gap: 5px;
+}
+#footer-language-wrap input {
+    outline: unset;
+    border: unset;
+    background-color: transparent;
+    cursor: pointer;
+}

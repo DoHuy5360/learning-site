@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link
+            data-n-head="ssr"
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,400;0,700;1,400;1,700&amp;family=Roboto:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap"
+        />
+        <link rel="stylesheet" href="./css/root.css" />
+        <link rel="stylesheet" href=".\css\header-footer.css" />
+        <link rel="stylesheet" href=".\css\post-show.css" />
+        <link rel="stylesheet" href=".\css\question-show.css" />
+        <title>public</title>
+        <style></style>
+    </head>
+    <body>
+        <div id="site-structure">
+            <header id="site-header">
+                <div id="header-width">
+                    <div class="header__part header__part--left">
+                        <img
+                            id="header-logo"
+                            src="https://firebasestorage.googleapis.com/v0/b/image-resize-5d865.appspot.com/o/Images%2FmyLogo.png?alt=media&token=13f9f9ff-4ca8-42ff-adb4-5d972c0ebe98"
+                        />
+                        <div id="wrap-link">
+                            <a href="" class="header__link--redirect"
+                                >Bài Viết</a
+                            >
+                            <a href="" class="header__link--redirect"
+                                >Hỏi Đáp</a
+                            >
+                            <a href="" class="header__link--redirect"
+                                >Tài Liệu</a
+                            >
+                            <a href="" class="header__link--redirect"
+                                >Đỉnh Núi</a
+                            >
+                        </div>
+                    </div>
+                    <div class="header__part header__part--center">
+                        <div id="header-search">
+                            <input type="text" name="" id="input-search" />
+                            <div id="search-tag"></div>
+                            <ion-icon name="search-outline"></ion-icon>
+                        </div>
+                        <div id="suggest-wrap">
+                            <div id="tags-wrap">
+                                <div id="suggest-tag">Word</div>
+                                <div id="suggest-tag">Exel</div>
+                                <div id="suggest-tag">Power poin</div>
+                                <div id="suggest-tag">Python</div>
+                                <div id="suggest-tag">Css</div>
+                                <div id="suggest-tag">Javascript</div>
+                                <div id="suggest-tag">PHP</div>
+                                <div id="suggest-tag">HTML</div>
+                                <div id="suggest-tag">C#</div>
+                                <div id="suggest-tag">React</div>
+                                <div id="suggest-tag">Angular</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="header__part header__part--right">
+                        <div id="wrap-notification">
+                            <ion-icon name="help-outline"></ion-icon>
+                            <ion-icon name="settings-outline"></ion-icon>
+                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-icon name="star-outline"></ion-icon>
+                            <ion-icon name="notifications-outline"></ion-icon>
+                            <ion-icon name="bookmarks-outline"></ion-icon>
+                            <ion-icon name="paper-plane-outline"></ion-icon>
+                        </div>
+                        <img
+                            id="header-user-avatar"
+                            src="https://firebasestorage.googleapis.com/v0/b/image-resize-5d865.appspot.com/o/Images%2FmyLogo.png?alt=media&token=13f9f9ff-4ca8-42ff-adb4-5d972c0ebe98"
+                            alt=""
+                        />
+                    </div>
+                </div>
+            </header>
+            <!-- --------------------------------- End header -->
+            <div id="wrap-background"></div>
+            <!-- todo --------------------------------- End background -->
+            <div id="full-height">
+            </div>
+            <!-- todo --------------------------------- End body -->
+            <footer id="site-footer">
+                <div id="footer-width">
+                    <div id="footer-part-top">
+                        <div id="footer-part-left" class="footer__part">
+                            <div id="footer-left-admin">
+                                <h3>Quản Trị Viên</h3>
+                                <div class="footer__list--info">
+                                    <a href="">Lưu Ý</a>
+                                    <a href="">Báo Lỗi</a>
+                                    <a href="">Phản Hồi</a>
+                                </div>
+                            </div>
+                            <div id="footer-left-users">
+                                <h3>Người dùng</h3>
+                                <div class="footer__list--info">
+                                    <a href="">Danh Sách Tác Giả</a>
+                                    <a href="">Nhãn Nội Dung</a>
+                                    <a href="">Sự Kiện</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="footer-part-center" class="footer__part">
+                            <h3>Về chúng tôi</h3>
+                            <div class="footer__list--info">
+                                <a href="">Thông tin</a>
+                                <a href="">Hợp tác</a>
+                                <a href="">Thuê</a>
+                            </div>
+                        </div>
+                        <div id="footer-part-right" class="footer__part">
+                            <h3>Learning Site</h3>
+                            <div class="footer__list--info">
+                                <a href="">Giới Thiệu</a>
+                                <a href="">Điều Khoản</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="footer-part-bottom">
+                        <div id="footer__left--bottom">
+                            <div id="footer-language-wrap">
+                                <ion-icon name="language-outline"></ion-icon>
+                                <input type="text" readonly />
+                                <ion-icon
+                                    name="chevron-back-outline"
+                                ></ion-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+            <!-- --------------------------------- End footer -->
+        </div>
+        <script
+            type="module"
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
+        ></script>
+        <script
+            nomodule
+            src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"
+        ></script>
+    </body>
+</html>
+<script>
+    let search_tag = document.getElementById("suggest-wrap");
+    let input_search = document.getElementById("input-search");
+    input_search.addEventListener("focus", (e) => {
+        search_tag.style = `
+            height: fit-content;
+            `;
+    });
+    input_search.addEventListener("blur", (e) => {
+        search_tag.style = `
+            height: 0;
+        `;
+    });
+</script>

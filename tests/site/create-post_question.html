@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="./css/create-post_question.css">
+    </head>
+    <body>
+        <div id="editer-full-wrap">
+            <div id="editor-input-title">
+                <input type="text" placeholder="Nhập tiêu đề ở đây"/>
+            </div>
+            <div id="editor-input-tag-wrap">
+                <div id="editor-input-tag">
+                    <div id="editor-list-tag"></div>
+                    <input type="text" placeholder="Nhập tag ở đây tối đa 5 tags"/>
+                </div>
+                <button type="submit">Công bố bài viết</button>
+            </div>
+            <div id="editor-board-wrap">
+                <div id="show"></div>
+                <div name="content" aria-disabled="true"></div>
+            </div>
+        </div>
+    </body>
+</html>
+<script src=".\post_editor\ckeditor\ckeditor.js"></script>
+<script>
+    CKEDITOR.replace("content");
+    CKEDITOR.plugins.registered["save"] = {
+        init: function (editor) {
+            var command = editor.addCommand("save", {
+                modes: { wysiwyg: 1, source: 1 },
+                exec: function (editor) {
+                    const text_area = document.querySelector(
+                            ".cke_wysiwyg_frame.cke_reset"
+                        ),
+                        content =
+                            text_area.contentWindow.document.querySelector(
+                                "[role='textbox']"
+                            );
+                    document.getElementById("show").innerHTML =
+                        content.innerHTML;
+                    return;
+                },
+            });
+            editor.ui.addButton("Save", { label: "My Save", command: "save" });
+        },
+    };
+</script>
