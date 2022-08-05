@@ -13,6 +13,7 @@
         <link rel="stylesheet" href=".\css\header-footer.css" />
         <link rel="stylesheet" href=".\css\post-show.css" />
         <link rel="stylesheet" href=".\css\question-show.css" />
+        <link rel="stylesheet" href=".\css\view-post.css" />
         <title>public</title>
         <style></style>
     </head>
@@ -84,6 +85,351 @@
             <div id="wrap-background"></div>
             <!-- todo --------------------------------- End background -->
             <div id="full-height">
+                <div id="post-view-body">
+                    <div id="post-view-content-wrap">
+                        <div id="post-view-side-bar-left">
+                            <div id="post-view-side-bar-element">
+                                <img src="./assets/avatar.png" alt="" />
+                                <div id="post-view-side-bar-left-star">
+                                    <span>238</span>
+                                    <ion-icon name="star-outline"></ion-icon>
+                                </div>
+                                <ion-icon name="bookmark-outline"></ion-icon>
+                                <ion-icon name="link-outline"></ion-icon>
+                            </div>
+                        </div>
+                        <div id="post-view-content-left">
+                            <div id="card-author-infomation">
+                                <div id="post-view-author-avatar">
+                                    <img src="./assets/avatar.png" alt="" />
+                                </div>
+                                <div id="post-view-author-info">
+                                    <div id="post-view-card-author-left-part">
+                                        <div id="post-view-author-left-header">
+                                            <a href="">Do Huy</a>
+                                            <p>cocdh123@gmail.com</p>
+                                            <button>Theo dõi</button>
+                                        </div>
+                                        <div id="post-view-author-left-footer">
+                                            <p class="post-view-user-index">
+                                                <ion-icon
+                                                    name="star-outline"
+                                                ></ion-icon>
+                                                <span>0</span>
+                                            </p>
+                                            <p class="post-view-user-index">
+                                                <ion-icon
+                                                    name="person-add-outline"
+                                                ></ion-icon>
+                                                <span>0</span>
+                                            </p>
+                                            <p class="post-view-user-index">
+                                                <ion-icon
+                                                    name="clipboard-outline"
+                                                ></ion-icon>
+                                                <span>0</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div id="post-view-card-author-right-part">
+                                        <div id="post-view-author-right-header">
+                                            <div id="post-view-created-at">
+                                                Posted 16 hours ago
+                                            </div>
+                                            <div id="post-view-time-to-read">
+                                                13 minutes to read
+                                            </div>
+                                        </div>
+                                        <div id="post-view-author-right-footer">
+                                            <p class="post-view-user-index">
+                                                <ion-icon
+                                                    name="eye-outline"
+                                                ></ion-icon>
+                                                <span>0</span>
+                                            </p>
+                                            <p class="post-view-user-index">
+                                                <ion-icon
+                                                    name="chatbubbles-outline"
+                                                ></ion-icon>
+                                                <span>0</span>
+                                            </p>
+                                            <p class="post-view-user-index">
+                                                <ion-icon
+                                                    name="bookmark-outline"
+                                                ></ion-icon>
+                                                <span>0</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="post-view-main-content">
+                                <div id="post-view-main-content-post">
+                                    Lorem ipsum dolor sit amet consectetur
+                                    adipisicing elit. Alias quibusdam quaerat
+                                    unde asperiores iusto fugit pariatur
+                                    distinctio ratione repellendus at expedita,
+                                    inventore repudiandae, dolore quia dolores.
+                                    Magnam eos dolores esse? Lorem ipsum dolor
+                                    sit amet consectetur adipisicing elit. Alias
+                                    quibusdam quaerat unde asperiores iusto
+                                    fugit pariatur distinctio ratione
+                                    consectetur adipisicing elit. Alias
+                                    quibusdam quaerat unde asperiores iusto
+                                    fugit pariatur distinctio ratione fugit
+                                    pariatur distinctio ratione repellendus at
+                                    expedita, inventore repudiandae, dolore quia
+                                    dolores. Magnam eos dolores esse? Lorem
+                                    ipsum dolor sit amet consectetur adipisicing
+                                    elit. Alias quibusdam quaerat unde
+                                    asperiores iusto fugit pariatur distinctio
+                                    ratione repellendus at expedita, inventore
+                                    repudiandae, dolore quia dolores. Magnam eos
+                                    dolores esse? Lorem ipsum dolor sit amet
+                                    consectetur adipisicing elit. Alias
+                                    quibusdam quaerat unde asperiores iusto
+                                    fugit pariatur distinctio ratione
+                                    repellendus at expedita, inventore
+                                    repudiandae, dolore quia dolores. Magnam eos
+                                    dolores esse?
+                                </div>
+                                <div id="post-view-main-content-footer">
+                                    exel
+                                </div>
+                            </div>
+                        </div>
+                        <div id="post-view-content-right">
+                            <div id="post-view--right-wrap">
+                                <div id="post-view-content-menu">
+                                    <div class="postview__menu--header">
+                                        <p>Muc Luc</p>
+                                        <span></span>
+                                    </div>
+                                    <div id="post-view-menu-element-list">
+                                        <p>
+                                            <span>1</span><a href="">tile1</a>
+                                        </p>
+                                        <p>
+                                            <span>2</span><a href="">tile1</a>
+                                        </p>
+                                        <p>
+                                            <span>3</span><a href="">tile1</a>
+                                        </p>
+                                        <p>
+                                            <span>4</span><a href="">tile1</a>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div id="post-view-relative-file">
+                                    <div class="postview__menu--header">
+                                        <p>Cac files lien quan</p>
+                                        <span></span>
+                                    </div>
+                                    <div id="post-view-relative-file-list">
+                                        <ion-icon
+                                            name="document-outline"
+                                        ></ion-icon>
+                                        <ion-icon
+                                            name="folder-outline"
+                                        ></ion-icon>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="post-view-author-other-post">
+                        <div class="postview__menu--header">
+                            <p>Cac bai viet khac cua Do Huy</p>
+                            <span></span>
+                        </div>
+                        <div id="post-view-author-orther-list">
+                            <div class="postview__card--postrelative">
+                                <div
+                                    class="postview__card--postrelative-header"
+                                >
+                                    Lorem ipsum dolor sit amet consectetur,
+                                    adipisicing elit. Facilis porro quos enim
+                                    ratione quasi provident id sunt aliquam
+                                    adipisci! Temporibus veritatis molestias
+                                    fuga reiciendis sequi voluptates rerum
+                                    doloribus. Inventore, exercitationem.
+                                </div>
+                                <div
+                                    class="postview__card--postrelative-footer"
+                                >
+                                    <a
+                                        href=""
+                                        class="postview__card--postrelative-author-name"
+                                    >
+                                        Do Huy
+                                    </a>
+                                    <div
+                                        class="postview__card--postrelative-time-to-read"
+                                    >
+                                        13 minutes to read
+                                    </div>
+                                    <div
+                                        class="postview__card--postrelative-author-index"
+                                    >
+                                        <p>
+                                            <ion-icon
+                                                name="eye-outline"
+                                            ></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon
+                                                name="star-outline"
+                                            ></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon
+                                                name="bookmark-outline"
+                                            ></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon
+                                                name="chatbubbles-outline"
+                                            ></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="postview__card--postrelative">
+                                <div
+                                    class="postview__card--postrelative-header"
+                                >
+                                    Lorem ipsum dolor sit amet consectetur,
+                                    adipisicing elit. Facilis porro quos enim
+                                    ratione quasi provident id sunt aliquam
+                                    adipisci! Temporibus veritatis molestias
+                                    fuga reiciendis sequi voluptates rerum
+                                    doloribus. Inventore, exercitationem.
+                                </div>
+                                <div
+                                    class="postview__card--postrelative-footer"
+                                >
+                                    <a
+                                        href=""
+                                        class="postview__card--postrelative-author-name"
+                                    >
+                                        Do Huy
+                                    </a>
+                                    <div
+                                        class="postview__card--postrelative-time-to-read"
+                                    >
+                                        13 minutes to read
+                                    </div>
+                                    <div
+                                        class="postview__card--postrelative-author-index"
+                                    >
+                                        <p>
+                                            <ion-icon
+                                                name="eye-outline"
+                                            ></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon
+                                                name="star-outline"
+                                            ></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon
+                                                name="bookmark-outline"
+                                            ></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon
+                                                name="chatbubbles-outline"
+                                            ></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="post-view-comment-wrap">
+                            <div class="postview__menu--header">
+                                <p>Binh luan</p>
+                                <span></span>
+                            </div>
+                            <div id="post-view-user-comment-field-wrap">
+                                <div id="post-view-user-comment-field">
+                                    <textarea name="" id=""></textarea>
+                                    <button>Bình luận</button>
+                                </div>
+                                <div id="post-view-all-comment-list">
+                                    <div class="postview__card--comment">
+                                        <div
+                                            class="postview__card--user-header"
+                                        >
+                                            <img
+                                                src="./assets/avatar.png"
+                                                id="postview-card-comment-user-avatar"
+                                                alt=""
+                                            />
+                                            <div
+                                                class="projectview-card-comment-user-info"
+                                            >
+                                                <div
+                                                    class="postview__cardcomment--user-infor-header"
+                                                >
+                                                    <a href="">Do Huy</a>
+                                                    <div
+                                                        class="postview__cardcomment--user-icon-list"
+                                                    >
+                                                        <img
+                                                            src="./assets/avatar.png"
+                                                            alt=""
+                                                        />
+                                                        <img
+                                                            src="./assets/avatar.png"
+                                                            alt=""
+                                                        />
+                                                        <img
+                                                            src="./assets/avatar.png"
+                                                            alt=""
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <div
+                                                    class="postview__cardcomment--user-infor-footer"
+                                                >
+                                                    <div
+                                                        class="postview__cardcomment--user-commenttime"
+                                                    >
+                                                        12/06/2002
+                                                    </div>
+                                                    <ion-icon
+                                                        name="create-outline"
+                                                    ></ion-icon>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="postview__card--user-body">
+                                            Qua tuyet voi
+                                        </div>
+                                        <div
+                                            class="postview__card--user-footer"
+                                        >
+                                            <p>Tra loi</p>
+                                            <p>Chia se</p>
+                                            <p>
+                                                <ion-icon name="alert-circle-outline"></ion-icon>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- todo --------------------------------- End body -->
             <footer id="site-footer">

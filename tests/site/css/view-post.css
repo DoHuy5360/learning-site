@@ -1,0 +1,290 @@
+#post-view-body {
+    padding: 20px 0;
+}
+#post-view-content-wrap {
+    display: grid;
+    grid-template-columns: 50px auto 300px;
+    gap: 10px;
+    width: var(--width-align);
+    margin: 20px auto;
+}
+#post-view-side-bar-left {
+    color: var(--gray-hard);
+}
+#post-view-side-bar-element {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 30px;
+    gap: 30px;
+}
+#post-view-side-bar-element img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: 50%;
+}
+#post-view-side-bar-left-star {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#post-view-side-bar-left-star span {
+    font-size: 20px;
+}
+/* todo: end left side bar */
+#post-view-content-left {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#post-view-author-avatar img {
+    width: 40px;
+    aspect-ratio: 1;
+    object-fit: contain;
+    border-radius: 50%;
+}
+#card-author-infomation {
+    display: flex;
+}
+#post-view-author-info {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+#post-view-card-author-left-part {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--gray-hard);
+}
+#post-view-author-left-header {
+    display: flex;
+    gap: 5px;
+}
+#post-view-author-left-header a {
+    color: var(--color-2);
+    text-decoration: unset;
+}
+#post-view-author-left-header button {
+    background-color: transparent;
+    border: 1px solid var(--gray-light);
+    padding: 5px 10px;
+}
+#post-view-author-left-footer {
+    display: flex;
+    gap: 10px;
+}
+.post-view-user-index {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+/* todo: ------------------------------- end left part header content */
+#post-view-card-author-right-part {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--gray-hard);
+}
+#post-view-author-right-header {
+    display: flex;
+    gap: 5px;
+}
+#post-view-author-right-footer {
+    display: flex;
+    gap: 10px;
+}
+/* todo: ------------------- start right part */
+#post-view--right-wrap {
+    display: flex;
+    flex-direction: column;
+    position: sticky;
+    top: 70px;
+}
+#post-view-content-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.postview__menu--header {
+    display: flex;
+    align-items: baseline;
+}
+.postview__menu--header p {
+    white-space: nowrap;
+    font-weight: bold;
+    color: var(--color-2);
+}
+.postview__menu--header span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-2);
+}
+#post-view-menu-element-list {
+    display: flex;
+    flex-direction: column;
+    color: var(--color-1);
+}
+#post-view-menu-element-list p {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    padding: 5px;
+}
+#post-view-menu-element-list a {
+    text-decoration: unset;
+}
+#post-view-relative-file {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#post-view-relative-file-list {
+    display: flex;
+    gap: 5px;
+    font-size: 20px;
+}
+/* todo: --------------- end of content */
+#post-view-author-other-post {
+    width: var(--width-align);
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.postview__card--postrelative-header {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    word-break: break-word;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+#post-view-author-orther-list {
+    display: flex;
+    width: 100%;
+    gap: 10px;
+}
+.postview__card--postrelative {
+    border: 1px solid var(--gray-light);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: calc(100% / 4);
+    box-shadow: 10px 10px 20px 1px #0000006b;
+    box-shadow: 0 0.125rem 0.25rem rgba(27, 27, 27, 0.075);
+}
+.postview__card--postrelative-footer {
+    display: flex;
+    flex-direction: column;
+}
+.postview__card--postrelative-author-index {
+    display: flex;
+    gap: 10px;
+}
+.postview__card--postrelative-author-index p {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.postview__card--postrelative-author-name {
+    text-decoration: unset;
+    font-weight: bold;
+    color: var(--color-2);
+}
+/* todo -------------- start comment  */
+#post-view-comment-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#post-view-user-comment-field-wrap{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#post-view-user-comment-field {
+    padding: 20px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid var(--color-1);
+    border-radius: 5px;
+}
+#post-view-user-comment-field textarea {
+    width: 100%;
+    height: 100%;
+    outline: unset;
+    resize: unset;
+    padding: 5px;
+    border-radius: inherit;
+}
+#post-view-user-comment-field button {
+    background-color: var(--color-3);
+    border: 1px solid var(--color-2);
+    padding: 10px 20px;
+    width: fit-content;
+    display: inline-block;
+    font-weight: bold;
+    align-self: end;
+    cursor: pointer;
+}
+#post-view-all-comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.postview__card--comment{
+    padding: 20px;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border: 1px solid var(--color-1);
+}
+.postview__card--user-header {
+    display: flex;
+}
+#postview-card-comment-user-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+.postview__cardcomment--user-icon-list {
+    display: flex;
+    gap: 5px;
+}
+.postview__cardcomment--user-icon-list img {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.projectview-card-comment-user-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.postview__cardcomment--user-infor-header {
+    display: flex;
+    gap: 10px;
+}
+.postview__cardcomment--user-infor-footer {
+    display: flex;
+    gap: 10px;
+}
+.postview__card--user-footer{
+    display: flex;
+    gap: 10px;
+    font-size: 13px;
+    color: var(--gray-hard);
+}
+.postview__card--user-footer p{
+    cursor: pointer;
+}
