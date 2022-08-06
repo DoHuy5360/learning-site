@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\Post;
+use App\Models\Post_comment;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -127,8 +128,8 @@ class PostController extends Controller
     {
         $post_id = explode('|', $name_id)[1];
         $corresponding_post = DB::select(
-            "SELECT * 
-             FROM posts, users
+            "SELECT * , users.id as user_id, posts.id as post_id
+             FROM users, posts 
              WHERE posts.id = {$post_id}
                    AND posts.creator::integer = users.id 
             "
@@ -143,7 +144,7 @@ class PostController extends Controller
         $relative_post = DB::select(
             "SELECT *
              FROM posts
-             WHERE posts.creator = '{$corresponding_post->id}'
+             WHERE posts.creator = '{$corresponding_post->user_id}'
              AND posts.id != $post_id::integer
             "
         );
@@ -158,10 +159,19 @@ class PostController extends Controller
             "
         );
         // return $relative_file;
+        $relative_comment = DB::select(
+            "SELECT *
+             FROM post_comments, users
+             WHERE post_comments.for = $post_id
+             AND post_comments.replier = users.id
+            "
+        );
+        // return $relative_comment;
         return view('view-post', [
             'corresponding_post' => $corresponding_post,
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,
+            'relative_comment' => $relative_comment
         ]);
     }
 
@@ -197,5 +207,20 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+
+    public function comment(Request $request)
+    {
+        $new_comment = new Post_comment;
+        $new_comment->for = $request->post_id;
+        $new_comment->replier = Auth::user()->id;
+        $new_comment->content = $request->comment;
+        $new_comment->save();
+
+        return response()->json([
+            "status" => "200",
+            "message" => "Phát ngôn thành công!"
+        ]);
     }
 }

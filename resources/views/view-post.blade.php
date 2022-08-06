@@ -141,7 +141,7 @@
                 <div id="post-view-author-orther-list">
                     @foreach ($relative_post as $post)
                         <div class="postview__card--postrelative">
-                            <a href="{{ url('/post'). "/" . remove_sign($post->title) . '|' . $post->id }}">
+                            <a href="{{ url('/post') . '/' . remove_sign($post->title) . '|' . $post->id }}">
                                 <div class="postview__card--postrelative-header">
                                     {{ $post->title }}
                                 </div>
@@ -183,48 +183,75 @@
                         <span></span>
                     </div>
                     <div id="post-view-user-comment-field-wrap">
-                        <div id="post-view-user-comment-field">
-                            <textarea name="" id=""></textarea>
-                            <button>Bình luận
+                        <form action="{{ url('post/') }}" id="post-view-user-comment-field" method="POST">
+                            @csrf
+                            <input name="post_id" value="{{ $corresponding_post->post_id }}" type="hidden">
+                            <textarea name="comment" id="postview-commnent-area"></textarea>
+                            <button type="submit">Bình luận
                                 <ion-icon name="paper-plane-outline"></ion-icon>
                             </button>
-                        </div>
+                        </form>
                         <div id="post-view-all-comment-list">
-                            <div class="postview__card--comment">
-                                <div class="postview__card--user-header">
-                                    <img src="./assets/avatar.png" id="postview-card-comment-user-avatar" alt="" />
-                                    <div class="projectview-card-comment-user-info">
-                                        <div class="postview__cardcomment--user-infor-header">
-                                            <a href="">Do Huy</a>
-                                            <div class="postview__cardcomment--user-icon-list">
-                                                <img src="./assets/avatar.png" alt="" />
-                                                <img src="./assets/avatar.png" alt="" />
-                                                <img src="./assets/avatar.png" alt="" />
+                            @foreach ($relative_comment as $comment)
+                                <div class="postview__card--comment">
+                                    <div class="postview__card--user-header">
+                                        <img src="{{ $comment->avatar }}" id="postview-card-comment-user-avatar" alt="" />
+                                        <div class="projectview-card-comment-user-info">
+                                            <div class="postview__cardcomment--user-infor-header">
+                                                <a href="">{{ $comment->name }}</a>
+                                                <div class="postview__cardcomment--user-icon-list">
+                                                    <img src="./assets/avatar.png" alt="" />
+                                                    <img src="./assets/avatar.png" alt="" />
+                                                    <img src="./assets/avatar.png" alt="" />
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="postview__cardcomment--user-infor-footer">
-                                            <div class="postview__cardcomment--user-commenttime">
-                                                12/06/2002
+                                            <div class="postview__cardcomment--user-infor-footer">
+                                                <div class="postview__cardcomment--user-commenttime">
+                                                    {{ $comment->created_at }}
+                                                </div>
+                                                @if ($comment->edit)
+                                                    <ion-icon name="create-outline"></ion-icon>
+                                                @endif
                                             </div>
-                                            <ion-icon name="create-outline"></ion-icon>
                                         </div>
                                     </div>
+                                    <div class="postview__card--user-body">
+                                        {{ $comment->content }}
+                                    </div>
+                                    <div class="postview__card--user-footer">
+                                        <p>Tra loi</p>
+                                        <p>Chia se</p>
+                                        <p>
+                                            <ion-icon name="alert-circle-outline"></ion-icon>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="postview__card--user-body">
-                                    Qua tuyet voi
-                                </div>
-                                <div class="postview__card--user-footer">
-                                    <p>Tra loi</p>
-                                    <p>Chia se</p>
-                                    <p>
-                                        <ion-icon name="alert-circle-outline"></ion-icon>
-                                    </p>
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script>
+        let comment_form = document.getElementById('post-view-user-comment-field')
+        comment_form.addEventListener('submit', e => {
+            e.preventDefault();
+            let ajax = new XMLHttpRequest();
+            ajax.open("POST", comment_form.getAttribute("action"), true);
+            ajax.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    let data = JSON.parse(this.responseText);
+                    alert(data.status + " - " + data.message)
+                }
+                if (this.status == 500) {
+                    // alert(this.responseText)
+                    alert("Phát ngôn thất bại")
+                }
+            }
+            let form_data = new FormData(comment_form);
+            ajax.send(form_data)
+            return false;
+        })
+    </script>
 @endsection

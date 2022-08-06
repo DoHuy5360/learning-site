@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PostController::class, 'index']);
 
 Route::resource('/post', PostController::class);
+Route::post('/post', [PostController::class, 'comment']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
