@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\File;
 use App\Models\Post;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -39,7 +40,7 @@ class PostController extends Controller
             //todo: push all relative tags to the corresponding post 
         }
         // return $all_posts;
-        return view('post', [
+        return view('post.post', [
             'all_posts' => $all_posts,
         ]);
     }
@@ -51,7 +52,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('create-post');
+        return view('post.create-post');
     }
 
     /**
@@ -81,6 +82,28 @@ class PostController extends Controller
              LIMIT 1
             "
         )[0];
+
+        if ($request->hasFile('file')) {
+            $all_files = $request->file('file');
+            foreach ($all_files as $file) {
+                $name_file = $file->getClientOriginalName();
+                $extension_file = $file->getClientOriginalExtension();
+                $current_time = time();
+                $fixed_file = $current_time . "." . $name_file;
+                $dest_path = public_path("assets/files/{$user_id}/");
+                $file->move($dest_path, $fixed_file);
+
+                $new_file = new File;
+                $new_file->belong = $recent_post->id;
+                $new_file->alias = $name_file;
+                $new_file->type = $extension_file;
+                $new_file->url = "/" . $user_id . "/" . $fixed_file;
+                // $new_file->tag =  $request->file_tag;
+                $new_file->tag =  "tag_xample";
+                $new_file->save();
+            }
+        }
+
         $new_tag = new Tag;
         $new_tag->from = $recent_post->id;
         $new_tag->of = "post";
@@ -105,13 +128,40 @@ class PostController extends Controller
         $post_id = explode('|', $name_id)[1];
         $corresponding_post = DB::select(
             "SELECT * 
-             FROM posts
+             FROM posts, users
              WHERE posts.id = {$post_id}
+                   AND posts.creator::integer = users.id 
+            "
+        )[0];
+        $relative_tag = DB::select(
+            "SELECT  tag_one, tag_two, tag_three, tag_four, tag_five
+                FROM tags
+                WHERE tags.from = {$post_id}
             "
         )[0];
         // return $corresponding_post;
-        return view('show-post', [
+        $relative_post = DB::select(
+            "SELECT *
+             FROM posts
+             WHERE posts.creator = '{$corresponding_post->id}'
+             AND posts.id != $post_id::integer
+            "
+        );
+        // return $relative_post;
+        $corresponding_post->tags = $relative_tag;
+        //todo: push all relative tags to the corresponding post 
+
+        $relative_file = DB::select(
+            "SELECT *
+             FROM files
+             WHERE files.belong = $post_id::integer
+            "
+        );
+        // return $relative_file;
+        return view('view-post', [
             'corresponding_post' => $corresponding_post,
+            'relative_post' => $relative_post,
+            'relative_file' => $relative_file,
         ]);
     }
 

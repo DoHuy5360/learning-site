@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/_root.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/header-footer.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/view-post.css') }}">
     <title>Document</title>
 </head>
 
@@ -18,7 +19,7 @@
                 <div class="header__part header__part--left">
                     <img id="header-logo" src="https://firebasestorage.googleapis.com/v0/b/image-resize-5d865.appspot.com/o/Images%2FmyLogo.png?alt=media&token=13f9f9ff-4ca8-42ff-adb4-5d972c0ebe98" />
                     <div id="wrap-link">
-                        <a href="" class="header__link--redirect">Bài Viết</a>
+                        <a href="{{ url('/') }}" class="header__link--redirect">Bài Viết</a>
                         <a href="" class="header__link--redirect">Hỏi Đáp</a>
                         <a href="" class="header__link--redirect">Tài Liệu</a>
                         <a href="" class="header__link--redirect">Đỉnh Núi</a>
@@ -153,3 +154,4 @@
 
 </html>
 <script src="{{ asset('assets/js/post.js') }}"></script>
+<script src="{{ asset('assets/js/view-post.js') }}"></script>
