@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\Post_commentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Reply_commetController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,7 +19,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PostController::class, 'index']);
 
 Route::resource('/post', PostController::class);
-Route::post('/post', [PostController::class, 'comment']);
+Route::resource('/comment', Post_commentController::class);
+Route::resource('/reply', Reply_commetController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

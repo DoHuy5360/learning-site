@@ -1,3 +1,7 @@
+body::-webkit-scrollbar{
+    width: 0;
+    height: 0;
+}
 #post-view-body {
     padding: 20px 0;
 }
@@ -265,6 +269,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: fit-content;
 }
 .postview__card--comment {
     padding: 20px;
@@ -335,4 +340,8 @@
 .postview__tag--element a {
     text-decoration: unset;
     color: var(--color-1);
+}
+#post-view-comment-frame{
+    transition: 1000ms linear;
+    height: 0;
 }

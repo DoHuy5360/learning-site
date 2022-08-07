@@ -159,19 +159,19 @@ class PostController extends Controller
             "
         );
         // return $relative_file;
-        $relative_comment = DB::select(
-            "SELECT *
-             FROM post_comments, users
-             WHERE post_comments.for = $post_id
-             AND post_comments.replier = users.id
-            "
-        );
+        // $relative_comment = DB::select(
+        //     "SELECT *
+        //      FROM post_comments, users
+        //      WHERE post_comments.for = $post_id
+        //      AND post_comments.replier = users.id
+        //     "
+        // );
         // return $relative_comment;
         return view('view-post', [
             'corresponding_post' => $corresponding_post,
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,
-            'relative_comment' => $relative_comment
+            // 'relative_comment' => $relative_comment
         ]);
     }
 
@@ -210,17 +210,17 @@ class PostController extends Controller
     }
 
 
-    public function comment(Request $request)
-    {
-        $new_comment = new Post_comment;
-        $new_comment->for = $request->post_id;
-        $new_comment->replier = Auth::user()->id;
-        $new_comment->content = $request->comment;
-        $new_comment->save();
+    // public function comment(Request $request)
+    // {
+    //     $new_comment = new Post_comment;
+    //     $new_comment->for = $request->post_id;
+    //     $new_comment->replier = Auth::user()->id;
+    //     $new_comment->content = $request->comment;
+    //     $new_comment->save();
 
-        return response()->json([
-            "status" => "200",
-            "message" => "Phát ngôn thành công!"
-        ]);
-    }
+    //     return response()->json([
+    //         "status" => "200",
+    //         "message" => "Phát ngôn thành công!"
+    //     ]);
+    // }
 }

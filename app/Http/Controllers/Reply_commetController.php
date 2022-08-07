@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Post_comment;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class Post_commentController extends Controller
+class Reply_commetController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,6 +14,7 @@ class Post_commentController extends Controller
      */
     public function index()
     {
+        //
     }
 
     /**
@@ -25,7 +24,7 @@ class Post_commentController extends Controller
      */
     public function create()
     {
-
+        //
     }
 
     /**
@@ -36,11 +35,7 @@ class Post_commentController extends Controller
      */
     public function store(Request $request)
     {
-        $new_comment = new Post_comment;
-        $new_comment->for = $request->post_id;
-        $new_comment->replier = Auth::user()->id;
-        $new_comment->content = $request->comment;
-        $new_comment->save();
+        //
     }
 
     /**
@@ -51,16 +46,17 @@ class Post_commentController extends Controller
      */
     public function show($id)
     {
-        $relative_comment = DB::select(
-            "SELECT *, post_comments.id as comment_id
-             FROM post_comments, users
-             WHERE post_comments.for = $id
-             AND post_comments.replier = users.id
+        $reply_relative = DB::select(
+            "SELECT *
+             FROM reply_comments, post_comments, users
+             WHERE reply_comments.content_type = $id
+             AND reply_comments.reply_for = post_comments.id
+             AND reply_comments.comment_replier = users.id
             "
         );
-        return view('comment.view-comment', [
-            'relative_comment' => $relative_comment,
-            'post_id' => $id,
+        // return $reply_relative;
+        return response()->json([
+            "reply_information" => $reply_relative
         ]);
     }
 
