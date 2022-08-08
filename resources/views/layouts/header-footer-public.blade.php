@@ -154,4 +154,3 @@
 
 </html>
 <script src="{{ asset('assets/js/post.js') }}"></script>
-<script src="{{ asset('assets/js/view-post.js') }}"></script>

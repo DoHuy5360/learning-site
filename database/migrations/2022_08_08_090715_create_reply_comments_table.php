@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('reply_comments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string('reply_code',10);
             $table->integer('content_type');
-            $table->integer('reply_for');
+            $table->string('reply_for',10);
             $table->integer('comment_replier');
             $table->text('reply_content');
             $table->boolean('edited')->default(false);

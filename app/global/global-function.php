@@ -19,3 +19,16 @@ function remove_sign($str)
     $str = preg_replace("/( )/", '-', $str);
     return $str;
 }
+function generate_code($code_length=10)
+{
+    $str_code = "";
+
+    $alphachar = array_merge(range('A', 'Z'), range('a', 'z'), range(0, 9));
+    $alphachar_length = sizeof($alphachar);
+    for ($i = 0; $i < $code_length; $i++) {
+        $rand_num = rand(0, $alphachar_length - 1);
+        $rand_char = $alphachar[$rand_num];
+        $str_code .= $rand_char;
+    };
+    return $str_code;
+}

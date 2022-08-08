@@ -158,20 +158,10 @@ class PostController extends Controller
              WHERE files.belong = $post_id::integer
             "
         );
-        // return $relative_file;
-        // $relative_comment = DB::select(
-        //     "SELECT *
-        //      FROM post_comments, users
-        //      WHERE post_comments.for = $post_id
-        //      AND post_comments.replier = users.id
-        //     "
-        // );
-        // return $relative_comment;
         return view('view-post', [
             'corresponding_post' => $corresponding_post,
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,
-            // 'relative_comment' => $relative_comment
         ]);
     }
 

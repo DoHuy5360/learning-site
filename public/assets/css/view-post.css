@@ -163,9 +163,6 @@ body::-webkit-scrollbar{
 .postview__file--element ion-icon {
     font-size: 15px;
 }
-.postview__file--element p{
-    
-}
 .postview__file--element a {
     font-size: 13px;
     text-decoration: unset;
@@ -340,8 +337,4 @@ body::-webkit-scrollbar{
 .postview__tag--element a {
     text-decoration: unset;
     color: var(--color-1);
-}
-#post-view-comment-frame{
-    transition: 1000ms linear;
-    height: 0;
 }

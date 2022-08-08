@@ -38,6 +38,7 @@ class Post_commentController extends Controller
     {
         $new_comment = new Post_comment;
         $new_comment->for = $request->post_id;
+        $new_comment->comment_code = generate_code(10);
         $new_comment->replier = Auth::user()->id;
         $new_comment->content = $request->comment;
         $new_comment->save();
@@ -56,6 +57,7 @@ class Post_commentController extends Controller
              FROM post_comments, users
              WHERE post_comments.for = $id
              AND post_comments.replier = users.id
+             ORDER BY post_comments.id DESC
             "
         );
         return view('comment.view-comment', [
