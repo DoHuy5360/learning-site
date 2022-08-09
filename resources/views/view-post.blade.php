@@ -5,7 +5,7 @@
             <div id="post-view-content-wrap">
                 <div id="post-view-side-bar-left">
                     <div id="post-view-side-bar-element">
-                        <img src="{{ $corresponding_post->avatar }}" alt="" />
+                        <img id="post-view-hidden-avatar" src="{{ $corresponding_post->avatar }}" alt="" />
                         <div id="post-view-side-bar-left-star">
                             <span>238</span>
                             <ion-icon name="star-outline"></ion-icon>
@@ -72,6 +72,7 @@
                         </div>
                     </div>
                     <div id="post-view-main-content">
+                        <h1>{{ $corresponding_post->title }}</h1>
                         <div id="post-view-main-content-post">
                             {{ $corresponding_post->content }}
                         </div>
@@ -93,20 +94,7 @@
                                 <p>Mục Lục</p>
                                 <span></span>
                             </div>
-                            <div id="post-view-menu-element-list">
-                                <p>
-                                    <span>1</span><a href="">tile1</a>
-                                </p>
-                                <p>
-                                    <span>2</span><a href="">tile1</a>
-                                </p>
-                                <p>
-                                    <span>3</span><a href="">tile1</a>
-                                </p>
-                                <p>
-                                    <span>4</span><a href="">tile1</a>
-                                </p>
-                            </div>
+                            <div id="post-view-menu-element-list"></div>
                         </div>
                         <div id="post-view-relative-file">
                             <div class="postview__menu--header">
@@ -134,48 +122,50 @@
                 </div>
             </div>
             <div id="post-view-author-other-post">
-                <div class="postview__menu--header">
-                    <p>Các bài viết khác của {{ $corresponding_post->name }}</p>
-                    <span></span>
-                </div>
-                <div id="post-view-author-orther-list">
-                    @foreach ($relative_post as $post)
-                        <div class="postview__card--postrelative">
-                            <a href="{{ url('/post') . '/' . remove_sign($post->title) . '|' . $post->id }}">
-                                <div class="postview__card--postrelative-header">
-                                    {{ $post->title }}
-                                </div>
-                            </a>
-                            <div class="postview__card--postrelative-footer">
-                                <a href="" class="postview__card--postrelative-author-name">
-                                    {{ $corresponding_post->name }}
+                <div id="post-view-relative-post-wrap">
+                    <div class="postview__menu--header">
+                        <p>Các bài viết khác của {{ $corresponding_post->name }}</p>
+                        <span></span>
+                    </div>
+                    <div id="post-view-author-orther-list">
+                        @foreach ($relative_post as $post)
+                            <div class="postview__card--postrelative">
+                                <a href="{{ url('/post') . '/' . remove_sign($post->title) . '|' . $post->id }}">
+                                    <div class="postview__card--postrelative-header">
+                                        {{ $post->title }}
+                                    </div>
                                 </a>
-                                <div class="postview__card--postrelative-time-to-read">
-                                    <p>
-                                        Đọc trong {{ $post->time }}
-                                    </p>
-                                </div>
-                                <div class="postview__card--postrelative-author-index">
-                                    <p>
-                                        <ion-icon name="eye-outline"></ion-icon>
-                                        <span>0</span>
-                                    </p>
-                                    <p>
-                                        <ion-icon name="star-outline"></ion-icon>
-                                        <span>0</span>
-                                    </p>
-                                    <p>
-                                        <ion-icon name="bookmark-outline"></ion-icon>
-                                        <span>0</span>
-                                    </p>
-                                    <p>
-                                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                                        <span>0</span>
-                                    </p>
+                                <div class="postview__card--postrelative-footer">
+                                    <a href="" class="postview__card--postrelative-author-name">
+                                        {{ $corresponding_post->name }}
+                                    </a>
+                                    <div class="postview__card--postrelative-time-to-read">
+                                        <p>
+                                            Đọc trong {{ $post->time }}
+                                        </p>
+                                    </div>
+                                    <div class="postview__card--postrelative-author-index">
+                                        <p>
+                                            <ion-icon name="eye-outline"></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon name="star-outline"></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon name="bookmark-outline"></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                        <p>
+                                            <ion-icon name="chatbubbles-outline"></ion-icon>
+                                            <span>0</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
                 <div id="post-view-comment-wrap">
                     <div class="postview__menu--header">

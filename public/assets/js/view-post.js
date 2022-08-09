@@ -1,4 +1,3 @@
-
 let ConvertStringToHTML = function (str) {
     let parser = new DOMParser();
     let doc = parser.parseFromString(str, "text/html");
@@ -7,6 +6,59 @@ let ConvertStringToHTML = function (str) {
 let post_content = document.getElementById("post-view-main-content-post");
 let post_content_converted = ConvertStringToHTML(post_content.innerText);
 post_content.innerHTML = post_content_converted.innerHTML;
+
+// todo --------------------------------------------------- check element is exist in viewport
+const list_title_wrap = document.getElementById("post-view-menu-element-list");
+const select_all_titles = document.querySelectorAll(
+    "#post-view-main-content h2"
+);
+for (var i = 0; i < select_all_titles.length; i++) {
+    const title = select_all_titles[i];
+    const h2_id = `${title.nodeName}-${i}`;
+    title.setAttribute("id", h2_id);
+    // title.setAttribute("class", "title__active")
+    const title_element = `
+        <p>
+            <a href="#${h2_id}">${title.outerText}</a>
+        </p>
+    `;
+    list_title_wrap.insertAdjacentHTML("beforeend", title_element);
+}
+function checkElementInViewport(el) {
+    const rect = el.getBoundingClientRect();
+    return (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <=
+            (window.innerHeight || document.documentElement.clientHeight) &&
+        rect.right <=
+            (window.innerWidth || document.documentElement.clientWidth)
+    );
+}
+const hidden_avatar = document.getElementById("post-view-hidden-avatar");
+document.addEventListener(
+    "scroll",
+    (e) => {
+        select_all_titles.forEach((title) => {
+            const is_in_viewport = checkElementInViewport(title);
+            const title_link = document.querySelector(`[href="#${title.id}"]`);
+            if (is_in_viewport) {
+                title_link.setAttribute("class", "title__active");
+            } else {
+                title_link.removeAttribute("class", "title__active");
+            }
+        });
+        if (
+            document.body.scrollTop > 400 ||
+            document.documentElement.scrollTop > 400
+        ) {
+            hidden_avatar.style.opacity = "1";
+        } else {
+            hidden_avatar.style.opacity = "0";
+        }
+    },
+    // { passive: true }
+);
 // todo --------------------------------------------------- ajax
 let comment_btn = document.getElementById("post-view-submit-comment-btn");
 let comment_frame = document.getElementById("post-view-comment-frame");

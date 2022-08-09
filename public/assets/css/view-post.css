@@ -10,7 +10,7 @@ body::-webkit-scrollbar{
     grid-template-columns: 50px auto 300px;
     gap: 10px;
     width: var(--width-align);
-    margin: 20px auto;
+    margin: 20px auto 60px auto;
 }
 #post-view-side-bar-left {
     color: var(--gray-hard);
@@ -22,13 +22,14 @@ body::-webkit-scrollbar{
     flex-direction: column;
     align-items: center;
     font-size: 30px;
-    gap: 30px;
+    gap: 20px;
 }
-#post-view-side-bar-element img {
+#post-view-hidden-avatar{
     width: 100%;
-    aspect-ratio: 1;
+    opacity: 0;
     object-fit: contain;
     border-radius: 50%;
+    transition: 300ms linear;
 }
 #post-view-side-bar-left-star {
     display: flex;
@@ -134,13 +135,22 @@ body::-webkit-scrollbar{
     color: var(--color-1);
 }
 #post-view-menu-element-list p {
-    display: flex;
-    align-items: baseline;
-    gap: 5px;
     padding: 5px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 #post-view-menu-element-list a {
     text-decoration: unset;
+    font-size: 13px;
+    color: var(--color-1);
+    transition: 100ms linear;
+}
+.title__active{
+    color: var(--color-2) !important;
+    border-left: 5px solid var(--color-2);
+    font-weight: bold;
+    padding-left: 5px;
 }
 #post-view-relative-file {
     display: flex;
@@ -152,6 +162,9 @@ body::-webkit-scrollbar{
     flex-direction: column;
     gap: 10px;
     padding: 5px;
+}
+#post-view-relative-file-list p{
+    font-size: 13px;
 }
 .postview__file--element {
     display: grid;
@@ -181,7 +194,7 @@ body::-webkit-scrollbar{
     margin: auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 30px;
 }
 .postview__card--postrelative-header {
     text-overflow: ellipsis;
@@ -190,6 +203,11 @@ body::-webkit-scrollbar{
     word-break: break-word;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+}
+#post-view-relative-post-wrap{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 #post-view-author-orther-list {
     display: flex;
