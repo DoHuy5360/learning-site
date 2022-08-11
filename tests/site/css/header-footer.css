@@ -133,7 +133,7 @@ ion-icon[name="search-outline"] {
     background-position: 0 50px;
 }
 /*--------------------------------- End header  */
-#full-height {
+.full-height {
     flex: 1 0 auto;
 }
 /* ------------------------------ start footer */

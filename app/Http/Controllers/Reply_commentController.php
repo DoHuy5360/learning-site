@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class Reply_commetController extends Controller
+class Reply_commentController extends Controller
 {
     /**
      * Display a listing of the resource.

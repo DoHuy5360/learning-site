@@ -1,6 +1,6 @@
 @extends('layouts.header-footer-public')
 @section('content')
-    <div id="full-height">
+    <div class="full-height">
         <div id="post-view-body">
             <div id="post-view-content-wrap">
                 <div id="post-view-side-bar-left">

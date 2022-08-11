@@ -1,0 +1,181 @@
+/* todo ------------ question */
+#quesVw-contents-body-wr {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    width: var(--width-align);
+    margin: 60px auto;
+}
+#quesVw-question-top-wr {
+    display: flex;
+    gap: 20px;
+}
+#quesVw-ques_ques_field-top-wr {
+    display: grid;
+    grid-template-columns: auto 300px;
+    gap: 20px;
+}
+#quesVw-interact-left-wr {
+    display: flex;
+    flex-direction: column;
+    margin-top: 60px;
+    gap: 10px;
+}
+.interact__icon {
+    font-size: 30px;
+}
+#quesVw-ques_text-left-wr {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#quesVw-ques_index-lv1-wr {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.author__infor--wr {
+    display: flex;
+    gap: 10px;
+}
+#quesVw-ques_bookmark-form {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    width: 100%;
+    background-color: lightblue;
+    gap: 5px;
+    justify-content: center;
+}
+#quesVw-ques_bookmark-form button[type="submit"] {
+    all: unset;
+}
+#quesVw-ques_info-right-wr {
+    display: flex;
+    flex-direction: column;
+}
+.group__index {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+#quesVw-ques_tag-lv3-ls {
+    margin: 10px 0;
+}
+#quesVw-ques_tag-lv3-ls span {
+    border: 1px solid;
+    padding: 2px 5px;
+    border-radius: 20px;
+    font-size: 13px;
+}
+#quesVw-aut_social-lv4-wr {
+    display: flex;
+    gap: 10px;
+    font-size: 25px;
+    justify-content: space-between;
+}
+#quesVw-open_answer-btn {
+    all: unset;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    margin: 30px 0 0 0;
+    background-color: lightblue;
+    width: fit-content;
+    cursor: pointer;
+}
+#quesVw-ques_author-right-wr {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#quesVw-aut_info-lv1-wr {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+#quesVw-aut_info-lv1-wr img {
+    width: 100px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    object-fit: cover;
+}
+#quesVw-auth_info-right-wr {
+    display: grid;
+    gap: 5px;
+}
+.author__interact--wr {
+    display: flex;
+    justify-content: space-between;
+}
+#quesVw-aut_follow-form button[type="submit"] {
+    border: 1px solid;
+    padding: 3px 10px;
+    background-color: transparent;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.underline__none {
+    text-decoration: unset;
+}
+#quesVw-aut_social-lv4-wr {
+    margin: 20px 0 0 0;
+    padding: 10px 0 0 0;
+    border-top: 1px solid;
+}
+#quesVw-chat_form-wr {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 0;
+    overflow: hidden;
+    transition: 300ms linear;
+    opacity: 0;
+    margin: 20px 0 0 0;
+}
+#quesVw-chat_form-wr.chat_active {
+    height: fit-content;
+    opacity: 1;
+}
+#quesVw-chat_field-write {
+    resize: vertical;
+    height: 100px;
+    min-height: 100px;
+    max-height: 300px;
+    padding: 10px;
+    outline: unset;
+}
+#quesVw-option_form-btn-wrap {
+    display: flex;
+    gap: 10px;
+    align-self: end;
+}
+#quesVw-chat_form-wr button {
+    border: 1px solid;
+    padding: 3px 10px;
+    width: fit-content;
+    cursor: pointer;
+}
+/* todo ------------------- answer start */
+.quesVw-answer-bellow-wr {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.quesVw-ans_info-right-wr {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid;
+    padding: 10px 0 0 0;
+}
+.quesVw-ans_index-lv1-wr {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.quesVw-ans_text-left-wr {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}

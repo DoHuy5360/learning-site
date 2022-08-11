@@ -158,7 +158,7 @@ class PostController extends Controller
              WHERE files.belong = $post_id::integer
             "
         );
-        return view('view-post', [
+        return view('post.view-post', [
             'corresponding_post' => $corresponding_post,
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,
