@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/header-footer.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create-post.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/create-question.css') }}">
     <title>Document</title>
 </head>
 
@@ -20,7 +21,7 @@
                     <img id="header-logo" src="https://firebasestorage.googleapis.com/v0/b/image-resize-5d865.appspot.com/o/Images%2FmyLogo.png?alt=media&token=13f9f9ff-4ca8-42ff-adb4-5d972c0ebe98" />
                     <div id="wrap-link">
                         <a href="{{ url('/') }}" class="header__link--redirect">Bài Viết</a>
-                        <a href="" class="header__link--redirect">Hỏi Đáp</a>
+                        <a href="{{ route('question.index') }}" class="header__link--redirect">Hỏi Đáp</a>
                         <a href="" class="header__link--redirect">Tài Liệu</a>
                         <a href="" class="header__link--redirect">Đỉnh Núi</a>
                     </div>
@@ -99,6 +100,7 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="{{ asset('assets/js/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('assets/js/create-post.js') }}"></script>
+    <script src="{{ asset('assets/js/create-question.js') }}"></script>
 </body>
 
 </html>

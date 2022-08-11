@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
@@ -20,7 +22,7 @@ class QuestionController extends Controller
              WHERE questions.questioner = users.id
             "
         );
-        return view('question.question',[
+        return view('question.question', [
             'all_questions' => $all_questions,
         ]);
     }
@@ -32,7 +34,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        //
+        return view('question.create-question');
     }
 
     /**
@@ -43,7 +45,16 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // return $request;
+        $user_id = Auth::user()->id;
+        $new_question = new Question;
+        $new_question->questioner = $user_id;
+        $new_question->title = $request->title;
+        $new_question->content = $request->content;
+        // $new_question->vote = "" ;
+        // $new_question->slug = "";
+        $new_question->save();
+        return redirect()->back()->with("success", "Câu hỏi đã được công bố.");
     }
 
     /**
@@ -54,7 +65,16 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        return view('question.view-question');
+        $corresponding_question = DB::select(
+            "SELECT *
+             FROM questions, users
+             WHERE questions.questioner = users.id
+             AND questions.id = $id
+            "
+        )[0];
+        return view('question.view-question', [
+            'corresponding_question' => $corresponding_question,
+        ]);
     }
 
     /**

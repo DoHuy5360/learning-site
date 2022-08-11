@@ -27,7 +27,7 @@
             </div>
             <div id="editor-board-wrap">
                 <input name="content" id="post-content" type="hidden" />
-                <div name="area" aria-disabled="true"></div>
+                <div name="post-area" aria-disabled="true"></div>
             </div>
         </div>
     </form>

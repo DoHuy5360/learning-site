@@ -53,6 +53,7 @@
 #quesVw-ques_info-right-wr {
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 .group__index {
     display: flex;

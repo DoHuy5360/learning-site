@@ -10,7 +10,7 @@
                     <a href="" class="menu__option--link"> Lưu Trữ </a>
                 </div>
                 <div id="create-question">
-                    <a href="" class="menu__option--link">Đặt Câu Hỏi</a>
+                    <a href="{{ route('question.create') }}" class="menu__option--link">Đặt Câu Hỏi</a>
                 </div>
             </div>
         </div>

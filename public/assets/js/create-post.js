@@ -1,4 +1,4 @@
-CKEDITOR.replace("area");
+CKEDITOR.replace("post-area");
 CKEDITOR.plugins.registered["save"] = {
     init: function (editor) {
         var command = editor.addCommand("save", {
