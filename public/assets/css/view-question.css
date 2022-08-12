@@ -164,11 +164,9 @@
     flex-direction: column;
     gap: 10px;
 }
-.quesVw-ans_info-right-wr {
+#quesVw-ans_info-right-wr {
     display: flex;
     flex-direction: column;
-    border-top: 1px solid;
-    padding: 10px 0 0 0;
 }
 .quesVw-ans_index-lv1-wr {
     display: flex;
@@ -179,4 +177,11 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+}
+.quesVw-ans_ans_field-top-wr{
+    display: grid;
+    grid-template-columns: auto 300px;
+    gap: 20px;
+    border-top: 1px solid;
+    margin: 20px 0 0 0 ;
 }

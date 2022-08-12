@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Post_commentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\Question_answerController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\Reply_commentController;
 use Illuminate\Support\Facades\Route;
@@ -20,9 +21,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [PostController::class, 'index']);
 
 Route::resource('/post', PostController::class);
-Route::resource('/question', QuestionController::class);
-Route::resource('/comment', Post_commentController::class);
+Route::resource('/post-comment', Post_commentController::class);
 Route::resource('/reply', Reply_commentController::class);
+Route::resource('/question', QuestionController::class);
+Route::resource('/question-comment', Question_answerController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -41,8 +41,15 @@ class PostController extends Controller
             //todo: push all relative tags to the corresponding post 
         }
         // return $all_posts;
+        $all_questions = DB::select(
+            "SELECT *, questions.id AS question_id
+             FROM questions, users
+             WHERE questions.questioner = users.id
+            "
+        );
         return view('post.post', [
             'all_posts' => $all_posts,
+            'all_questions'=> $all_questions,
         ]);
     }
 

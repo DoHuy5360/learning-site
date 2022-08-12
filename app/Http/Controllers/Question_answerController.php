@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Question;
+use App\Models\Question_answer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-class QuestionController extends Controller
+class Question_answerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,15 +16,7 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $all_questions = DB::select(
-            "SELECT *, questions.id AS question_id
-             FROM questions, users
-             WHERE questions.questioner = users.id
-            "
-        );
-        return view('question.question', [
-            'all_questions' => $all_questions,
-        ]);
+        //
     }
 
     /**
@@ -34,7 +26,7 @@ class QuestionController extends Controller
      */
     public function create()
     {
-        return view('question.create-question');
+        //
     }
 
     /**
@@ -47,14 +39,26 @@ class QuestionController extends Controller
     {
         // return $request;
         $user_id = Auth::user()->id;
-        $new_question = new Question;
-        $new_question->questioner = $user_id;
-        $new_question->title = $request->title;
-        $new_question->content = $request->content;
-        // $new_question->vote = "" ;
-        // $new_question->slug = "";
-        $new_question->save();
-        return redirect()->back()->with("success", "Câu hỏi đã được công bố.");
+        $new_comment = new Question_answer;
+        $new_comment->answer_code = generate_code(10);
+        $new_comment->content_type = $request->question_id;
+        $new_comment->content = $request->content;
+        $new_comment->replier = $user_id;
+        $new_comment->save();
+
+        $data_answer = DB::select(
+            "SELECT u.name, u.avatar, u.email, q.created_at
+             FROM users u, question_answers q
+             WHERE u.id = $user_id 
+             AND q.replier = $user_id
+             ORDER BY q.id DESC
+             LIMIT 1
+            "
+        )[0];
+
+        return response()->json([
+            'data_answer' => $data_answer,
+        ]);
     }
 
     /**
@@ -65,25 +69,7 @@ class QuestionController extends Controller
      */
     public function show($id)
     {
-        $corresponding_question = DB::select(
-            "SELECT *
-             FROM questions, users
-             WHERE questions.questioner = users.id
-             AND questions.id = $id
-            "
-        )[0];
-        $all_comment = DB::select(
-            "SELECT *
-             FROM question_answers, users
-             WHERE question_answers.content_type = $id
-             AND question_answers.replier = users.id
-            "
-        );
-        return view('question.view-question', [
-            'corresponding_question' => $corresponding_question,
-            'question_id' => $id,
-            'all_comment'=> $all_comment,
-        ]);
+        //
     }
 
     /**

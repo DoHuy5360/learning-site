@@ -173,7 +173,7 @@
                         <span></span>
                     </div>
                     <div id="post-view-user-comment-field-wrap">
-                        <form action="{{ route('comment.store') }}" id="post-view-user-comment-field" method="POST">
+                        <form action="{{ route('post-comment.store') }}" id="post-view-user-comment-field" method="POST">
                             @csrf
                             <input name="post_id" value="{{ $corresponding_post->post_id }}" type="hidden">
                             <textarea name="comment" id="postview-commnent-area" required></textarea>
@@ -181,7 +181,7 @@
                                 <ion-icon name="paper-plane-outline"></ion-icon>
                             </button>
                         </form>
-                        <iframe id="post-view-comment-frame" src="{{ 'http://127.0.0.1:8000/comment/' . $corresponding_post->post_id }}" frameborder="0"></iframe>
+                        <iframe id="post-view-comment-frame" src="{{ 'http://127.0.0.1:8000/post-comment/' . $corresponding_post->post_id }}" frameborder="0"></iframe>
                     </div>
                 </div>
             </div>

@@ -97,8 +97,10 @@
                         <button id="quesVw-open_comment-btn" type="button">Bình luận cho câu hỏi</button>
                     </div>
                     <div id="quesVw-send_text-bottom-wr">
-                        <form action="" id="quesVw-chat_form-wr" method="post">
-                            <textarea name="" id="quesVw-chat_field-write" cols="30" rows="10" placeholder="Ghi gi do"></textarea>
+                        <form action="{{ route('question-comment.store') }}" id="quesVw-chat_form-wr" method="post">
+                            @csrf
+                            <input type="hidden" name="question_id" value="{{ $question_id }}">
+                            <textarea name="content" id="quesVw-chat_field-write" cols="30" rows="10" placeholder="Ghi gi do"></textarea>
                             <div id="quesVw-option_form-btn-wrap">
                                 <button id="quesVw-btn-close-form" type="button">Close</button>
                                 <button type="submit">Send</button>
@@ -109,26 +111,26 @@
             </div>
             <!-- todo answer start -->
             <div class="quesVw-answer-bellow-wr">
-                <div class="quesVw-ans_info-right-wr">
-                    <div id="quesVw-ques_ques_field-top-wr">
+                <div id="quesVw-ans_info-right-wr">
+                    @foreach ($all_comment as $comment)
+                    <div class="quesVw-ans_ans_field-top-wr">
                         <div class="quesVw-ans_text-left-wr">
                             <div class="quesVw-ans_index-lv1-wr">
                                 <div class="group__index">
                                     <ion-icon name="time-outline"></ion-icon>
-                                    <span>20 tiếng trước </span>
+                                    <span>{{ $comment->created_at }}</span>
                                 </div>
                             </div>
                             <div id="quesVw-ques_question-lv4-wr">
-                                <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Alias explicabo aspernatur labore, vel vitae eos vero ullam corrupti magnam, voluptatem aut, atque quisquam.
-                                    Nulla iure praesentium laborum? Voluptatem, doloribus quo?</p>
+                                <p>{{ $comment->content }}</p>
                             </div>
                         </div>
                         <div id="quesVw-ques_author-right-wr">
                             <div id="quesVw-aut_info-lv1-wr">
-                                <img src="https://bit.ly/3pbRb8m" alt="" />
+                                <img src="{{ $comment->avatar }}" alt="" />
                                 <div id="quesVw-auth_info-right-wr">
-                                    <a href="" id="quesVw-aut_name-top" class="underline__none">Do Huy</a>
-                                    <span id="quesVw-aut_email-bottom">cocdh123@gmail.com</span>
+                                    <a href="" id="quesVw-aut_name-top" class="underline__none">{{ $comment->name }}</a>
+                                    <span id="quesVw-aut_email-bottom">{{ $comment->email }}</span>
                                 </div>
                             </div>
                             <div class="author__interact--wr">
@@ -156,6 +158,7 @@
                             </div>
                         </div>
                     </div>
+                    @endforeach
                     <div id="quesVw-comment_field-bellow-wr">
                         <button id="quesVw-open_comment-btn" type="button">Bình luận cho câu trả lời</button>
                     </div>
