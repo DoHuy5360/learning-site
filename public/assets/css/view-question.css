@@ -178,10 +178,72 @@
     flex-direction: column;
     gap: 5px;
 }
+
+.for_reply{
+    border: 1px solid var(--gray-hard);
+    border-radius: 5px;
+    padding: 5px;
+}
 .quesVw-ans_ans_field-top-wr{
+    margin: 20px 0 0 0 ;
+    border-top: 1px solid;
+}
+.quesVw-ans_wrap-top-wr{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.quesVw-ans_element-top-wr{
     display: grid;
     grid-template-columns: auto 300px;
     gap: 20px;
-    border-top: 1px solid;
-    margin: 20px 0 0 0 ;
+}
+.quesVw-answer_comment-btn{
+    all: unset;
+    cursor: pointer;
+    color: var(--gray-light);
+}
+.quesVw-comment_form-wr{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: 300ms linear;
+    margin: 20px 0 0 0;
+}
+.quesVw-comment_field-write{
+    resize: vertical;
+    height: 100px;
+    min-height: 100px;
+    max-height: 300px;
+    padding: 10px;
+    outline: unset;
+}
+/* todo ------------------ start reply */
+.reply__text--left{
+    width: 100%;
+}
+.reply__author--right {
+    height: 30px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    padding-left: 10px;
+}
+.author__wrap--avatar {
+    height: inherit;
+    object-fit: contain;
+    aspect-ratio: 1;
+    border-radius: 50%;
+}
+.reply__created--at{
+    color: var(--color-2);
+    font-size: 13px;
+}
+.reply__author--right{
+    justify-self: end;
+}
+.quesVw-ans_detail-top-wr{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }

@@ -2,7 +2,7 @@ let post_id_of_comment = document.getElementById("post-id-of-comment");
 let ajax = new XMLHttpRequest();
 ajax.open(
     "GET",
-    `http://127.0.0.1:8000/reply/${post_id_of_comment.value}`,
+    `http://127.0.0.1:8000/reply-post/${post_id_of_comment.value}`,
     true
 );
 ajax.send();
@@ -86,7 +86,7 @@ function addEventReply(_post_id, _csrf_token) {
             const comment_frame = selected_btn.target.parentNode.parentNode;
             const reply_for = comment_frame.getAttribute("data-comment-id")
             const reply_box = `
-                <form action="/reply" method="POST">
+                <form action="/reply-post" method="POST">
                     <input name="post_id" type="hidden" value="${_post_id.value}">
                     <input name="_token" type="hidden" value="${_csrf_token}">
                     <input name="reply_for" type="hidden" value="${reply_for}">

@@ -1,1 +1,116 @@
-
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                /* outline: 1px solid red; */
+            }
+            .reply__wrap--content {
+                
+            }
+            .reply__wrap--info {
+                display: grid;
+                /* height: 30px; */
+                grid-template-columns: auto 200px;
+            }
+            .reply__text--left{
+                display: flex;
+                flex-direction: column;
+            }
+            .reply__author--right {
+                height: 30px;
+                display: flex;
+                gap: 5px;
+                align-items: center;
+                border-left: 2px solid;
+                padding-left: 10px;
+            }
+            .author__wrap--avatar {
+                height: inherit;
+                object-fit: contain;
+                aspect-ratio: 1;
+                border-radius: 50%;
+            }
+            .reply__created--at {
+                color: #00aaff;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="reply__wrap--content">
+            <div class="reply__wrap--info">
+                <div class="reply__text--left">
+                    <div>
+                        <span>
+                            Lorem ipsum dolor sit amet consectetur, adipisicing
+                            elit. Magni, ullam commodi. Quia odio mollitia earum
+                            numquam sapiente, expedita dicta est inventore eos!
+                            Harum dolore voluptatem rem, dolor perferendis
+                            eligendi unde.
+                        </span>
+                        <span class="reply__created--at">12/04/3003</span>
+                    </div>
+                    <div class="quesVw-answer_comment_field-bellow-wr">
+                        <button class="quesVw-answer_comment-btn" type="button">
+                            Bình luận cho bình luận trên ...
+                        </button>
+                    </div>
+                </div>
+                <div class="reply__author--right">
+                    <img
+                        class="author__wrap--avatar"
+                        src="./assets/avatar.png"
+                        alt=""
+                    />
+                    <div class="author__wrap--name">DoHuy</div>
+                </div>
+            </div>
+        </div>
+        <div class="reply__wrap--content">
+            <div class="reply__wrap--info">
+                <div class="reply__text--left">
+                    <div>
+                        <span>
+                            Lorem ipsum dolor sit amet consectetur, adipisicing
+                            elit. Magni, ullam commodi. Quia odio mollitia earum
+                            numquam sapiente, expedita dicta est inventore eos!
+                            Harum dolore voluptatem rem, dolor perferendis
+                            eligendi unde.
+                            Lorem ipsum dolor sit amet consectetur, adipisicing
+                            elit. Magni, ullam commodi. Quia odio mollitia earum
+                            numquam sapiente, expedita dicta est inventore eos!
+                            Harum dolore voluptatem rem, dolor perferendis
+                            eligendi unde.
+                            Lorem ipsum dolor sit amet consectetur, adipisicing
+                            elit. Magni, ullam commodi. Quia odio mollitia earum
+                            numquam sapiente, expedita dicta est inventore eos!
+                            Harum dolore voluptatem rem, dolor perferendis
+                            eligendi unde.
+                        </span>
+                        <span class="reply__created--at">12/04/3003</span>
+                    </div>
+                    <div class="quesVw-answer_comment_field-bellow-wr">
+                        <button class="quesVw-answer_comment-btn" type="button">
+                            Bình luận cho bình luận trên ...
+                        </button>
+                    </div>
+                </div>
+                <div class="reply__author--right">
+                    <img
+                        class="author__wrap--avatar"
+                        src="./assets/avatar.png"
+                        alt=""
+                    />
+                    <div class="author__wrap--name">DoHuy</div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

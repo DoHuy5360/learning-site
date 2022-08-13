@@ -48,7 +48,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div id="quesVw-ques_author-right-wr">
+                        <div class="quesVw-ans_author-right-wr">
                             <div id="quesVw-aut_info-lv1-wr">
                                 <img src="{{ $corresponding_question->avatar }}" alt="" />
                                 <div id="quesVw-auth_info-right-wr">
@@ -99,7 +99,7 @@
                     <div id="quesVw-send_text-bottom-wr">
                         <form action="{{ route('question-comment.store') }}" id="quesVw-chat_form-wr" method="post">
                             @csrf
-                            <input type="hidden" name="question_id" value="{{ $question_id }}">
+                            <input id="quesVw-question_id" type="hidden" name="question_id" value="{{ $question_id }}">
                             <textarea name="content" id="quesVw-chat_field-write" cols="30" rows="10" placeholder="Ghi gi do"></textarea>
                             <div id="quesVw-option_form-btn-wrap">
                                 <button id="quesVw-btn-close-form" type="button">Close</button>
@@ -112,65 +112,61 @@
             <!-- todo answer start -->
             <div class="quesVw-answer-bellow-wr">
                 <div id="quesVw-ans_info-right-wr">
-                    @foreach ($all_comment as $comment)
-                    <div class="quesVw-ans_ans_field-top-wr">
-                        <div class="quesVw-ans_text-left-wr">
-                            <div class="quesVw-ans_index-lv1-wr">
-                                <div class="group__index">
-                                    <ion-icon name="time-outline"></ion-icon>
-                                    <span>{{ $comment->created_at }}</span>
+                    @foreach ($all_answers as $answer)
+                        <div class="quesVw-ans_ans_field-top-wr">
+                            <div class="quesVw-ans_wrap-top-wr" data-answer-code="{{ $answer->answer_code }}">
+                                <div class="quesVw-ans_element-top-wr">
+                                    <div class="quesVw-ans_text-left-wr">
+                                        <div class="quesVw-ans_index-lv1-wr">
+                                            <div class="group__index">
+                                                <ion-icon name="time-outline"></ion-icon>
+                                                <span>{{ $answer->created_at }}</span>
+                                            </div>
+                                        </div>
+                                        <div id="quesVw-ques_question-lv4-wr">
+                                            <p>{{ $answer->content }}</p>
+                                        </div>
+                                        <div class="quesVw-answer_comment_field-bellow-wr">
+                                            <button class="quesVw-answer_comment-btn" type="button">Bình luận cho câu trả lời này ...</button>
+                                        </div>
+                                    </div>
+                                    <div id="quesVw-ques_author-right-wr">
+                                        <div id="quesVw-aut_info-lv1-wr">
+                                            <img src="{{ $answer->avatar }}" alt="" />
+                                            <div id="quesVw-auth_info-right-wr">
+                                                <a href="" id="quesVw-aut_name-top" class="underline__none">{{ $answer->name }}</a>
+                                                <span id="quesVw-aut_email-bottom">{{ $answer->email }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="author__interact--wr">
+                                            <div class="author__infor--wr">
+                                                <div class="group__index">
+                                                    <ion-icon name="star-outline"></ion-icon>
+                                                    <span>453</span>
+                                                </div>
+                                                <div class="group__index">
+                                                    <ion-icon name="person-add-outline"></ion-icon>
+                                                    <span>453</span>
+                                                </div>
+                                                <div class="group__index">
+                                                    <ion-icon name="help-outline"></ion-icon>
+                                                    <span>453</span>
+                                                </div>
+                                                <div class="group__index">
+                                                    <ion-icon name="paper-plane-outline"></ion-icon>
+                                                    <span>453</span>
+                                                </div>
+                                            </div>
+                                            <form action="" id="quesVw-aut_follow-form" method="post">
+                                                <button type="submit">Theo Dõi</button>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div id="quesVw-ques_question-lv4-wr">
-                                <p>{{ $comment->content }}</p>
-                            </div>
+
                         </div>
-                        <div id="quesVw-ques_author-right-wr">
-                            <div id="quesVw-aut_info-lv1-wr">
-                                <img src="{{ $comment->avatar }}" alt="" />
-                                <div id="quesVw-auth_info-right-wr">
-                                    <a href="" id="quesVw-aut_name-top" class="underline__none">{{ $comment->name }}</a>
-                                    <span id="quesVw-aut_email-bottom">{{ $comment->email }}</span>
-                                </div>
-                            </div>
-                            <div class="author__interact--wr">
-                                <div class="author__infor--wr">
-                                    <div class="group__index">
-                                        <ion-icon name="star-outline"></ion-icon>
-                                        <span>453</span>
-                                    </div>
-                                    <div class="group__index">
-                                        <ion-icon name="person-add-outline"></ion-icon>
-                                        <span>453</span>
-                                    </div>
-                                    <div class="group__index">
-                                        <ion-icon name="help-outline"></ion-icon>
-                                        <span>453</span>
-                                    </div>
-                                    <div class="group__index">
-                                        <ion-icon name="paper-plane-outline"></ion-icon>
-                                        <span>453</span>
-                                    </div>
-                                </div>
-                                <form action="" id="quesVw-aut_follow-form" method="post">
-                                    <button type="submit">Theo Dõi</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
-                    <div id="quesVw-comment_field-bellow-wr">
-                        <button id="quesVw-open_comment-btn" type="button">Bình luận cho câu trả lời</button>
-                    </div>
-                    <div id="quesVw-send_text-bottom-wr">
-                        <form action="" id="quesVw-chat_form-wr" method="post">
-                            <textarea name="" id="quesVw-chat_field-write" cols="30" rows="10" placeholder="Ghi gi do"></textarea>
-                            <div id="quesVw-option_form-btn-wrap">
-                                <button id="quesVw-btn-close-form" type="button">Close</button>
-                                <button type="submit">Send</button>
-                            </div>
-                        </form>
-                    </div>
                 </div>
             </div>
         </div>
