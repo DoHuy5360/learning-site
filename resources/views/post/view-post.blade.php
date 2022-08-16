@@ -67,6 +67,16 @@
                                         <ion-icon name="bookmark-outline"></ion-icon>
                                         <span>0</span>
                                     </p>
+                                    <div id="postVw-option-setting">
+                                        <input id="postVw-setting-btn" type="checkbox" value="">
+                                        <label for="postVw-setting-btn">
+                                            <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
+                                            <div id="setting-box">
+                                                <a href="{{ route('post.edit',$corresponding_post->id) }}" class="postVw-option-btn">Sửa bài viết</a>
+                                                <a href="" class="postVw-option-btn">Xóa bài viết</a>
+                                            </div>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

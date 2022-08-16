@@ -34,7 +34,6 @@ CKEDITOR.replace("question-area");
         const question_form = document.getElementById('create-question-form')
         const question_content = document.getElementById('question-content')
         document.getElementById('send-request-to-store-question').addEventListener('click', e => {
-            console.log(1);
             question_content.value = getTextAreaElement().innerHTML;
             question_form.submit()
         })

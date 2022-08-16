@@ -19,15 +19,16 @@ class PostController extends Controller
      */
     public function index()
     {
+        //todo: get all post but not contain any tags
         $all_posts = DB::select(
             "SELECT * 
              FROM public.users, public.posts
              WHERE users.id = posts.creator::integer
             "
         );
-        //todo: get all post but not contain any tags
         // return $all_posts;
 
+        //todo: push all relative tags to the corresponding post
         foreach ($all_posts as $post) {
             $relative_tag = DB::select(
                 "SELECT  tag_one, tag_two, tag_three, tag_four, tag_five
@@ -37,7 +38,6 @@ class PostController extends Controller
             );
             $post_index = array_search($post, $all_posts);
             $all_posts[$post_index]->tags = $relative_tag;
-            //todo: push all relative tags to the corresponding post 
         }
         // return $all_posts;
         $all_questions = DB::select(
@@ -48,7 +48,7 @@ class PostController extends Controller
         );
         return view('post.post', [
             'all_posts' => $all_posts,
-            'all_questions'=> $all_questions,
+            'all_questions' => $all_questions,
         ]);
     }
 
@@ -147,6 +147,7 @@ class PostController extends Controller
             "
         )[0];
         // return $corresponding_post;
+        //todo: push all relative tags to the corresponding post
         $relative_post = DB::select(
             "SELECT *
              FROM posts
@@ -156,7 +157,6 @@ class PostController extends Controller
         );
         // return $relative_post;
         $corresponding_post->tags = $relative_tag;
-        //todo: push all relative tags to the corresponding post 
 
         $relative_file = DB::select(
             "SELECT *
@@ -179,7 +179,16 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $corresponding_post = DB::select(
+            "SELECT *
+             FROM posts
+             WHERE posts.id = $id
+            "
+        )[0];
+        // return $corresponding_post;
+        return view('post.edit-post', [
+            'corresponding_post'=>$corresponding_post,
+        ]);
     }
 
     /**
@@ -191,7 +200,16 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // return $request;
+        DB::update(
+            "UPDATE posts
+             SET title = '$request->title',
+                 content = '$request->content',
+                 time = '$request->time'
+             WHERE id = $id
+            "
+        );
+        return redirect()->back()->with('success', 'Cập nhật thành công!');
     }
 
     /**

@@ -81,11 +81,49 @@ body::-webkit-scrollbar{
 #post-view-author-left-footer {
     display: flex;
     gap: 10px;
+    align-items: center;
 }
 .post-view-user-index {
     display: flex;
     gap: 5px;
     align-items: center;
+}
+#postVw-option-setting{
+    margin-left: auto;
+}
+#postVw-option-setting label{
+    cursor: pointer;
+    position: relative;
+}
+#postVw-setting-btn{
+    all: unset;
+    cursor: pointer;
+}
+#setting-box{
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: absolute;
+    right: 100%;
+    z-index: 1;
+    transition: 100ms linear;
+    transform: scale(0);
+}
+#postVw-setting-btn:checked + label > #setting-box{
+    transform: scale(1);
+    box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+}
+.postVw-option-btn{
+    white-space: nowrap;
+    text-decoration: unset;
+    color: var(--color-2);
+    padding: 5px 10px;
+    cursor: pointer;
+    background-color: var(--color-4);
+    transition: 100ms linear;
+}
+.postVw-option-btn:hover{
+    background-color: var(--gray-light);
 }
 /* todo: ------------------------------- end left part header content */
 #post-view-card-author-right-part {
@@ -221,8 +259,7 @@ body::-webkit-scrollbar{
     flex-direction: column;
     gap: 10px;
     width: calc(100% / 4);
-    box-shadow: 10px 10px 20px 1px #0000006b;
-    box-shadow: 0 0.125rem 0.25rem rgba(27, 27, 27, 0.075);
+    box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
 }
 .postview__card--postrelative-footer {
     display: flex;
