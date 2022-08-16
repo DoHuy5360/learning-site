@@ -8,8 +8,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/_root.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/header-footer.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/question.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/view-question.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create-post.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create-question.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
+
     <title>Document</title>
 </head>
 

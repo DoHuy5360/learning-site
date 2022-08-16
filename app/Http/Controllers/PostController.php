@@ -22,8 +22,7 @@ class PostController extends Controller
         $all_posts = DB::select(
             "SELECT * 
              FROM public.users, public.posts
-             WHERE 
-                    users.id = posts.creator::integer
+             WHERE users.id = posts.creator::integer
             "
         );
         //todo: get all post but not contain any tags

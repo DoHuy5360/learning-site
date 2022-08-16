@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/view-post.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/question.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/view-question.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/view-question.css') }}">    
     <title>Document</title>
 </head>
 
@@ -68,7 +68,9 @@
                                     <img id="header-user-avatar" src="{{ Auth::user()->avatar }}" alt="" draggable="false">
                                     <div id="user-management-list-wrap">
                                         <div id="user-management-list">
-                                            <button class="option__cell" type="button">Profile</button>
+                                            <a href="{{ route('profile.index') }}">
+                                                <button class="option__cell" type="button">Profile</button>
+                                            </a>
                                             <button class="option__cell" type="button">Setting</button>
                                             <form id="form-logout" action="{{ route('logout') }}" method="post">
                                                 @csrf

@@ -15,6 +15,8 @@ return new class extends Migration
     {
         Schema::create('tags', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
+            $table->integer('creator')->nullable();
             $table->integer('from');
             $table->string('of')->nullable();
             $table->string('tag_one')->nullable();
@@ -22,7 +24,6 @@ return new class extends Migration
             $table->string('tag_three')->nullable();
             $table->string('tag_four')->nullable();
             $table->string('tag_five')->nullable();
-            $table->timestamps();
         });
     }
 

@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\Post_commentController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Question_answerController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\Reply_answerController;
 use App\Http\Controllers\Reply_commentController;
 use Illuminate\Support\Facades\Route;
+use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,7 @@ Route::resource('/reply-post', Reply_commentController::class);
 Route::resource('/question', QuestionController::class);
 Route::resource('/question-comment', Question_answerController::class);
 Route::resource('/reply-answer', Reply_answerController::class);
+Route::resource('/profile', ProfileController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
