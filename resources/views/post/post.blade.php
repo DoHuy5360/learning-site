@@ -1,6 +1,9 @@
 @extends('layouts.header-footer-public')
 @section('content')
     <h1 id="welcome">Chào mừng đến với Learning Site</h1>
+    @if ($message = Session::get('success'))
+        <div class="success-message">{{ $message }}</div>
+    @endif
     <div id="site-body">
         <div id="body-part-left">
             <h2 class="body__link--wrap">
@@ -25,10 +28,7 @@
                                 </div>
                                 <div class="post__card--body">
                                     <h2 class="post__card--title">
-                                        @php
-                                            $convert_slug = remove_sign($post->title);
-                                        @endphp
-                                        <a href="{{ url("/post/{$convert_slug}|{$post->id}") }}">{{ $post->title }}</a>
+                                        <a href="{{ route('post.show', remove_sign($post->title) . "|" . $post->id) }}">{{ $post->title }}</a>
                                     </h2>
                                 </div>
                                 <div class="post__card--footer">

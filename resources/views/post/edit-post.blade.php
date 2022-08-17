@@ -1,9 +1,9 @@
 @extends('layouts.header-footer-create')
 @section('content')
-    @if ($message = Session::get('success'))
+    {{-- @if ($message = Session::get('success'))
         <div class="success-message">{{ $message }}</div>
-    @endif
-    <form action="{{ route('post.update', $corresponding_post->id) }}" id="update-post-form" enctype="multipart/form-data" method="POST">
+    @endif --}}
+    <form action="{{ route('post.update', remove_sign($corresponding_post->title) . '|' . $corresponding_post->id) }}" id="update-post-form" enctype="multipart/form-data" method="POST">
         @csrf
         @method('PATCH')
         <input name="time" id="time-to-read-post" type="hidden" />

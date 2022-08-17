@@ -132,7 +132,8 @@ class PostController extends Controller
      */
     public function show($name_id)
     {
-        $post_id = explode('|', $name_id)[1];
+        $split_request = explode('|', $name_id);
+        $post_id = end($split_request);
         $corresponding_post = DB::select(
             "SELECT * , users.id as user_id, posts.id as post_id
              FROM users, posts 
@@ -187,7 +188,7 @@ class PostController extends Controller
         )[0];
         // return $corresponding_post;
         return view('post.edit-post', [
-            'corresponding_post'=>$corresponding_post,
+            'corresponding_post' => $corresponding_post,
         ]);
     }
 
@@ -201,15 +202,17 @@ class PostController extends Controller
     public function update(Request $request, $id)
     {
         // return $request;
+        $split_request = explode('|', $id);
+        $post_id = end($split_request);
         DB::update(
             "UPDATE posts
              SET title = '$request->title',
                  content = '$request->content',
                  time = '$request->time'
-             WHERE id = $id
+             WHERE id = $post_id
             "
         );
-        return redirect()->back()->with('success', 'Cập nhật thành công!');
+        return redirect()->route(route: 'post.show', parameters: $id)->with('success', 'Cập nhật thành công!');
     }
 
     /**
@@ -220,7 +223,13 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // return $id;
+        DB::delete(
+            "DELETE FROM posts
+             WHERE id = $id
+            "
+        );
+        return redirect()->route(route:'post.index')->with('success', 'Xóa thành công');
     }
 
 

@@ -1,5 +1,8 @@
 @extends('layouts.header-footer-public')
 @section('content')
+    @if ($message = Session::get('success'))
+        <div class="success-message">{{ $message }}</div>
+    @endif
     <div class="full-height">
         <div id="post-view-body">
             <div id="post-view-content-wrap">
@@ -72,8 +75,16 @@
                                         <label for="postVw-setting-btn">
                                             <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
                                             <div id="setting-box">
-                                                <a href="{{ route('post.edit',$corresponding_post->id) }}" class="postVw-option-btn">Sửa bài viết</a>
-                                                <a href="" class="postVw-option-btn">Xóa bài viết</a>
+                                                <a href="{{ route('post.edit', $corresponding_post->id) }}" class="postVw-option-btn">
+                                                    <ion-icon name="create-outline"></ion-icon>
+                                                    <span>Sửa bài viết</span>
+                                                </a>
+                                                <form action="{{ route('post.destroy', $corresponding_post->id) }}" class="postVw-option-btn" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <ion-icon name="trash-outline"></ion-icon>
+                                                    <button type="submit">Xóa bài viết</button>
+                                                </form>
                                             </div>
                                         </label>
                                     </div>
@@ -140,7 +151,7 @@
                     <div id="post-view-author-orther-list">
                         @foreach ($relative_post as $post)
                             <div class="postview__card--postrelative">
-                                <a href="{{ url('/post') . '/' . remove_sign($post->title) . '|' . $post->id }}">
+                                <a class="underline__none" href="{{ url('/post') . '/' . remove_sign($post->title) . '|' . $post->id }}">
                                     <div class="postview__card--postrelative-header">
                                         {{ $post->title }}
                                     </div>

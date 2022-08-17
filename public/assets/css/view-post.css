@@ -116,13 +116,20 @@ body::-webkit-scrollbar{
 .postVw-option-btn{
     white-space: nowrap;
     text-decoration: unset;
-    color: var(--color-2);
+    color: var(--gray-hard);
     padding: 5px 10px;
     cursor: pointer;
-    background-color: var(--color-4);
     transition: 100ms linear;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.postVw-option-btn button{
+    padding: 5px 10px;
+    all: unset;
 }
 .postVw-option-btn:hover{
+    color: var(--color-1);
     background-color: var(--gray-light);
 }
 /* todo: ------------------------------- end left part header content */
@@ -296,15 +303,19 @@ body::-webkit-scrollbar{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border: 1px solid var(--color-1);
+    border: 1px solid var(--gray-light);
     border-radius: 5px;
+    box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    -webkit-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    -moz-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
 }
-#post-view-user-comment-field textarea {
+#postview-commnent-area {
     width: 100%;
     height: 100%;
     outline: unset;
     resize: unset;
     padding: 5px;
+    border: 1px solid var(--gray-hard);
     border-radius: inherit;
 }
 #post-view-user-comment-field button {
@@ -329,7 +340,10 @@ body::-webkit-scrollbar{
     display: flex;
     flex-direction: column;
     gap: 10px;
-    border: 1px solid var(--color-1);
+    border: 1px solid var(--gray-light);
+    box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    -webkit-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    -moz-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
 }
 .postview__card--user-header {
     display: flex;
