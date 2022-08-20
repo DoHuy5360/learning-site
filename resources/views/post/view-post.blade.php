@@ -74,18 +74,20 @@
                                         <input id="postVw-setting-btn" type="checkbox" value="">
                                         <label for="postVw-setting-btn">
                                             <ion-icon name="ellipsis-horizontal-outline"></ion-icon>
-                                            <div id="setting-box">
-                                                <a href="{{ route('post.edit', $corresponding_post->id) }}" class="postVw-option-btn">
-                                                    <ion-icon name="create-outline"></ion-icon>
-                                                    <span>Sửa bài viết</span>
-                                                </a>
-                                                <form action="{{ route('post.destroy', $corresponding_post->id) }}" class="postVw-option-btn" method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <ion-icon name="trash-outline"></ion-icon>
-                                                    <button type="submit">Xóa bài viết</button>
-                                                </form>
-                                            </div>
+                                            @if ($is_author)
+                                                <div id="setting-box">
+                                                    <a href="{{ route('post.edit', $corresponding_post->id) }}" class="postVw-option-btn">
+                                                        <ion-icon name="create-outline"></ion-icon>
+                                                        <span>Sửa bài viết</span>
+                                                    </a>
+                                                    <form action="{{ route('post.destroy', $corresponding_post->id) }}" class="postVw-option-btn" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <ion-icon name="trash-outline"></ion-icon>
+                                                        <button type="submit">Xóa bài viết</button>
+                                                    </form>
+                                                </div>
+                                            @endif
                                         </label>
                                     </div>
                                 </div>

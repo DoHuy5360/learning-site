@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\File;
 use App\Models\Post;
-use App\Models\Post_comment;
+use App\Models\Series_Post;
+use App\Models\SeriesPost;
 use App\Models\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -59,7 +60,18 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create-post');
+        $user_id = Auth::user()->id;
+        $all_series = DB::select(
+            "SELECT *
+             FROM series
+             WHERE creator = $user_id
+             ORDER BY id DESC
+            "
+        );
+        // return $all_series;
+        return view('post.create-post',[
+            'all_series'=>$all_series,
+        ]);
     }
 
     /**
@@ -70,9 +82,10 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $user_id = Auth::user()->id;
         $array_tag = explode(' ', $request->tag);
-
+        // todo: store new post
         $new_post = new Post;
         $new_post->title = $request->title;
         $new_post->content = $request->content;
@@ -80,7 +93,7 @@ class PostController extends Controller
         $new_post->made = "internal";
         $new_post->time = $request->time;
         $new_post->save();
-
+        // todo: get latest post id
         $recent_post = DB::select(
             "SELECT *
              FROM posts
@@ -89,7 +102,7 @@ class PostController extends Controller
              LIMIT 1
             "
         )[0];
-
+        // todo: store files
         if ($request->hasFile('file')) {
             $all_files = $request->file('file');
             foreach ($all_files as $file) {
@@ -110,7 +123,7 @@ class PostController extends Controller
                 $new_file->save();
             }
         }
-
+        // todo: store tags
         $new_tag = new Tag;
         $new_tag->from = $recent_post->id;
         $new_tag->of = "post";
@@ -120,6 +133,15 @@ class PostController extends Controller
         $new_tag->tag_four = isset($array_tag[3]) ? $array_tag[3] : 'null';
         $new_tag->tag_five = isset($array_tag[4]) ? $array_tag[4] : 'null';
         $new_tag->save();
+
+        // todo: store series_post
+        $array_series = explode(',',$request->array_series);
+        foreach ($array_series as $series) {   
+            $new_series_post = new SeriesPost;
+            $new_series_post->series_id = (int)$series;
+            $new_series_post->post_id = $recent_post->id;
+            $new_series_post->save();
+        }
 
         return redirect()->route('post.create')->with('success', 'Bài viết đã được công bố!');
     }
@@ -132,6 +154,7 @@ class PostController extends Controller
      */
     public function show($name_id)
     {
+        $user_id = Auth::user()->id;
         $split_request = explode('|', $name_id);
         $post_id = end($split_request);
         $corresponding_post = DB::select(
@@ -165,7 +188,10 @@ class PostController extends Controller
              WHERE files.belong = $post_id::integer
             "
         );
+        $is_author = ($corresponding_post->creator == $user_id) ? true: false;
+        // return $is_author;
         return view('post.view-post', [
+            'is_author'=>$is_author,
             'corresponding_post' => $corresponding_post,
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,

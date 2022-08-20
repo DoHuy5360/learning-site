@@ -64,7 +64,11 @@
                             </div>
                         @endforeach
                     </div>
-                    <div id="profile-series-table" class="profile__table--display">Series</div>
+                    <div id="profile-series-table" class="profile__table--display">
+                        @foreach ($user_series as $series)
+                            <p>{{ $series->name }}</p>
+                        @endforeach
+                    </div>
                     <div id="profile-question-table" class="profile__table--display">
                         @foreach ($user_questions as $question)
                             <div class="card__question--wrap">

@@ -53,19 +53,37 @@ function getTimeToReadParagraph(_post_content) {
     return time_to_read;
 }
 let send_request_to_store_post = document.getElementById(
-        "send-request-to-store-post"
-    ),
-    post_content = document.getElementById("post-content"),
-    create_post_form = document.getElementById("create-post-form");
-time_to_read_post = document.getElementById("time-to-read-post");
+    "send-request-to-store-post"
+);
+let post_content = document.getElementById("post-content");
+let create_post_form = document.getElementById("create-post-form");
+let time_to_read_post = document.getElementById("time-to-read-post");
+let list_series = document.getElementById("list-series");
 
 send_request_to_store_post.addEventListener("click", (e) => {
     const textarea_element = getTextAreaElement();
     post_content.value = textarea_element.innerHTML;
-    time_to_read_post.value = getTimeToReadParagraph(
-        textarea_element.innerText
-    );
+    time_to_read_post.value = getTimeToReadParagraph(textarea_element.innerHTML);
+    list_series.value = series_selected_aray
     create_post_form.submit();
+});
+// todo: add series ids to an array
+let series_selected_aray = [];
+const list_series_element = document.querySelectorAll(
+    ".input__series--element"
+);
+list_series_element.forEach((series) => {
+    series.addEventListener("change", (e) => {
+        const data_series_id = series.getAttribute("data-series-id");
+        if (e.currentTarget.checked) {
+            series_selected_aray.push(data_series_id);
+            // console.log(series_selected_aray);
+        } else {
+            const series_index = series_selected_aray.indexOf(data_series_id);
+            series_selected_aray.splice(series_index, 1);
+            // console.log(series_selected_aray);
+        }
+    });
 });
 // window.onload = function () {
 //     const text_area = document.querySelector(".cke_wysiwyg_frame.cke_reset");

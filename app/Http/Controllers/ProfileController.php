@@ -71,12 +71,19 @@ class ProfileController extends Controller
             array_push($all_tags, $value->tag_five);
         }
         $array_tags =  array_unique($all_tags);
+
+        $user_series = DB::select(
+            "SELECT *
+             FROM series
+            "
+        );
         return view('profile.profile',[
             'user_informations'=>$user_informations,
             'user_posts'=>$user_posts,
             'user_questions'=>$user_questions,
             'user_answers'=>$user_answers,
             'array_tags'=>$array_tags,
+            'user_series'=>$user_series,
         ]);
     }
 

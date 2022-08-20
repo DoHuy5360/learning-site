@@ -7,6 +7,7 @@ use App\Http\Controllers\Question_answerController;
 use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\Reply_answerController;
 use App\Http\Controllers\Reply_commentController;
+use App\Http\Controllers\SeriesController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpKernel\Profiler\Profile;
 
@@ -30,6 +31,7 @@ Route::resource('/question', QuestionController::class);
 Route::resource('/question-comment', Question_answerController::class);
 Route::resource('/reply-answer', Reply_answerController::class);
 Route::resource('/profile', ProfileController::class);
+Route::resource('/series', SeriesController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

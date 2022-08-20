@@ -29,6 +29,7 @@
     height: 30px;
     font-size: 16px;
     outline: unset;
+    border: 1px solid var(--gray-soft);
 }
 #create-post-input-tag-field {
     display: flex;
@@ -43,6 +44,14 @@
     padding: 0 10px;
     height: 30px;
     cursor: pointer;
+    background-color: var(--color-3);
+    border: 1px solid var(--color-2);
+    color: var(--color-1);
+    font-weight: bold;
+    transition: 100ms linear;
+}
+#send-request-to-store-post:hover{
+    background-color: var(--green-light);
 }
 #editor-board-wrap {
     display: block;
@@ -62,4 +71,92 @@
 }
 #cke_1_bottom {
     display: none;
+}
+/*! Series */
+#edit-series-choice{
+    border-left: 1px solid var(--gray-soft);
+    padding-left: 5px;
+}
+#edit-advance-option{
+    display: flex;
+    gap: 10px;
+}
+#edit-series-add-btn{
+    all: unset;
+}
+#edit-series-hidden-box{
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    overflow: clip;
+}
+#edit-series-hidden-box > p{
+    position: relative;
+    z-index: 100;
+    background-color: white;
+    width: 100%;
+}
+#edit-series-list{
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    background-color: var(--gray-light);
+    transition: 200ms linear;
+    z-index: 99;
+    overflow: scroll;
+    height: 200px;
+    transform: translateY(-200px);
+    margin-top: 5px;
+    position: absolute;
+}
+#edit-series-list::-webkit-scrollbar{
+    height: 0;
+    width: 0;
+}
+#edit-series-add-btn:checked + label > #edit-series-list{
+    position: relative;
+    transform: translateY(0);
+}
+.series__element{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 5px;
+    transition: 200ms linear;
+    padding: 0 5px;
+    border-radius: inherit;
+}
+.series__element:hover{
+    background-color: white;
+}
+.series__element label{
+    width: 100%;
+    padding: 5px 0;
+    cursor: pointer;
+}
+#edit-add-new-series{
+    padding-left: 5px;
+    height: 30px;
+    border: 1px solid var(--gray-soft);
+    outline: unset;
+}
+#edit-add-series-box{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 5px;
+    border-radius: 5px;
+}
+#edit-add-series-btn{
+    background-color: var(--color-3);
+    border: 1px solid var(--gray-soft);
+    height: 100%;
+    padding: 0 5px;
+    cursor: pointer;
+    border-radius: inherit;
+    color: var(--gray-hard);
+}
+#edit-add-series-btn:hover{
+    color: black;
 }
