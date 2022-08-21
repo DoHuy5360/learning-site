@@ -119,6 +119,19 @@
                             </div>
                             <div id="post-view-menu-element-list"></div>
                         </div>
+                        @foreach ($series_posts as $series)
+                            <div class="postView__series--field">
+                                <div class="postview__menu--header">
+                                    <p>{{ $series->name }}</p>
+                                    <span></span>
+                                </div>
+                                <div id="post-view-relative-post-series">
+                                    @foreach ($series->relative_posts as $post)
+                                        {{ $post->title }}
+                                    @endforeach
+                                </div>
+                            </div>
+                        @endforeach
                         <div id="post-view-relative-file">
                             <div class="postview__menu--header">
                                 <p>File(s) đính kèm</p>

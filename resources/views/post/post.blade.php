@@ -28,14 +28,12 @@
                                 </div>
                                 <div class="post__card--body">
                                     <h2 class="post__card--title">
-                                        <a href="{{ route('post.show', remove_sign($post->title) . "|" . $post->id) }}">{{ $post->title }}</a>
+                                        <a href="{{ route('post.show', remove_sign($post->title) . '|' . $post->id) }}">{{ $post->title }}</a>
                                     </h2>
                                 </div>
                                 <div class="post__card--footer">
-                                    @foreach ($post->tags[0] as $tag_key => $tag_value)
-                                        @if ($tag_value != 'null')
-                                            <a href="" class="post__card--tag">{{ $tag_value }}</a>
-                                        @endif
+                                    @foreach ($post->tags as $tag)
+                                        <a href="" class="post__card--tag">{{ $tag->name }}</a>
                                     @endforeach
                                 </div>
                             </div>
@@ -52,34 +50,34 @@
                 </h2>
                 <div class="body__question--wrap">
                     @foreach ($all_questions as $question)
-                    <div class="question__card--wrap">
-                        <div class="question__card--header">
-                            <h2 class="question__card--title">
-                                <a href="{{ url("/question") . "/" . $question->question_id }}">{{ $question->title }}</a>
-                            </h2>
+                        <div class="question__card--wrap">
+                            <div class="question__card--header">
+                                <h2 class="question__card--title">
+                                    <a href="{{ url('/question') . '/' . $question->question_id }}">{{ $question->title }}</a>
+                                </h2>
+                            </div>
+                            <div class="question__card--body">
+                                <div class="question__index question__card--helpful">
+                                    <ion-icon name="star-outline"></ion-icon>
+                                    <span>0</span>
+                                </div>
+                                <div class="question__index question__card--answer">
+                                    <ion-icon name="hand-right-outline"></ion-icon>
+                                    <span>0</span>
+                                </div>
+                                <div class="question__index question__card--comment">
+                                    <ion-icon name="chatbubbles-outline"></ion-icon>
+                                    <span>0</span>
+                                </div>
+                                <div class="question__index question__card--view">
+                                    <ion-icon name="eye-outline"></ion-icon>
+                                    <span>0</span>
+                                </div>
+                            </div>
+                            <div class="question__card--footer">
+                                <a href="" class="question__card--username"> {{ $question->name }} </a>
+                            </div>
                         </div>
-                        <div class="question__card--body">
-                            <div class="question__index question__card--helpful">
-                                <ion-icon name="star-outline"></ion-icon>
-                                <span>0</span>
-                            </div>
-                            <div class="question__index question__card--answer">
-                                <ion-icon name="hand-right-outline"></ion-icon>
-                                <span>0</span>
-                            </div>
-                            <div class="question__index question__card--comment">
-                                <ion-icon name="chatbubbles-outline"></ion-icon>
-                                <span>0</span>
-                            </div>
-                            <div class="question__index question__card--view">
-                                <ion-icon name="eye-outline"></ion-icon>
-                                <span>0</span>
-                            </div>
-                        </div>
-                        <div class="question__card--footer">
-                            <a href="" class="question__card--username"> {{ $question->name }} </a>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
             </div>

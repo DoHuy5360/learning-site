@@ -1,3 +1,4 @@
+// todo: insert editor plugin
 CKEDITOR.replace("post-area");
 CKEDITOR.plugins.registered["save"] = {
     init: function (editor) {
@@ -18,14 +19,14 @@ CKEDITOR.plugins.registered["save"] = {
         editor.ui.addButton("Save", { label: "My Save", command: "save" });
     },
 };
-
+// todo: get contents inside the editor textarea
 function getTextAreaElement() {
     const text_area = document.querySelector(".cke_wysiwyg_frame.cke_reset");
     const content =
         text_area.contentWindow.document.querySelector("[role='textbox']");
     return content;
 }
-
+// todo: get time to read th post
 const sixty_seconds = 60;
 const sixty_minutes = 60;
 const average_word_read_per_minute = 240; // Base on Google search
@@ -60,11 +61,16 @@ let create_post_form = document.getElementById("create-post-form");
 let time_to_read_post = document.getElementById("time-to-read-post");
 let list_series = document.getElementById("list-series");
 
+// todo: process before send request
 send_request_to_store_post.addEventListener("click", (e) => {
+    // const list_tags = document.querySelectorAll('.editor__tag--name')
     const textarea_element = getTextAreaElement();
     post_content.value = textarea_element.innerHTML;
-    time_to_read_post.value = getTimeToReadParagraph(textarea_element.innerHTML);
-    list_series.value = series_selected_aray
+    time_to_read_post.value = getTimeToReadParagraph(
+        textarea_element.innerHTML
+    );
+    list_series.value = series_selected_aray;
+    tags_input_node.value = list_tags;
     create_post_form.submit();
 });
 // todo: add series ids to an array
@@ -85,6 +91,48 @@ list_series_element.forEach((series) => {
         }
     });
 });
+let list_tags = [];
+const list_tags_node = document.getElementById("editor-list-tag");
+const tags_input_node = document.getElementById("create-post-tag-input");
+tags_input_node.addEventListener("keydown", (e) => {
+    if (e.code == "Enter") {
+        const tag_name = tags_input_node.value;
+        const tag_html = createTagNode(tag_name);
+        list_tags_node.appendChild(tag_html)
+        // list_tags_node.insertAdjacentHTML("beforeend", tag_html);
+        list_tags.push(tags_input_node.value);
+        // console.log(list_tags);
+        tags_input_node.value = "";
+    }
+});
+function createTagNode(_tag_name) {
+    const tag_box = document.createElement('div');
+    tag_box.setAttribute('class', 'editor__tag--box')
+    const tag_name = document.createElement('div');
+    tag_name.setAttribute('class', 'editor__tag--name')
+    tag_name.textContent = _tag_name
+    const remove_tag = document.createElement('button')
+    remove_tag.setAttribute('class', 'editor__tag--remove')
+    remove_tag.setAttribute('type', 'button')
+    remove_tag.innerHTML = '<ion-icon name="close-outline"></ion-icon>'
+    remove_tag.addEventListener('click', e =>{
+        const tag_index = list_tags.indexOf(_tag_name)
+        list_tags.splice(tag_index,1)
+        // console.log(list_tags);
+        tag_box.remove()
+    })
+    tag_box.appendChild(tag_name)
+    tag_box.appendChild(remove_tag)
+    return tag_box;
+    return `
+    <div class="editor__tag--box">
+        <div class="c">${_tag_name}</div>
+        <button class="editor__tag--remove" type="button">
+            <ion-icon name="close-outline"></ion-icon>
+        </button>
+    </div>
+    `;
+}
 // window.onload = function () {
 //     const text_area = document.querySelector(".cke_wysiwyg_frame.cke_reset");
 //     content =

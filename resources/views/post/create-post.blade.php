@@ -67,7 +67,7 @@
                 if (this.readyState == 4 & this.status == 200 && this.responseText) {
                     const data_response = JSON.parse(this.responseText)
                     const {
-                    series_information
+                        series_information
                     } = data_response
                     const series_html = `
                     <div class="series__element">
@@ -79,7 +79,7 @@
                 }
             }
         })
-        
-                            // next step is send request
+
+        // next step is send request
     </script>
 @endsection

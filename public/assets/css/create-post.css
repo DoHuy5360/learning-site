@@ -35,9 +35,40 @@
     display: flex;
     gap: 20px;
 }
+#editor-list-tag{
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.editor__tag--box{
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid var(--gray-soft);
+    border-radius: 5px;
+    height: 30px;
+}
+.editor__tag--name{
+    padding-left: 5px;
+}
+.editor__tag--remove{
+    all: unset;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 5px;
+    border-left: 1px solid var(--gray-hard);
+    color: var(--gray-hard);
+}
+.editor__tag--remove:hover{
+    color: black;
+}
 #editor-input-tag {
     width: 100%;
     height: inherit;
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 #send-request-to-store-post {
     white-space: nowrap;

@@ -77,13 +77,25 @@ class ProfileController extends Controller
              FROM series
             "
         );
-        return view('profile.profile',[
-            'user_informations'=>$user_informations,
-            'user_posts'=>$user_posts,
-            'user_questions'=>$user_questions,
-            'user_answers'=>$user_answers,
-            'array_tags'=>$array_tags,
-            'user_series'=>$user_series,
+        for ($i = 0; $i < sizeof($user_series); $i++) {
+            $series_element = $user_series[$i];
+            $relative_posts_series = DB::select(
+                "SELECT p.title, p.time, p.created_at
+                 FROM posts p, series_posts sp
+                 WHERE sp.series_id = $series_element->id
+                 AND sp.post_id = p.id                
+                "
+            );
+            $series_element->relative_posts = $relative_posts_series;
+        }
+        // return $user_series;
+        return view('profile.profile', [
+            'user_informations' => $user_informations,
+            'user_posts' => $user_posts,
+            'user_questions' => $user_questions,
+            'user_answers' => $user_answers,
+            'array_tags' => $array_tags,
+            'user_series' => $user_series,
         ]);
     }
 

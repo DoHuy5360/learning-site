@@ -66,7 +66,14 @@
                     </div>
                     <div id="profile-series-table" class="profile__table--display">
                         @foreach ($user_series as $series)
-                            <p>{{ $series->name }}</p>
+                            <span>
+                                {{ $series->name }}
+                            </span>
+                            <ul>
+                                @foreach ($series->relative_posts as $post)
+                                    <li>{{ $post->title }}</li>
+                                @endforeach
+                            </ul>
                         @endforeach
                     </div>
                     <div id="profile-question-table" class="profile__table--display">
@@ -190,7 +197,7 @@
                             <p>
                                 <a href="" class="underline__none">{{ $tag }}</a>
                             </p>
-                            @endforeach
+                        @endforeach
                     </div>
                     <div id="profile-reputaion-table" class="profile__table--display">#a9</div>
                     <div id="aprofile-contact-table" class="profile__table--display">#a10</div>

@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Series_Post;
 use App\Models\SeriesPost;
 use App\Models\Tag;
+use App\Models\TagContent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,9 +33,11 @@ class PostController extends Controller
         //todo: push all relative tags to the corresponding post
         foreach ($all_posts as $post) {
             $relative_tag = DB::select(
-                "SELECT  tag_one, tag_two, tag_three, tag_four, tag_five
-                 FROM tags
-                 WHERE tags.from = {$post->id}
+                "SELECT t.name
+                 FROM tags t, tag_contents tc
+                 WHERE t.tag_code = tc.tag_id
+                 AND tc.content_id::integer = {$post->id}
+                 AND t.type = 'post'
                 "
             );
             $post_index = array_search($post, $all_posts);
@@ -69,8 +72,8 @@ class PostController extends Controller
             "
         );
         // return $all_series;
-        return view('post.create-post',[
-            'all_series'=>$all_series,
+        return view('post.create-post', [
+            'all_series' => $all_series,
         ]);
     }
 
@@ -82,9 +85,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // return $request;
         $user_id = Auth::user()->id;
-        $array_tag = explode(' ', $request->tag);
         // todo: store new post
         $new_post = new Post;
         $new_post->title = $request->title;
@@ -102,6 +103,38 @@ class PostController extends Controller
              LIMIT 1
             "
         )[0];
+        // todo: store tags
+        $array_tags = explode(',', $request->tag);
+        foreach ($array_tags as $tag_name) {
+            $coressponding_tag = DB::select(
+                "SELECT *
+                 FROM tags
+                 WHERE name = '$tag_name'
+                 LIMIT 1
+                "
+            );
+            if($coressponding_tag){
+                $tag_code = $coressponding_tag[0]->tag_code;
+                $new_tag_content = new TagContent;
+                $new_tag_content->tag_id = $tag_code;
+                $new_tag_content->content_id = $recent_post->id;
+                $new_tag_content->save();
+            }else{
+                $new_tag_code = generate_code(10);
+                $new_tag = new Tag;
+                $new_tag->tag_code = $new_tag_code;
+                $new_tag->name = $tag_name;
+                $new_tag->creator = $user_id;
+                $new_tag->type = "post";
+                $new_tag->save();
+
+                $new_tag_content = new TagContent;
+                $new_tag_content->tag_id = $new_tag_code;
+                $new_tag_content->content_id = $recent_post->id;
+                $new_tag_content->save();
+            }
+        }
+        
         // todo: store files
         if ($request->hasFile('file')) {
             $all_files = $request->file('file');
@@ -112,7 +145,7 @@ class PostController extends Controller
                 $fixed_file = $current_time . "." . $name_file;
                 $dest_path = public_path("assets/files/{$user_id}/");
                 $file->move($dest_path, $fixed_file);
-
+                
                 $new_file = new File;
                 $new_file->belong = $recent_post->id;
                 $new_file->alias = $name_file;
@@ -123,20 +156,10 @@ class PostController extends Controller
                 $new_file->save();
             }
         }
-        // todo: store tags
-        $new_tag = new Tag;
-        $new_tag->from = $recent_post->id;
-        $new_tag->of = "post";
-        $new_tag->tag_one = isset($array_tag[0]) ? $array_tag[0] : 'null';
-        $new_tag->tag_two = isset($array_tag[1]) ? $array_tag[1] : 'null';
-        $new_tag->tag_three = isset($array_tag[2]) ? $array_tag[2] : 'null';
-        $new_tag->tag_four = isset($array_tag[3]) ? $array_tag[3] : 'null';
-        $new_tag->tag_five = isset($array_tag[4]) ? $array_tag[4] : 'null';
-        $new_tag->save();
 
         // todo: store series_post
-        $array_series = explode(',',$request->array_series);
-        foreach ($array_series as $series) {   
+        $array_series = explode(',', $request->array_series);
+        foreach ($array_series as $series) {
             $new_series_post = new SeriesPost;
             $new_series_post->series_id = (int)$series;
             $new_series_post->post_id = $recent_post->id;
@@ -188,13 +211,34 @@ class PostController extends Controller
              WHERE files.belong = $post_id::integer
             "
         );
-        $is_author = ($corresponding_post->creator == $user_id) ? true: false;
+        $series_posts = DB::select(
+            "SELECT *, s.id AS series_id
+             FROM series s, series_posts sp
+             WHERE sp.post_id = $post_id
+             AND s.id = sp.series_id
+            "
+        );
+        // return $series_posts;
+        for ($i = 0; $i < sizeof($series_posts); $i++) {
+            $series_element = $series_posts[$i];
+            $posts_of_series = DB::select(
+                "SELECT *
+                 FROM posts p, series_posts sp
+                 WHERE p.id = sp.post_id
+                 AND sp.series_id = $series_element->series_id
+                "
+            );
+            $series_posts[$i]->relative_posts = $posts_of_series;
+        }
+        // return $series_posts;
+        $is_author = ($corresponding_post->creator == $user_id) ? true : false;
         // return $is_author;
         return view('post.view-post', [
-            'is_author'=>$is_author,
+            'is_author' => $is_author,
             'corresponding_post' => $corresponding_post,
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,
+            'series_posts' => $series_posts,
         ]);
     }
 
@@ -255,7 +299,7 @@ class PostController extends Controller
              WHERE id = $id
             "
         );
-        return redirect()->route(route:'post.index')->with('success', 'Xóa thành công');
+        return redirect()->route(route: 'post.index')->with('success', 'Xóa thành công');
     }
 
 
