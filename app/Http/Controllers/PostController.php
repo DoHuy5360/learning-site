@@ -113,13 +113,13 @@ class PostController extends Controller
                  LIMIT 1
                 "
             );
-            if($coressponding_tag){
+            if ($coressponding_tag) {
                 $tag_code = $coressponding_tag[0]->tag_code;
                 $new_tag_content = new TagContent;
                 $new_tag_content->tag_id = $tag_code;
                 $new_tag_content->content_id = $recent_post->id;
                 $new_tag_content->save();
-            }else{
+            } else {
                 $new_tag_code = generate_code(10);
                 $new_tag = new Tag;
                 $new_tag->tag_code = $new_tag_code;
@@ -134,7 +134,7 @@ class PostController extends Controller
                 $new_tag_content->save();
             }
         }
-        
+
         // todo: store files
         if ($request->hasFile('file')) {
             $all_files = $request->file('file');
@@ -145,7 +145,7 @@ class PostController extends Controller
                 $fixed_file = $current_time . "." . $name_file;
                 $dest_path = public_path("assets/files/{$user_id}/");
                 $file->move($dest_path, $fixed_file);
-                
+
                 $new_file = new File;
                 $new_file->belong = $recent_post->id;
                 $new_file->alias = $name_file;
@@ -184,15 +184,18 @@ class PostController extends Controller
             "SELECT * , users.id as user_id, posts.id as post_id
              FROM users, posts 
              WHERE posts.id = {$post_id}
-                   AND posts.creator::integer = users.id 
+             AND posts.creator::integer = users.id 
             "
         )[0];
         $relative_tag = DB::select(
-            "SELECT  tag_one, tag_two, tag_three, tag_four, tag_five
-                FROM tags
-                WHERE tags.from = {$post_id}
+            "SELECT t.name
+             FROM tags t, tag_contents tc
+             WHERE t.tag_code = tc.tag_id
+             AND tc.content_id::integer = {$post_id}
+             AND t.type = 'post'
             "
-        )[0];
+        );
+        // return $relative_tag;
         // return $corresponding_post;
         //todo: push all relative tags to the corresponding post
         $relative_post = DB::select(
@@ -203,7 +206,6 @@ class PostController extends Controller
             "
         );
         // return $relative_post;
-        $corresponding_post->tags = $relative_tag;
 
         $relative_file = DB::select(
             "SELECT *
@@ -239,6 +241,7 @@ class PostController extends Controller
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,
             'series_posts' => $series_posts,
+            'relative_tag'=>$relative_tag,
         ]);
     }
 
@@ -257,8 +260,24 @@ class PostController extends Controller
             "
         )[0];
         // return $corresponding_post;
+        $corresponding_tag = DB::select(
+            "SELECT t.name
+             FROM tags t, tag_contents tc
+             WHERE t.tag_code = tc.tag_id
+             AND tc.content_id::integer = $id
+             AND t.type = 'post'
+            "
+        );
+        // return $corresponding_tag;
+        $all_series = DB::select(
+            "SELECT name, id
+             FROM series
+            "
+        );
         return view('post.edit-post', [
             'corresponding_post' => $corresponding_post,
+            'corresponding_tag'=>$corresponding_tag,
+            'all_series'=>$all_series,
         ]);
     }
 
@@ -271,7 +290,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // return $request;
+        return $request;
         $split_request = explode('|', $id);
         $post_id = end($split_request);
         DB::update(

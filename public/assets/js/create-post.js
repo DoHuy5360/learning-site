@@ -99,9 +99,7 @@ tags_input_node.addEventListener("keydown", (e) => {
         const tag_name = tags_input_node.value;
         const tag_html = createTagNode(tag_name);
         list_tags_node.appendChild(tag_html)
-        // list_tags_node.insertAdjacentHTML("beforeend", tag_html);
         list_tags.push(tags_input_node.value);
-        // console.log(list_tags);
         tags_input_node.value = "";
     }
 });
@@ -118,7 +116,6 @@ function createTagNode(_tag_name) {
     remove_tag.addEventListener('click', e =>{
         const tag_index = list_tags.indexOf(_tag_name)
         list_tags.splice(tag_index,1)
-        // console.log(list_tags);
         tag_box.remove()
     })
     tag_box.appendChild(tag_name)

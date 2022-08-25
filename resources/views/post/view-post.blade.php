@@ -100,12 +100,10 @@
                             {{ $corresponding_post->content }}
                         </div>
                         <div id="post-view-main-content-footer">
-                            @foreach ($corresponding_post->tags as $tag_key => $tag_value)
-                                @if ($tag_value != 'null')
-                                    <p class="postview__tag--element">
-                                        <a href="">{{ $tag_value }}</a>
-                                    </p>
-                                @endif
+                            @foreach ($relative_tag as $tag)
+                                <p class="postview__tag--element">
+                                    <a href="">{{ $tag->name }}</a>
+                                </p>
                             @endforeach
                         </div>
                     </div>

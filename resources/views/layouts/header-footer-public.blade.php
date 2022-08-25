@@ -68,7 +68,7 @@
                                     <img id="header-user-avatar" src="{{ Auth::user()->avatar }}" alt="" draggable="false">
                                     <div id="user-management-list-wrap">
                                         <div id="user-management-list">
-                                            <a href="{{ route('profile.index') }}">
+                                            <a href="{{ route('profile.show', Auth::user()->id) }}">
                                                 <button class="option__cell" type="button">Profile</button>
                                             </a>
                                             <button class="option__cell" type="button">Setting</button>

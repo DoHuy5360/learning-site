@@ -79,7 +79,7 @@
                                     <button type="submit">Theo Dõi</button>
                                 </form>
                             </div>
-                            <div id="quesVw-aut_bookM-lv3-wr">
+                            <div id="quesVw-aut_bookquesVw-chat_form-wrM-lv3-wr">
                                 <form action="" id="quesVw-ques_bookmark-form" method="post">
                                     <ion-icon name="bookmark-outline"></ion-icon>
                                     <button type="submit">Lưu Trữ Câu Hỏi Này</button>
@@ -94,19 +94,21 @@
                         </div>
                     </div>
                     <div id="quesVw-comment_field-bellow-wr">
-                        <button id="quesVw-open_comment-btn" type="button">Bình luận cho câu hỏi</button>
+                        <button id="quesVw-open_comment-btn" class="quesVw-answer_comment-btn" type="button">Bình luận cho câu hỏi này ...</button>
                     </div>
                     <div id="quesVw-send_text-bottom-wr">
-                        <form action="{{ route('question-comment.store') }}" id="quesVw-chat_form-wr" method="post">
+                        <form action="" id="quesVw-chat_form-wr" method="post">
                             @csrf
                             <input id="quesVw-question_id" type="hidden" name="question_id" value="{{ $question_id }}">
+                            <input type="hidden" name="reply_for" value="{{ $corresponding_question->question_code }}">
                             <textarea name="content" id="quesVw-chat_field-write" cols="30" rows="10" placeholder="Ghi gi do"></textarea>
                             <div id="quesVw-option_form-btn-wrap">
                                 <button id="quesVw-btn-close-form" type="button">Close</button>
-                                <button type="submit">Send</button>
+                                <button class="quesVw-btn-send-form" type="submit">Send</button>
                             </div>
                         </form>
                     </div>
+                    <div id="quesVw-reply-list"  data-answer-code="{{ $corresponding_question->question_code }}"></div>
                 </div>
             </div>
             <!-- todo answer start -->
@@ -177,9 +179,13 @@
         let chat_form = document.getElementById('quesVw-chat_form-wr')
         let close_form_btn = document.getElementById('quesVw-btn-close-form')
         create_comment_btn.addEventListener('click', e => {
+            // chat_form.setAttribute('action','http://127.0.0.1:8000/question-comment')
+            chat_form.setAttribute('data-mesage-type','comment')
             chat_form.classList.add('chat_active')
         })
         create_answer_btn.addEventListener('click', e => {
+            // chat_form.setAttribute('action','http://127.0.0.1:8000/reply-answer')
+            chat_form.setAttribute('data-mesage-type','answer')
             chat_form.classList.add('chat_active')
         })
         close_form_btn.addEventListener('click', e => {

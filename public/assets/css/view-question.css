@@ -109,6 +109,7 @@
 .author__interact--wr {
     display: flex;
     justify-content: space-between;
+    margin: 5px 0 10px 0;
 }
 #quesVw-aut_follow-form button[type="submit"] {
     border: 1px solid;
@@ -131,7 +132,7 @@
     overflow: hidden;
     transition: 300ms linear;
     opacity: 0;
-    margin: 20px 0 0 0;
+    margin: 20px 0;
 }
 #quesVw-chat_form-wr.chat_active {
     height: fit-content;
@@ -149,12 +150,6 @@
     display: flex;
     gap: 10px;
     align-self: end;
-}
-#quesVw-chat_form-wr button {
-    border: 1px solid;
-    padding: 3px 10px;
-    width: fit-content;
-    cursor: pointer;
 }
 /* todo ------------------- answer start */
 .quesVw-answer-bellow-wr {
@@ -178,7 +173,7 @@
 }
 
 .for_reply{
-    border: 1px solid var(--gray-hard);
+    border: 1px solid var(--gray-soft);
     border-radius: 5px;
     padding: 5px;
 }
@@ -200,7 +195,7 @@
 .quesVw-answer_comment-btn{
     all: unset;
     cursor: pointer;
-    color: var(--gray-light);
+    color: var(--gray-hard);
 }
 .quesVw-comment_form-wr{
     display: flex;
@@ -245,4 +240,30 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+#quesVw-reply-list{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+#quesVw-comment_field-bellow-wr{
+    margin-top: 20px;
+}
+#quesVw-btn-close-form,
+.quesVw-comment_form-close{
+    border: unset;
+    background-color: var(--red-light);
+    color: black;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+.quesVw-btn-send-form{
+    border: unset;
+    background-color: var(--green-light);
+    color: black;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+
 }

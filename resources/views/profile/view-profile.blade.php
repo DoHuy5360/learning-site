@@ -54,10 +54,8 @@
                                         </h2>
                                     </div>
                                     <div class="post__card--footer">
-                                        @foreach ($post->tags[0] as $tag_key => $tag_value)
-                                            @if ($tag_value != 'null')
-                                                <a href="" class="post__card--tag">{{ $tag_value }}</a>
-                                            @endif
+                                        @foreach ($post->tags as $tag)
+                                            <a href="" class="post__card--tag">{{ $tag->name }}</a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -193,10 +191,8 @@
                     <div id="profile-following-table" class="profile__table--display">#a6</div>
                     <div id="profile-follower-table" class="profile__table--display">#a7</div>
                     <div id="profile-tag-table" class="profile__table--display">
-                        @foreach ($array_tags as $tag)
-                            <p>
-                                <a href="" class="underline__none">{{ $tag }}</a>
-                            </p>
+                        @foreach ($user_tags as $tag)
+                                <a href="" class="profileVw-tag-table underline__none">{{ $tag->name }}</a>
                         @endforeach
                     </div>
                     <div id="profile-reputaion-table" class="profile__table--display">#a9</div>
@@ -236,7 +232,7 @@
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Bài viết</div>
-                            <div class="profile__index--index">14843</div>
+                            <div class="profile__index--index">{{ $amount_post }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Bookmark</div>

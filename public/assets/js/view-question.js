@@ -56,12 +56,15 @@ function setEventForAllReplyAnswerBtn() {
                         (_url = request_url),
                         (_form = data_form),
                         (_response_data) => {
-                            const reply_data = _response_data.reply_information
-                            const reply_html = createReply.call(reply_data)
+                            const reply_data = _response_data.reply_information;
+                            const reply_html = createReply.call(reply_data);
                             const target_answer = document.querySelector(
                                 `[data-answer-code="${answer_code}"]`
                             );
-                            target_answer.insertAdjacentHTML('beforeend',reply_html)
+                            target_answer.insertAdjacentHTML(
+                                "beforeend",
+                                reply_html
+                            );
                         }
                     );
                 });
@@ -79,10 +82,10 @@ function createAnswerComment(_question_id, _reply_for) {
         <input type="hidden" name="_token" value="${csrf_token.value}">
         <input type="hidden" name="question_id" value="${_question_id}">
         <input type="hidden" name="reply_for" value="${_reply_for}">
-        <textarea name="content" class="quesVw-comment_field-write" cols="30" rows="10" placeholder="Ghi gi do"></textarea>
+        <textarea name="content" class="quesVw-comment_field-write" cols="30" rows="10" placeholder="Ghi gi do" required></textarea>
         <div id="quesVw-option_form-btn-wrap">
             <button class="quesVw-comment_form-close" type="button">Close</button>
-            <button type="submit">Send</button>
+            <button class="quesVw-btn-send-form" type="submit">Send</button>
         </div>
     </form>
     `;
@@ -96,26 +99,41 @@ question_comment_form.addEventListener("submit", (e) => {
     e.preventDefault();
     // todo : create new request form action
     const form_data = new FormData(question_comment_form);
-    const form_action_url = question_comment_form.getAttribute("action");
-    createAjax(
-        (_method = "POST"),
-        (_url = form_action_url),
-        (_form = form_data),
-        (_comment_information) => {
-            // todo : _comment_information contain response data from | route('question-comment.store') |
-            // todo : -> include comment information and user information who is create this one
-            const answer_content = document.getElementById(
-                "quesVw-chat_field-write"
-            );
-            // todo : get content from textarea for display
-            // todo : -> Because render 'HTML texts' from database need 1 more step to display by Javasript convert
-            const answer_html = createAnswer.call(
-                _comment_information.data_answer,
-                answer_content.value
-            );
-            list_answer.insertAdjacentHTML("afterbegin", answer_html);
-        }
-    );
+    if (question_comment_form.getAttribute("data-mesage-type") == "answer") {
+        createAjax(
+            (_method = "POST"),
+            (_url = "http://127.0.0.1:8000/question-comment"),
+            (_form = form_data),
+            (_comment_information) => {
+                // todo : _comment_information contain response data from | route('question-comment.store') |
+                // todo : -> include comment information and user information who is create this one
+                const answer_content = document.getElementById(
+                    "quesVw-chat_field-write"
+                );
+                // todo : get content from textarea for display
+                // todo : -> Because render 'HTML texts' from database need 1 more step to display by Javasript convert
+                const answer_html = createAnswer.call(
+                    _comment_information.data_answer,
+                    answer_content.value
+                );
+                list_answer.insertAdjacentHTML("afterbegin", answer_html);
+            }
+        );
+    } else {
+        // todo: send reply question request and display reply template
+        createAjax(
+            (_method = "POST"),
+            (_url = "http://127.0.0.1:8000/reply-answer"),
+            (_form = form_data),
+            (_reply_information) => {
+                const reply_html = createReply.call(
+                    _reply_information.reply_information,
+                );
+                const reply_question_node = document.getElementById('quesVw-reply-list')
+                reply_question_node.insertAdjacentHTML("beforeend", reply_html);
+            }
+        );
+    }
 });
 
 function createAnswer(_answer) {

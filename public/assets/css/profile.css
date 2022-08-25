@@ -62,12 +62,13 @@
     width: 100%;
     visibility: visible;
     height: fit-content;
-    /* border: 1px solid var(--gray-hard); */
+    position: relative;
+    overflow: unset;
 }
 #profile-display-index-wrap {
     display: flex;
     width: 100%;
-    gap: 5px;
+    gap: 10px;
 }
 #profile-display-left {
     width: calc(100% - 300px);
@@ -98,4 +99,16 @@
     flex-direction: column;
     gap: 10px;
 
+}
+.profileVw-tag-table{
+    border: 1px solid var(--gray-hard);
+    padding: 3px 10px;
+    font-size: 13px;
+    border-radius: 20px;
+    color: var(--gray-hard);
+    background-color: var(--gray-light);
+    font-weight: bold;
+}
+.profileVw-tag-table:hover{
+    color: var(--color-1);
 }

@@ -191,3 +191,9 @@
 #edit-add-series-btn:hover{
     color: black;
 }
+#send-request-to-update-post{
+    white-space: nowrap;
+    padding: 0 5px;
+    border: 1px solid var(--gray-soft);
+    cursor: pointer;
+}

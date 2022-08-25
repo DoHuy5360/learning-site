@@ -14,7 +14,9 @@
     <link rel="stylesheet" href="{{ asset('assets/css/create-question.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
 
-    <title>Document</title>
+    <title>
+        @yield('title')
+    </title>
 </head>
 
 <body>
@@ -105,6 +107,7 @@
     <script src="{{ asset('assets/js/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('assets/js/create-post.js') }}"></script>
     <script src="{{ asset('assets/js/create-question.js') }}"></script>
+    @yield('script')
 </body>
 
 </html>

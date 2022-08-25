@@ -47,7 +47,9 @@ class QuestionController extends Controller
     {
         // return $request;
         $user_id = Auth::user()->id;
+        $question_code = generate_code(10);
         $new_question = new Question;
+        $new_question->question_code = $question_code;
         $new_question->questioner = $user_id;
         $new_question->title = $request->title;
         $new_question->content = $request->content;
