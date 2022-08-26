@@ -241,7 +241,7 @@ class PostController extends Controller
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,
             'series_posts' => $series_posts,
-            'relative_tag'=>$relative_tag,
+            'relative_tag' => $relative_tag,
         ]);
     }
 
@@ -274,10 +274,25 @@ class PostController extends Controller
              FROM series
             "
         );
+        // return $all_series;
+
+        foreach ($all_series as $series) {
+            $series_of_post_in_list_series = DB::select(
+                "SELECT series_id
+                 FROM series_posts
+                 WHERE post_id = $id
+                 AND series_id = $series->id
+                "
+            );
+            if ($series_of_post_in_list_series) {
+                $series->choosen = 'checked';
+            }
+        }
+        // return $all_series;
         return view('post.edit-post', [
             'corresponding_post' => $corresponding_post,
-            'corresponding_tag'=>$corresponding_tag,
-            'all_series'=>$all_series,
+            'corresponding_tag' => $corresponding_tag,
+            'all_series' => $all_series,
         ]);
     }
 
@@ -290,7 +305,8 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        return $request;
+        // return $request;
+        $user_id  = Auth::user()->id;
         $split_request = explode('|', $id);
         $post_id = end($split_request);
         DB::update(
@@ -301,6 +317,64 @@ class PostController extends Controller
              WHERE id = $post_id
             "
         );
+        $success_delete_tag = DB::delete(
+            "DELETE FROM tag_contents
+             WHERE content_id::integer = $post_id
+            "
+        );
+        // todo: update tags
+        $array_tags = explode(',', $request->tag);
+        foreach ($array_tags as $tag_name) {
+            $coressponding_tag = DB::select(
+                "SELECT *
+                 FROM tags
+                 WHERE name = '$tag_name'
+                 LIMIT 1
+                "
+            );
+            if ($coressponding_tag) {
+                $code_of_tag = $coressponding_tag[0]->tag_code;
+                $post_in_series = DB::select(
+                    "SELECT *
+                    FROM tag_contents
+                    WHERE tag_id = '$code_of_tag'
+                    AND content_id::integer = $post_id
+                  "
+                );
+                if (!$post_in_series) {
+                    $new_tag_content = new TagContent;
+                    $new_tag_content->tag_id = $code_of_tag;
+                    $new_tag_content->content_id = $post_id;
+                    $new_tag_content->save();
+                }
+            } else {
+                $new_tag_code = generate_code(10);
+                $new_tag = new Tag;
+                $new_tag->tag_code = $new_tag_code;
+                $new_tag->name = $tag_name;
+                $new_tag->creator = $user_id;
+                $new_tag->type = "post";
+                $new_tag->save();
+
+                $new_tag_content = new TagContent;
+                $new_tag_content->tag_id = $new_tag_code;
+                $new_tag_content->content_id = $post_id;
+                $new_tag_content->save();
+            }
+        }
+        // todo: update series
+        $success_delete_series = DB::delete(
+            "DELETE FROM series_posts
+             WHERE post_id = $post_id
+            "
+        );
+        $array_series = explode(',', $request->array_series);
+        foreach ($array_series as $series) {
+            $new_series_post = new SeriesPost;
+            $new_series_post->series_id = (int)$series;
+            $new_series_post->post_id = $post_id;
+            $new_series_post->save();
+        }
         return redirect()->route(route: 'post.show', parameters: $id)->with('success', 'Cập nhật thành công!');
     }
 

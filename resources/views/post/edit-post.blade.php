@@ -53,7 +53,11 @@
                             @foreach ($all_series as $series)
                                 <div class="series__element">
                                     <label for="input-series-element">{{ $series->name }}</label>
-                                    <input type="checkbox" data-series-id="{{ $series->id }}" class="input__series--element">
+                                    @if (isset($series->choosen))
+                                        <input class="input__series--element" type="checkbox" data-series-id="{{ $series->id }}" {{ $series->choosen }}>
+                                    @else
+                                        <input class="input__series--element" type="checkbox" data-series-id="{{ $series->id }}">
+                                    @endif
                                 </div>
                             @endforeach
                         </div>
