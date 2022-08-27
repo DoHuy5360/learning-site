@@ -87,9 +87,8 @@ class Reply_answerController extends Controller
              u.avatar,
              u.email,
              u.name
-             FROM reply_answers r, users u, question_answers q
+             FROM reply_answers r, users u
              WHERE r.answer_replier = u.id
-             AND q.content_type = $id
              AND r.content_type = $id
             "
         );

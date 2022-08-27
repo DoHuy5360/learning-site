@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Question;
+use App\Models\Tag;
+use App\Models\TagContent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -16,17 +18,43 @@ class QuestionController extends Controller
      */
     public function index()
     {
+        // return $all_questions;
+
+        // $relative_post = DB::select(
+        //     "SELECT *
+        //      FROM post
+        //     "
+        // );
+        return view('question.question', [
+            // '' => $,
+        ]);
+    }
+    public function getQuestions()
+    {
         $all_questions = DB::select(
             "SELECT *, questions.id AS question_id
              FROM questions, users
              WHERE questions.questioner = users.id
             "
         );
-        return view('question.question', [
-            'all_questions' => $all_questions,
-        ]);
+        // return $all_questions;
+        for ($i = 0; $i < sizeof($all_questions); $i++) {
+            $question_id = $all_questions[$i]->question_id;
+            $relative_tag = DB::select(
+                "SELECT t.name
+                 FROM tags t, tag_contents tc
+                 WHERE t.tag_code = tc.tag_id
+                 AND tc.content_id::integer = $question_id
+                "
+            );
+            $all_questions[$i]->tags = $relative_tag;
+        }
+        return response()->json(
+            [
+                'all_questions' => $all_questions
+            ]
+        );
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -56,6 +84,48 @@ class QuestionController extends Controller
         // $new_question->vote = "" ;
         // $new_question->slug = "";
         $new_question->save();
+
+        $recent_question = DB::select(
+            "SELECT *
+             FROM questions
+             WHERE questioner = '$user_id'
+             ORDER BY id DESC
+             LIMIT 1
+            "
+        )[0];
+
+        // todo: store tags
+        $array_tags = explode(',', $request->tag);
+        foreach ($array_tags as $tag_name) {
+            $coressponding_tag = DB::select(
+                "SELECT *
+                 FROM tags
+                 WHERE name = '$tag_name'
+                 LIMIT 1
+                "
+            );
+            if ($coressponding_tag) {
+                $tag_code = $coressponding_tag[0]->tag_code;
+                $new_tag_content = new TagContent;
+                $new_tag_content->tag_id = $tag_code;
+                $new_tag_content->content_id = $recent_question->id;
+                $new_tag_content->save();
+            } else {
+                $new_tag_code = generate_code(10);
+                $new_tag = new Tag;
+                $new_tag->tag_code = $new_tag_code;
+                $new_tag->name = $tag_name;
+                $new_tag->creator = $user_id;
+                $new_tag->type = "question";
+                $new_tag->save();
+
+                $new_tag_content = new TagContent;
+                $new_tag_content->tag_id = $new_tag_code;
+                $new_tag_content->content_id = $recent_question->id;
+                $new_tag_content->save();
+            }
+        }
+
         return redirect()->back()->with("success", "Câu hỏi đã được công bố.");
     }
 
@@ -84,7 +154,7 @@ class QuestionController extends Controller
         return view('question.view-question', [
             'corresponding_question' => $corresponding_question,
             'question_id' => $id,
-            'all_answers'=> $all_answers,
+            'all_answers' => $all_answers,
         ]);
     }
 

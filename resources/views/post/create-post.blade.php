@@ -1,4 +1,7 @@
 @extends('layouts.header-footer-create')
+@section('script')
+    <script src="{{ asset('assets/js/post/create-post.js') }}"></script>
+@endsection
 @section('content')
     @if ($message = Session::get('success'))
         <div class="success-message">{{ $message }}</div>
@@ -80,6 +83,5 @@
             }
         })
 
-        // next step is send request
     </script>
 @endsection

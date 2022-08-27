@@ -1,4 +1,7 @@
 @extends('layouts.header-footer-create')
+@section('script')
+    <script src="{{ asset('assets/js/question/create-question.js') }}"></script>
+@endsection
 @section('content')
     @if ($message = Session::get('success'))
         <div class="success-message">{{ $message }}</div>

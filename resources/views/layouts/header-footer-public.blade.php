@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/post.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/view-post.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/question.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/view-question.css') }}">    
+    <link rel="stylesheet" href="{{ asset('assets/css/view-question.css') }}">
     <title>Document</title>
 </head>
 
@@ -154,8 +154,8 @@
         src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
     ></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    @yield('script')
 </body>
 
 </html>
 <script src="{{ asset('assets/js/post.js') }}"></script>
-<script src="{{ asset('assets/js/view-question.js') }}"></script>

@@ -15,7 +15,6 @@ class ProfileController extends Controller
      */
     public function index()
     {
-        
     }
 
     /**
@@ -116,12 +115,37 @@ class ProfileController extends Controller
             $series_element->relative_posts = $relative_posts_series;
         }
         // return $user_series;
+        $user_following = DB::select(
+            "SELECT *
+             FROM follows f, users u
+             WHERE f.follower = $user_id
+             AND f.followed = u.id
+            "
+        );
+        // return $user_following;
+        $user_follower = DB::select(
+            "SELECT *
+             FROM follows f, users u
+             WHERE f.follower = u.id
+             AND f.followed = $user_id
+            "
+        );
+        // return $user_follower;
+        $amount_following = sizeof($user_following);
         $amount_post = DB::select(
             "SELECT COUNT(*)
              FROM posts
+             WHERE creator::integer = $user_id
             "
         )[0]->count;
         // return $amount_post;
+        $amount_tag = DB::select(
+            "SELECT COUNT(*)
+             FROM tags
+             WHERE creator::integer = $user_id
+            "
+        )[0]->count;
+        // return $amount_tag;
         return view('profile.view-profile', [
             'user_informations' => $user_informations,
             'user_posts' => $user_posts,
@@ -129,7 +153,11 @@ class ProfileController extends Controller
             'user_answers' => $user_answers,
             'user_tags' => $user_tags,
             'user_series' => $user_series,
-            'amount_post'=>$amount_post,
+            'user_following' => $user_following,
+            'user_follower' => $user_follower,
+            'amount_following'=> $amount_following,
+            'amount_post' => $amount_post,
+            'amount_tag' => $amount_tag,
         ]);
     }
 

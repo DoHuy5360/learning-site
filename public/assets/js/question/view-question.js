@@ -65,6 +65,7 @@ function setEventForAllReplyAnswerBtn() {
                                 "beforeend",
                                 reply_html
                             );
+                            setEventForAllReplyAnswerBtn();
                         }
                     );
                 });
@@ -131,6 +132,7 @@ question_comment_form.addEventListener("submit", (e) => {
                 );
                 const reply_question_node = document.getElementById('quesVw-reply-list')
                 reply_question_node.insertAdjacentHTML("beforeend", reply_html);
+                setEventForAllReplyAnswerBtn();
             }
         );
     }
@@ -191,7 +193,7 @@ function createAnswer(_answer) {
     
     `;
 }
-// todo : display reply comment message
+// todo : display answer reply message
 createAjax(
     (_method = "GET"),
     (_url = `http://127.0.0.1:8000/reply-answer/${question_id.value}`),
@@ -218,21 +220,21 @@ function createReply() {
     return `
     <div class="quesVw-ans_text-left-wr for_reply" data-answer-code="${this.reply_code}">
         <div class="quesVw-ans_detail-top-wr">
-                <div class="reply__text--left">
-                    <div>
-                        <span>${this.content}</span>
-                        <span class="reply__created--at">${this.created_at}</span>
-                    </div>
-                    <div class="quesVw-answer_comment_field-bellow-wr">
-                        <button class="quesVw-answer_comment-btn" type="button">
-                            Trả lời bình luận này ...
-                        </button>
-                    </div>
+            <div class="reply__text--left">
+                <div>
+                    <span>${this.content}</span>
+                    <span class="reply__created--at">${this.created_at}</span>
                 </div>
-                <div class="reply__author--right">
-                    <img class="author__wrap--avatar" src="${this.avatar}" alt="" />
-                    <div class="author__wrap--name">${this.name}</div>
+                <div class="quesVw-answer_comment_field-bellow-wr">
+                    <button class="quesVw-answer_comment-btn" type="button">
+                        Trả lời bình luận này ...
+                    </button>
                 </div>
+            </div>
+            <div class="reply__author--right">
+                <img class="author__wrap--avatar" src="${this.avatar}" alt="" />
+                <div class="author__wrap--name">${this.name}</div>
+            </div>
         </div>
     </div>
 

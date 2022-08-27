@@ -23,7 +23,7 @@
                     <a href="#profile-following-table" class="profile-option">Dang Theo Doi</a>
                     <a href="#profile-follower-table" class="profile-option">Nguoi Theo Doi</a>
                     <a href="#profile-tag-table" class="profile-option">The</a>
-                    <a href="#profile-reputaion-table" class="profile-option">Reputations</a>
+                    {{-- <a href="#profile-reputaion-table" class="profile-option">Reputations</a> --}}
                     <a href="#aprofile-contact-table" class="profile-option">Lien He</a>
                 </div>
             </div>
@@ -188,14 +188,76 @@
                         @endforeach
                     </div>
                     <div id="profile-bookmark-table" class="profile__table--display">#a5</div>
-                    <div id="profile-following-table" class="profile__table--display">#a6</div>
-                    <div id="profile-follower-table" class="profile__table--display">#a7</div>
+                    <div id="profile-following-table" class="profile__table--display">
+                        @foreach ($user_following as $following)
+                            <div class="profile__following--wrap">
+                                <div class="profile__following--wrapavatar">
+                                    <img class="profile__following--avatar" src="{{ $following->avatar }}" alt="">
+                                </div>
+                                <div class="profile__following--infomation">
+                                    <div class="profile__following--name">
+                                        <a href="" class="underline__none">{{ $following->name }}</a>
+                                        <button class="profile__follow--btn">Theo dõi</button>
+                                    </div>
+                                    <div class="profile__following--index">
+                                        <div class="profile__following">
+                                            <ion-icon name="star-outline"></ion-icon>
+                                            <span>3493</span>
+                                        </div>
+                                        <div class="profile__following">
+                                            <ion-icon name="paper-plane-outline"></ion-icon>
+                                            <span>449</span>
+                                        </div>
+                                        <div class="profile__following">
+                                            <ion-icon name="person-add-outline"></ion-icon>
+                                            <span>33</span>
+                                        </div>
+                                    </div>
+                                    <div class="profile__following--email">
+                                        {{ $following->email }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                    <div id="profile-follower-table" class="profile__table--display">
+                        @foreach ($user_follower as $follower)
+                            <div class="profile__following--wrap">
+                                <div class="profile__following--wrapavatar">
+                                    <img class="profile__following--avatar" src="{{ $follower->avatar }}" alt="">
+                                </div>
+                                <div class="profile__following--infomation">
+                                    <div class="profile__following--name">
+                                        <a href="" class="underline__none">{{ $follower->name }}</a>
+                                        <button class="profile__follow--btn">Theo dõi</button>
+                                    </div>
+                                    <div class="profile__following--index">
+                                        <div class="profile__following">
+                                            <ion-icon name="star-outline"></ion-icon>
+                                            <span>3493</span>
+                                        </div>
+                                        <div class="profile__following">
+                                            <ion-icon name="paper-plane-outline"></ion-icon>
+                                            <span>449</span>
+                                        </div>
+                                        <div class="profile__following">
+                                            <ion-icon name="person-add-outline"></ion-icon>
+                                            <span>33</span>
+                                        </div>
+                                    </div>
+                                    <div class="profile__following--email">
+                                        {{ $follower->email }}
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                     <div id="profile-tag-table" class="profile__table--display">
                         @foreach ($user_tags as $tag)
                                 <a href="" class="profileVw-tag-table underline__none">{{ $tag->name }}</a>
                         @endforeach
                     </div>
-                    <div id="profile-reputaion-table" class="profile__table--display">#a9</div>
+                    {{-- <div id="profile-reputaion-table" class="profile__table--display">#a9</div> --}}
                     <div id="aprofile-contact-table" class="profile__table--display">#a10</div>
                 </div>
                 <div id="profile-display-right">
@@ -206,23 +268,23 @@
                             </div>
                             <div class="profile__index--index">1443</div>
                         </div>
-                        <div class="profile__index--row">
+                        {{-- <div class="profile__index--row">
                             <div class="profile__index--name">
                                 Reputations
                             </div>
                             <div class="profile__index--index">34</div>
-                        </div>
+                        </div> --}}
                         <div class="profile__index--row">
                             <div class="profile__index--name">
-                                Các thẻ theo dõi
+                                Số lượng thẻ
                             </div>
-                            <div class="profile__index--index">1431</div>
+                            <div class="profile__index--index">{{ $amount_tag }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">
                                 Đang theo dõi các người dùng
                             </div>
-                            <div class="profile__index--index">13</div>
+                            <div class="profile__index--index">{{ $amount_following }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">

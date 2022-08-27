@@ -46,11 +46,11 @@
                                     </p>
                                     <p class="post-view-user-index">
                                         <ion-icon name="person-add-outline"></ion-icon>
-                                        <span>0</span>
+                                        <span>{{ $amount_follower }}</span>
                                     </p>
                                     <p class="post-view-user-index">
-                                        <ion-icon name="clipboard-outline"></ion-icon>
-                                        <span>0</span>
+                                        <ion-icon name="paper-plane-outline"></ion-icon>
+                                        <span>{{ $amount_post }}</span>
                                     </p>
                                 </div>
                             </div>

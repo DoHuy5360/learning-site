@@ -1,4 +1,8 @@
 @extends('layouts.header-footer-public')
+@section('script')
+    <script src="{{ asset('assets/js/ajax.js') }}"></script>
+    <script src="{{ asset('assets/js/question/question.js') }}"></script>
+@endsection
 @section('content')
     <div id="question-site-body">
         <div id="question-view-menu">
@@ -18,7 +22,7 @@
             <div id="content-body-wrap">
                 <div id="body-left-part-question">
                     <div id="question-list-wrap">
-                        @foreach ($all_questions as $question)
+                        {{-- @foreach ($all_questions as $question)
                             <div class="card__question--wrap">
                                 <div class="card__question--leftpart">
                                     <div class="cardquestion__leftpart--header">
@@ -62,12 +66,14 @@
                                     </div>
                                     <div class="cardquestion__rightpart--footer">
                                         <div class="cardquestion__list-tag">
-                                            <a href="">HTML</a>
+                                            @foreach ($question->tags as $tag)
+                                                <a href="">{{ $tag->name }}</a>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+                        @endforeach --}}
                     </div>
                 </div>
                 <div id="body-right-part-question">

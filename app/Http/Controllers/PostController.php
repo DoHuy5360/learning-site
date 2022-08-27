@@ -187,6 +187,7 @@ class PostController extends Controller
              AND posts.creator::integer = users.id 
             "
         )[0];
+        // return $corresponding_post;
         $relative_tag = DB::select(
             "SELECT t.name
              FROM tags t, tag_contents tc
@@ -196,7 +197,6 @@ class PostController extends Controller
             "
         );
         // return $relative_tag;
-        // return $corresponding_post;
         //todo: push all relative tags to the corresponding post
         $relative_post = DB::select(
             "SELECT *
@@ -245,6 +245,18 @@ class PostController extends Controller
         // return empty($get_follower);
         $is_following = empty($get_follower) ? false : true;
         // return $is_following;
+        $amount_post = DB::select(
+            "SELECT COUNT(*)
+             FROM posts
+             WHERE creator::integer = $corresponding_post->creator
+            "
+        )[0]->count;
+        $amount_follower = DB::select(
+            "SELECT COUNT(*)
+             FROM follows
+             WHERE followed = $user_id
+            "
+        )[0]->count;
         return view('post.view-post', [
             'is_author' => $is_author,
             'corresponding_post' => $corresponding_post,
@@ -253,6 +265,8 @@ class PostController extends Controller
             'series_posts' => $series_posts,
             'relative_tag' => $relative_tag,
             'is_following' => $is_following,
+            'amount_post' => $amount_post,
+            'amount_follower' => $amount_follower,
         ]);
     }
 

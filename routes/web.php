@@ -34,6 +34,8 @@ Route::resource('/profile', ProfileController::class);
 Route::resource('/series', SeriesController::class);
 Route::resource('/follow', FollowController::class);
 
+Route::get('/question-list', [QuestionController::class, 'getQuestions']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');

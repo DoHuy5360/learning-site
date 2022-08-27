@@ -50,7 +50,7 @@
 .profile-option:hover {
     color: var(--color-1);
 }
-.profile__table--display{
+.profile__table--display {
     width: 0;
     height: 0;
     overflow: hidden;
@@ -58,7 +58,7 @@
     visibility: hidden;
     position: absolute;
 }
-.profile__table--display:target{
+.profile__table--display:target {
     width: 100%;
     visibility: visible;
     height: fit-content;
@@ -94,21 +94,56 @@
 .profile__index--name {
     color: var(--gray-hard);
 }
-#profile-post-table{
+#profile-post-table {
     display: flex;
     flex-direction: column;
     gap: 10px;
-
 }
-.profileVw-tag-table{
-    border: 1px solid var(--gray-hard);
+.profileVw-tag-table {
+    color: var(--color-1);
+    border: 1px solid var(--color-2);
+    background-color: transparent;
     padding: 3px 10px;
     font-size: 13px;
     border-radius: 20px;
-    color: var(--gray-hard);
-    background-color: var(--gray-light);
-    font-weight: bold;
 }
-.profileVw-tag-table:hover{
-    color: var(--color-1);
+.profileVw-tag-table:hover {
+    background-color: var(--color-3);
+}
+#profile-following-table {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.profile__following--wrap {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.profile__following--avatar {
+    width: 100px;
+    aspect-ratio: 1;
+    object-fit: contain;
+}
+.profile__following--infomation {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+.profile__following--name {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    justify-content: space-between;
+}
+.profile__following--index {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.profile__following {
+    font-size: 13px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
 }

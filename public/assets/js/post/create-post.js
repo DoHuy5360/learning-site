@@ -99,7 +99,7 @@ tags_input_node.addEventListener("keydown", (e) => {
         const tag_name = tags_input_node.value;
         const tag_html = createTagNode(tag_name);
         list_tags_node.appendChild(tag_html)
-        list_tags.push(tags_input_node.value);
+        list_tags.push(tag_name);
         tags_input_node.value = "";
     }
 });

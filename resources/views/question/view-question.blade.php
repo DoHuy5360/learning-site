@@ -1,4 +1,7 @@
 @extends('layouts.header-footer-public')
+@section('script')
+    <script src="{{ asset('assets/js/question/view-question.js') }}"></script>
+@endsection
 @section('content')
     <div class="full-height">
         <div id="quesVw-contents-body-wr">
@@ -94,7 +97,7 @@
                         </div>
                     </div>
                     <div id="quesVw-comment_field-bellow-wr">
-                        <button id="quesVw-open_comment-btn" class="quesVw-answer_comment-btn" type="button">Bình luận cho câu hỏi này ...</button>
+                        <button id="quesVw-open_comment-btn" type="button">Bình luận cho câu hỏi này ...</button>
                     </div>
                     <div id="quesVw-send_text-bottom-wr">
                         <form action="" id="quesVw-chat_form-wr" method="post">
