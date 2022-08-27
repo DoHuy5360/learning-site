@@ -17,7 +17,9 @@
     --gray-soft: #D1D1D1;
     --gray-hard: #9b9b9b;
     --green-light: #b6ffb6;
+    --green-dark: #2dd02d;
     --red-light: #ff8a8a;
+    --red-dark: #ff8a8a;
     --width-align: 80%;
 }
 html {

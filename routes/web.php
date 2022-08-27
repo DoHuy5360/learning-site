@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowController;
 use App\Http\Controllers\Post_commentController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -9,7 +10,6 @@ use App\Http\Controllers\Reply_answerController;
 use App\Http\Controllers\Reply_commentController;
 use App\Http\Controllers\SeriesController;
 use Illuminate\Support\Facades\Route;
-use Symfony\Component\HttpKernel\Profiler\Profile;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +32,7 @@ Route::resource('/question-comment', Question_answerController::class);
 Route::resource('/reply-answer', Reply_answerController::class);
 Route::resource('/profile', ProfileController::class);
 Route::resource('/series', SeriesController::class);
+Route::resource('/follow', FollowController::class);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -73,10 +73,20 @@ body::-webkit-scrollbar{
     color: var(--color-2);
     text-decoration: unset;
 }
-#post-view-author-left-header button {
+#postVw-unfollow-btn,
+#postVw-follow-btn {
     background-color: transparent;
-    border: 1px solid var(--gray-light);
-    padding: 5px 10px;
+    padding: 3px 7px;
+    border-radius: 5px;
+    cursor: grab;
+}
+#postVw-unfollow-btn{
+    color: var(--red-light);
+    border: 1px solid var(--red-light);
+}
+#postVw-follow-btn{
+    color: var(--green-dark);
+    border: 1px solid var(--green-dark);
 }
 #post-view-author-left-footer {
     display: flex;

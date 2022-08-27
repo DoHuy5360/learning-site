@@ -28,7 +28,16 @@
                                 <div id="post-view-author-left-header">
                                     <a href="">{{ $corresponding_post->name }}</a>
                                     <p>{{ $corresponding_post->email }}</p>
-                                    <button>Theo dõi</button>
+                                    <form action="{{ route('follow.destroy', $corresponding_post->user_id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button id="postVw-unfollow-btn" type="submit">Hủy theo dõi</button>
+                                    </form>
+                                    <form action="{{ route('follow.store') }}" id="postVw-follow-form" style="display:{{ !$is_following ? 'block' : 'none' }};" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="followed" value="{{ $corresponding_post->user_id }}">
+                                        <button id="postVw-follow-btn" type="submit">Theo dõi</button>
+                                    </form>
                                 </div>
                                 <div id="post-view-author-left-footer">
                                     <p class="post-view-user-index">
@@ -125,7 +134,9 @@
                                 </div>
                                 <div id="post-view-relative-post-series">
                                     @foreach ($series->relative_posts as $post)
-                                        {{ $post->title }}
+                                        <a class="underline__none" href="{{ route('post.show', remove_sign($post->title) . '|' . $post->post_id) }}">
+                                            <p>{{ $post->title }}</p>
+                                        </a>
                                     @endforeach
                                 </div>
                             </div>

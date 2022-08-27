@@ -235,6 +235,16 @@ class PostController extends Controller
         // return $series_posts;
         $is_author = ($corresponding_post->creator == $user_id) ? true : false;
         // return $is_author;
+        $get_follower = DB::select(
+            "SELECT *
+             FROM follows
+             WHERE followed = $corresponding_post->creator
+             AND follower = $user_id
+            "
+        );
+        // return empty($get_follower);
+        $is_following = empty($get_follower) ? false : true;
+        // return $is_following;
         return view('post.view-post', [
             'is_author' => $is_author,
             'corresponding_post' => $corresponding_post,
@@ -242,6 +252,7 @@ class PostController extends Controller
             'relative_file' => $relative_file,
             'series_posts' => $series_posts,
             'relative_tag' => $relative_tag,
+            'is_following' => $is_following,
         ]);
     }
 

@@ -56,7 +56,7 @@ document.addEventListener(
         } else {
             hidden_avatar.style.opacity = "0";
         }
-    },
+    }
     // { passive: true }
 );
 // todo --------------------------------------------------- ajax
@@ -99,3 +99,46 @@ function updateFrameHeight() {
     }, 1000);
 }
 updateFrameHeight();
+
+const unfollow_form = document.getElementById("postVw-unfollow-form");
+const follow_form = document.getElementById("postVw-follow-form");
+follow_form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const form_data = new FormData(follow_form);
+    createAjax(
+        (_method = "POST"),
+        (_url = "http://127.0.0.1:8000/follow"),
+        (_form = form_data),
+        (response) => {
+            console.log(response.response);
+            follow_form.style.display = "none";
+            unfollow_form.style.display = "block";
+        }
+    );
+});
+unfollow_form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const form_data = new FormData(unfollow_form);
+    const form_url = unfollow_form.getAttribute('action')
+    createAjax(
+        (_method = "POST"),
+        (_url = form_url),
+        (_form = form_data),
+        (response) => {
+            console.log(response.response);
+            unfollow_form.style.display = "none";
+            follow_form.style.display = "block";
+        }
+    );
+});
+function createAjax(_method, _url, _form, _callback) {
+    const ajax = new XMLHttpRequest();
+    ajax.open(_method, _url);
+    ajax.send(_form);
+    ajax.onreadystatechange = function () {
+        if (this.status == 200 && this.readyState == 4 && this.responseText) {
+            const data_response = JSON.parse(this.responseText);
+            _callback(data_response);
+        }
+    };
+}
