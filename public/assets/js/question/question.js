@@ -10,11 +10,17 @@ first_n_questions.createAjax(
             (_response = questions_data),
             (_createHtml = createQuestionHtml)
         );
+        setEventRelativePost();
     }
 );
+let first_index_questions = document.querySelector(".index__questions");
+first_index_questions.classList.add("active");
 const list_index_questions = document.querySelectorAll(".index__questions");
 list_index_questions.forEach((index) => {
     index.addEventListener("click", (e) => {
+        first_index_questions.classList.remove("active");
+        index.classList.add("active");
+        first_index_questions = index;
         const list_questions = document.getElementById("question-list-wrap");
         list_questions.innerHTML = "";
         const data_question_id = index.getAttribute("data-questions-index");
@@ -30,6 +36,7 @@ list_index_questions.forEach((index) => {
                     (_response = questions_data),
                     (_createHtml = createQuestionHtml)
                 );
+                setEventRelativePost();
             }
         );
     });
@@ -88,6 +95,9 @@ function createQuestionHtml() {
                 <div class="cardquestion__list-tag">
                     ${tag_list.innerHTML}
                 </div>
+                <button class="question__tags--relativePost" type="button">
+                    <ion-icon name="chevron-forward-outline"></ion-icon>
+                </button>
             </div>
         </div>
     </div>
@@ -123,3 +133,70 @@ question_previous_btn.addEventListener("click", (e) => {
         question_previous_btn.disabled = true;
     }
 });
+// todo: --------------
+function setEventRelativePost() {
+    const questions_node = document.querySelectorAll(
+        ".question__tags--relativePost"
+    );
+    questions_node.forEach((question) => {
+        question.addEventListener("click", (e) => {
+            const list_tags_wrap = question.parentNode.querySelector(
+                ".cardquestion__list-tag"
+            );
+            const array_tags = [...list_tags_wrap.children];
+            let list_tags = [];
+            array_tags.forEach((tag) => {
+                list_tags.push(tag.innerText);
+            });
+            const relative_post = new AJAX();
+            relative_post.createAjax(
+                (_method = "GET"),
+                (_path = `/post-relative/${list_tags}`),
+                (_form = undefined),
+                (data_response) => {
+                    console.log(data_response);
+                    const questions_data = data_response.all_relative_posts;
+                    relative_post.insertResponseToNodeId(
+                        (_node_id = "question-rightpart-list-relativepost"),
+                        (_response = questions_data),
+                        (_createHtml = createRelativePost)
+                    );
+                }
+            );
+        });
+    });
+}
+function createRelativePost(){
+    return `
+    <div class="postrelative__card--wrap">
+        <div class="relative__post--header">
+            <p>
+                <a href="">${this.title}</a>
+            </p>
+        </div>
+        <div class="relative__post--body">
+            <div class="relative__post--index">
+                <ion-icon name="star-outline"></ion-icon>
+                <span>0</span>
+            </div>
+            <div class="relative__post--index">
+                <ion-icon name="chatbubbles-outline"></ion-icon>
+                <span>0</span>
+            </div>
+            <div class="relative__post--index">
+                <ion-icon name="bookmark-outline"></ion-icon>
+                <span>0</span>
+            </div>
+            <div class="relative__post--index">
+                <ion-icon name="eye-outline"></ion-icon>
+                <span>0</span>
+            </div>
+        </div>
+        <div class="relative__post--footer">
+            <p class="relative__post--authorname">
+                <a href="">${this.name}</a>
+            </p>
+        </div>
+    </div>
+    `
+}

@@ -31,7 +31,7 @@ class AJAX {
     /**
      * @param {String} _node_id Chỉ nhận Id của Node muốn chèn HTML vào
      * @param {Array} _response Mảng chứa các đối tượng [ { }, { }, ... ]
-     * @param {Function} _createHtml Tên của 1 hàm mà nó trả về HTML 
+     * @param {Function} _createHtml Tên của 1 hàm mà nó trả về HTML
      */
     insertResponseToNodeId(_node_id, _response, _createHtml) {
         const node_id = document.getElementById(_node_id);

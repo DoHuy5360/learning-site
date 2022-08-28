@@ -23,9 +23,10 @@ class PostController extends Controller
     {
         //todo: get all post but not contain any tags
         $all_posts = DB::select(
-            "SELECT * 
-             FROM public.users, public.posts
-             WHERE users.id = posts.creator::integer
+            "SELECT *, p.id AS post_id
+             FROM posts p, users u
+             WHERE u.id = p.creator::integer
+             ORDER BY u.id DESC
             "
         );
         // return $all_posts;
@@ -36,7 +37,7 @@ class PostController extends Controller
                 "SELECT t.name
                  FROM tags t, tag_contents tc
                  WHERE t.tag_code = tc.tag_id
-                 AND tc.content_id::integer = {$post->id}
+                 AND tc.content_id::integer = {$post->post_id}
                  AND t.type = 'post'
                 "
             );
@@ -180,11 +181,12 @@ class PostController extends Controller
         $user_id = Auth::user()->id;
         $split_request = explode('|', $name_id);
         $post_id = end($split_request);
+        // return $post_id;
         $corresponding_post = DB::select(
-            "SELECT * , users.id as user_id, posts.id as post_id
-             FROM users, posts 
-             WHERE posts.id = {$post_id}
-             AND posts.creator::integer = users.id 
+            "SELECT * , u.id as user_id, p.id as post_id
+             FROM users u, posts p
+             WHERE p.id = {$post_id}
+             AND p.creator::integer = u.id 
             "
         )[0];
         // return $corresponding_post;

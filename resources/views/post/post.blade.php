@@ -28,7 +28,7 @@
                                 </div>
                                 <div class="post__card--body">
                                     <h2 class="post__card--title">
-                                        <a href="{{ route('post.show', remove_sign($post->title) . '|' . $post->id) }}">{{ $post->title }}</a>
+                                        <a href="{{ route('post.show', remove_sign($post->title) . '|' . $post->post_id) }}">{{ $post->title }}</a>
                                     </h2>
                                 </div>
                                 <div class="post__card--footer">

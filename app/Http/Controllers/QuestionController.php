@@ -20,11 +20,15 @@ class QuestionController extends Controller
     {
         // return $all_questions;
 
-        // $relative_post = DB::select(
-        //     "SELECT *
-        //      FROM post
-        //     "
-        // );
+        $relative_posts = DB::select(
+            "SELECT *
+             FROM posts p, users u
+             WHERE u.id = p.creator::integer
+             ORDER BY u.id DESC
+             LIMIT 1
+            "
+        );
+        // return $relative_posts;
         $all_questions_length = DB::select(
             "SELECT COUNT(*)
              FROM questions, users
@@ -34,6 +38,7 @@ class QuestionController extends Controller
         // return $all_questions_length;
         return view('question.question', [
             'all_questions_length' => $all_questions_length,
+            'relative_posts' => $relative_posts,
         ]);
     }
     public function getQuestions($index)
@@ -42,9 +47,10 @@ class QuestionController extends Controller
         $range = 7;
         $start = ($index - 1) * $range;
         $all_questions = DB::select(
-            "SELECT *, questions.id AS question_id
-             FROM questions, users
-             WHERE questions.questioner = users.id
+            "SELECT *, q.id AS question_id
+             FROM questions q, users u
+             WHERE q.questioner = u.id
+             ORDER BY q.id DESC
              LIMIT $range OFFSET $start
             "
         );
@@ -63,6 +69,47 @@ class QuestionController extends Controller
         return response()->json(
             [
                 'all_questions' => $all_questions
+            ]
+        );
+    }
+    public function getRelativePost($tag)
+    {
+        // return $tag;
+        $array_tags = explode(',', $tag);
+        $relative_posts = DB::select(
+            "SELECT *, p.id AS post_id
+             FROM posts p, users u
+             WHERE u.id = p.creator::integer
+             ORDER BY u.id DESC
+            --  LIMIT 1
+            "
+        );
+        // return $relative_posts;
+        $all_relative_posts = [];
+        for ($i = 0; $i < sizeof($relative_posts); $i++) {
+            $select_post = $relative_posts[$i];
+            $relative_tag = DB::select(
+                "SELECT t.name
+                 FROM tags t, tag_contents tc
+                 WHERE t.tag_code = tc.tag_id
+                 AND tc.content_id::integer = $select_post->post_id
+                 AND t.type = 'post'
+                "
+            );
+            $select_post->tag = $relative_tag;
+            foreach ($relative_tag as $tag) {
+                if (in_array($tag->name, $array_tags)) {
+                    $all_relative_posts[$i] = $select_post;
+                    break;
+                }
+            }
+        };
+        // return $relative_posts;
+        // return $all_relative_posts;
+        return response()->json(
+            [
+                'all_relative_posts' => $all_relative_posts,
+                'array_tags' => $array_tags,
             ]
         );
     }

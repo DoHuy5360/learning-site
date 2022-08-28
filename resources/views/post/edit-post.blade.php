@@ -4,6 +4,7 @@
 @endsection
 @section('script')
     <script src="{{ asset('assets/js/post/edit-post.js') }}"></script>
+    <script src="{{ asset('assets/js/post/create-post.js') }}"></script>
 @endsection
 @section('content')
     <form action="{{ route('post.update', remove_sign($corresponding_post->title) . '|' . $corresponding_post->id) }}" id="update-post-form" enctype="multipart/form-data" method="POST">
