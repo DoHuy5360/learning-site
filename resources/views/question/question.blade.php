@@ -75,6 +75,23 @@
                             </div>
                         @endforeach --}}
                     </div>
+                    <div id="question-list-index-question">
+                        <button id="question-previous-index">
+                            <ion-icon name="chevron-back-outline"></ion-icon>
+                        </button>
+                        <div id="question-wrap-box-index">
+                            @for ($wrap = 0; $wrap < $all_questions_length; $wrap += 5)
+                                <div class="index__questions--wrap">
+                                    @for ($index = 1; $index < 6; $index++)
+                                        <input class="index__questions" value="{{ $wrap + $index }}" data-questions-index="{{ $wrap + $index }}" type="button" />
+                                    @endfor
+                                </div>
+                            @endfor
+                        </div>
+                        <button id="question-next-index">
+                            <ion-icon name="chevron-forward-outline"></ion-icon>
+                        </button>
+                    </div>
                 </div>
                 <div id="body-right-part-question">
                     <div id="make-fixed-position">

@@ -1,17 +1,39 @@
-const questions = new AJAX();
-questions.createAjax(
+const first_n_questions = new AJAX();
+first_n_questions.createAjax(
     (_method = "GET"),
-    (_path = "/question-list"),
+    (_path = "/question-list/1"),
     (_form = undefined),
-    (response_data) => {
-        const questions_data = response_data.all_questions;
-        questions.insertResponseToNodeId(
+    (data_response) => {
+        const questions_data = data_response.all_questions;
+        first_n_questions.insertResponseToNodeId(
             (_node_id = "question-list-wrap"),
             (_response = questions_data),
             (_createHtml = createQuestionHtml)
         );
     }
 );
+const list_index_questions = document.querySelectorAll(".index__questions");
+list_index_questions.forEach((index) => {
+    index.addEventListener("click", (e) => {
+        const list_questions = document.getElementById("question-list-wrap");
+        list_questions.innerHTML = "";
+        const data_question_id = index.getAttribute("data-questions-index");
+        const n_questions = new AJAX();
+        n_questions.createAjax(
+            (_method = "GET"),
+            (_path = `/question-list/${data_question_id}`),
+            (_form = undefined),
+            (data_response) => {
+                const questions_data = data_response.all_questions;
+                first_n_questions.insertResponseToNodeId(
+                    (_node_id = "question-list-wrap"),
+                    (_response = questions_data),
+                    (_createHtml = createQuestionHtml)
+                );
+            }
+        );
+    });
+});
 function createQuestionHtml() {
     const tag_list = document.createElement("div");
     this.tags.forEach((tag) => {
@@ -71,3 +93,33 @@ function createQuestionHtml() {
     </div>
     `;
 }
+const question_previous_btn = document.getElementById(
+    "question-previous-index"
+);
+const question_next_btn = document.getElementById("question-next-index");
+const question_index_bar = document.getElementById("question-wrap-box-index");
+let current_index = 0;
+const all_index_element = question_index_bar.children;
+question_next_btn.addEventListener("click", (e) => {
+    all_index_element[current_index].style.display = "none";
+    current_index++;
+    all_index_element[current_index].style.display = "flex";
+    if (current_index == all_index_element.length - 1) {
+        question_next_btn.disabled = true;
+    } else {
+        question_next_btn.disabled = false;
+        question_previous_btn.disabled = false;
+    }
+});
+question_previous_btn.disabled = true;
+question_previous_btn.addEventListener("click", (e) => {
+    all_index_element[current_index].style.display = "none";
+    current_index--;
+    all_index_element[current_index].style.display = "flex";
+    if (current_index != 0) {
+        question_previous_btn.disabled = false;
+        question_next_btn.disabled = false;
+    } else {
+        question_previous_btn.disabled = true;
+    }
+});

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->text('content');
             $table->text('slug')->nullable();
         });
+        // \App\Models\Question::factory()->count(40)->create();
     }
 
     /**

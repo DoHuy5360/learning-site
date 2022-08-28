@@ -34,7 +34,7 @@ Route::resource('/profile', ProfileController::class);
 Route::resource('/series', SeriesController::class);
 Route::resource('/follow', FollowController::class);
 
-Route::get('/question-list', [QuestionController::class, 'getQuestions']);
+Route::get('/question-list/{index}', [QuestionController::class, 'getQuestions']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

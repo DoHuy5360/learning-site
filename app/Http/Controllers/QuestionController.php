@@ -25,16 +25,27 @@ class QuestionController extends Controller
         //      FROM post
         //     "
         // );
+        $all_questions_length = DB::select(
+            "SELECT COUNT(*)
+             FROM questions, users
+             WHERE questions.questioner = users.id
+            "
+        )[0]->count / 7;
+        // return $all_questions_length;
         return view('question.question', [
-            // '' => $,
+            'all_questions_length' => $all_questions_length,
         ]);
     }
-    public function getQuestions()
+    public function getQuestions($index)
     {
+        // return $index;
+        $range = 7;
+        $start = ($index - 1) * $range;
         $all_questions = DB::select(
             "SELECT *, questions.id AS question_id
              FROM questions, users
              WHERE questions.questioner = users.id
+             LIMIT $range OFFSET $start
             "
         );
         // return $all_questions;
