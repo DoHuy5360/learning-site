@@ -46,9 +46,10 @@ class PostController extends Controller
         }
         // return $all_posts;
         $all_questions = DB::select(
-            "SELECT *, questions.id AS question_id
-             FROM questions, users
-             WHERE questions.questioner = users.id
+            "SELECT *, q.id AS question_id
+             FROM questions q, users u
+             WHERE q.questioner = u.id
+             ORDER BY q.id DESC
             "
         );
         return view('post.post', [

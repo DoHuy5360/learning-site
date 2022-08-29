@@ -27,22 +27,26 @@
                         </div>
                     </div>
                     <div id="question-list-index-question">
-                        <button id="question-previous-index">
+                        <button id="question-previous-index" type="button">
                             <ion-icon name="chevron-back-outline"></ion-icon>
                         </button>
                         <div id="question-wrap-box-index">
-                            @for ($wrap = 0; $wrap < $all_questions_length; $wrap += 5)
+                            @for ($wrap = 0; $wrap < $all_questions_length; $wrap += 10)
                                 <div class="index__questions--wrap">
-                                    @for ($index = 1; $index < 6; $index++)
-                                        {{-- <input class="index__questions" value="{{ $wrap + $index }}" data-questions-index="{{ $wrap + $index }}" type="button" /> --}}
-                                        <div class="index__questions" data-questions-index="{{ $wrap + $index }}">
-                                            {{ $wrap + $index }}
-                                        </div>
+                                    @for ($ascending = 1; $ascending < 11; $ascending++)
+                                        @php
+                                            $question_index = $wrap + $ascending;
+                                        @endphp
+                                        @if ($question_index < $all_questions_length + 1)
+                                            <div class="index__questions" data-questions-index="{{ $question_index }}">
+                                                {{ $question_index }}
+                                            </div>
+                                        @endif
                                     @endfor
                                 </div>
                             @endfor
                         </div>
-                        <button id="question-next-index">
+                        <button id="question-next-index" type="button">
                             <ion-icon name="chevron-forward-outline"></ion-icon>
                         </button>
                     </div>
@@ -54,38 +58,7 @@
                             <span></span>
                         </p>
                         <div id="question-rightpart-list-relativepost">
-                            {{-- @foreach ($relative_posts as $post)
-                                <div class="postrelative__card--wrap">
-                                    <div class="relative__post--header">
-                                        <p>
-                                            <a href="">{{ $post->title }}</a>
-                                        </p>
-                                    </div>
-                                    <div class="relative__post--body">
-                                        <div class="relative__post--index">
-                                            <ion-icon name="star-outline"></ion-icon>
-                                            <span>0</span>
-                                        </div>
-                                        <div class="relative__post--index">
-                                            <ion-icon name="chatbubbles-outline"></ion-icon>
-                                            <span>0</span>
-                                        </div>
-                                        <div class="relative__post--index">
-                                            <ion-icon name="bookmark-outline"></ion-icon>
-                                            <span>0</span>
-                                        </div>
-                                        <div class="relative__post--index">
-                                            <ion-icon name="eye-outline"></ion-icon>
-                                            <span>0</span>
-                                        </div>
-                                    </div>
-                                    <div class="relative__post--footer">
-                                        <p class="relative__post--authorname">
-                                            <a href="">{{ $post->name }}</a>
-                                        </p>
-                                    </div>
-                                </div>
-                            @endforeach --}}
+                            {{-- relative post --}}
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,172 @@
+#tagVw-wrap-all {
+    width: var(--width-align);
+    margin: 20px auto;
+}
+#tagVw-header-wrap{
+    overflow: hidden;
+    height: 70px;
+}
+#tagVw-header-wrap:hover{
+    overflow: visible;
+    height: unset;
+}
+#tagVw-tag-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    height: 70px;
+    float: left;
+    margin-right: 25px;
+}
+#tagVw-avatar {
+    width: 70px;
+    aspect-ratio: 1;
+    object-fit: cover;
+}
+#tagVw-wrap-name {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 5px 0;
+}
+#tagVw-name {
+    font-size: 25px;
+    white-space: nowrap;
+}
+#tagVw-follow {
+    color: var(--color-2);
+    border: 1px solid var(--color-2);
+    padding: 0 5px;
+    border-radius: 20px;
+    background-color: transparent;
+    cursor: pointer;
+}
+#tagVw-tag-description {
+    text-align: justify;
+    word-break: keep-all;
+    transform: translateY(5px);
+    z-index: -1;
+    position: relative;
+}
+#tagVw-big-letters {
+    font-size: 30px;
+    float: left;
+    margin-right: 5px;
+    vertical-align: top;
+    transform: scale(1.5);
+}
+/* #tagVw-paragraph{
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+} */
+#tagVw-body-wrap {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 20px;
+    margin-top: 30px;
+}
+#tagVw-left-part {
+}
+#tagVw-menu-bar {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-soft);
+}
+.tagVw__option--choice {
+    padding: 5px 10px;
+    text-decoration: unset;
+    color: var(--gray-hard);
+    transition: 100ms linear;
+}
+.tagVw__option--choice:hover {
+    color: black;
+}
+#tagVw-filter-wrap {
+    display: flex;
+    justify-content: end;
+    margin-top: 10px;
+}
+#tagVw-right-part {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+#tagVw-tag-name,
+#tagVw-tag-popular {
+    display: flex;
+    padding: 5px 0;
+    align-items: baseline;
+    gap: 5px;
+}
+#tagVw-tag-name span:first-child,
+#tagVw-tag-popular span:first-child {
+    white-space: nowrap;
+}
+#tagVw-tag-name span:last-child,
+#tagVw-tag-popular span:last-child {
+    width: 100%;
+    height: 1px;
+    background-color: var(--gray-soft);
+}
+#tagVw-content-first,
+#tagVw-content-second {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+#tagVw-tag-index {
+    display: flex;
+    border: 1px solid var(--gray-soft);
+    background-color: var(--gray-soft);
+    gap: 1px;
+}
+.tagVw__index--wrap {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: white;
+    width: 100%;
+}
+.tagVw__index--amount {
+    font-size: 20px;
+    font-weight: bold;
+}
+.tagVw__index--name {
+    white-space: nowrap;
+}
+#tagVw-list-tag {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.tagVw__tag--others {
+    display: flex;
+    border-radius: 20px;
+    overflow: hidden;
+    outline: 1px solid var(--color-2);
+    align-items: center;
+    font-size: 13px;
+    cursor: pointer;
+}
+.tagVw__others--name {
+    padding: 2px 8px;
+}
+.tagVw__others--amount {
+    background-color: var(--color-2);
+    padding: 2px 8px;
+    color: white;
+    height: 100%;
+}
+#tagVw-all-tag-link {
+    display: flex;
+    align-items: center;
+    color: var(--color-2);
+    font-weight: bold;
+    gap: 5px;
+    border-top: 1px solid var(--gray-soft);
+    padding: 10px 0;
+    cursor: pointer;
+}

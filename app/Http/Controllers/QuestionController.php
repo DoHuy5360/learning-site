@@ -20,15 +20,6 @@ class QuestionController extends Controller
     {
         // return $all_questions;
 
-        $relative_posts = DB::select(
-            "SELECT *
-             FROM posts p, users u
-             WHERE u.id = p.creator::integer
-             ORDER BY u.id DESC
-             LIMIT 1
-            "
-        );
-        // return $relative_posts;
         $all_questions_length = DB::select(
             "SELECT COUNT(*)
              FROM questions, users
@@ -38,7 +29,6 @@ class QuestionController extends Controller
         // return $all_questions_length;
         return view('question.question', [
             'all_questions_length' => $all_questions_length,
-            'relative_posts' => $relative_posts,
         ]);
     }
     public function getQuestions($index)
@@ -56,7 +46,9 @@ class QuestionController extends Controller
         );
         // return $all_questions;
         for ($i = 0; $i < sizeof($all_questions); $i++) {
-            $question_id = $all_questions[$i]->question_id;
+            $target_question = $all_questions[$i];
+            // todo: Lấy danh sách tags của câu hỏi này
+            $question_id = $target_question->question_id;
             $relative_tag = DB::select(
                 "SELECT t.name
                  FROM tags t, tag_contents tc
@@ -64,8 +56,27 @@ class QuestionController extends Controller
                  AND tc.content_id::integer = $question_id
                 "
             );
-            $all_questions[$i]->tags = $relative_tag;
+            $target_question->tags = $relative_tag;
+            // todo: Lấy danh sách người trả lời câu hỏi này
+            $anser_question = DB::select(
+                "SELECT DISTINCT ON (u.id) *
+                 FROM question_answers qa, users u
+                 WHERE qa.content_type = $target_question->question_id
+                 AND qa.replier = u.id
+                "
+            );
+            $target_question->answers = $anser_question;
+            // todo: Lấy số lượng câu trả lời
+            $amount_anser = DB::select(
+                "SELECT COUNT(qa.id)
+                 FROM question_answers qa, users u
+                 WHERE qa.content_type = $target_question->question_id
+                 AND qa.replier = u.id
+                "
+            );
+            $target_question->amount_anser = $amount_anser[0]->count;
         }
+        // return $all_questions;
         return response()->json(
             [
                 'all_questions' => $all_questions
@@ -99,7 +110,7 @@ class QuestionController extends Controller
             $select_post->tag = $relative_tag;
             foreach ($relative_tag as $tag) {
                 if (in_array($tag->name, $array_tags)) {
-                    $all_relative_posts[$i] = $select_post;
+                    array_push($all_relative_posts, $select_post);
                     break;
                 }
             }

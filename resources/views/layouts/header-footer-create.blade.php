@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/create-post.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/create-question.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/profile.css') }}">
-
+    @yield('style')
     <title>
         @yield('title')
     </title>
@@ -106,5 +106,6 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="{{ asset('assets/js/ckeditor/ckeditor.js') }}"></script>
 </body>
+
 </html>
 @yield('script')

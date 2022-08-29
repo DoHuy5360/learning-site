@@ -43,12 +43,32 @@ list_index_questions.forEach((index) => {
 });
 function createQuestionHtml() {
     const tag_list = document.createElement("div");
-    this.tags.forEach((tag) => {
-        const tag_link = document.createElement("a");
-        tag_link.setAttribute("href", "#");
-        tag_link.textContent = tag.name;
-        tag_list.appendChild(tag_link);
-    });
+    let open_relativePost_btn;
+    if (this.tags.length != 0) {
+        this.tags.forEach((tag) => {
+            const tag_link = document.createElement("a");
+            tag_link.setAttribute("href", "#");
+            tag_link.textContent = tag.name;
+            tag_list.appendChild(tag_link);
+        });
+        const relativePost_btn_wrap = document.createElement("div");
+        const relativePost_btn = document.createElement("button");
+        relativePost_btn.setAttribute("class", "question__tags--relativePost");
+        relativePost_btn.setAttribute("type", "button");
+        relativePost_btn.innerHTML =
+        '<ion-icon name="newspaper-outline"></ion-icon>';
+        relativePost_btn_wrap.appendChild(relativePost_btn);
+        open_relativePost_btn = relativePost_btn_wrap.innerHTML;
+    } else {
+        open_relativePost_btn = "";
+    }
+    const answer_avatar_list = document.createElement("div");
+    this.answers.forEach(answer => {
+        const avatar_answer = document.createElement('img')
+        avatar_answer.setAttribute('src',answer.avatar)
+        avatar_answer.setAttribute('title',answer.name)
+        answer_avatar_list.appendChild(avatar_answer)
+    })
     return `
     <div class="card__question--wrap">
         <div class="card__question--leftpart">
@@ -67,7 +87,7 @@ function createQuestionHtml() {
                 </div>
                 <div class="cardquestion__leftpart--index">
                     <ion-icon name="chatbubbles-outline"></ion-icon>
-                    <span>0</span>
+                    <span>${this.amount_anser}</span>
                 </div>
                 <div class="cardquestion__leftpart--index">
                     <ion-icon name="eye-outline"></ion-icon>
@@ -81,11 +101,11 @@ function createQuestionHtml() {
                     <img src="${this.avatar}" alt="" />
                 </div>
                 <div class="cardquestion__author--name">
-                    <a href="">${this.name}</a>
+                    <a href="/profile/${this.questioner}">${this.name}</a>
                 </div>
                 <ion-icon name="arrow-undo-outline"></ion-icon>
                 <div class="cardquestion__list--helper">
-                    <img src="./assets/avatar.png" alt="" />
+                    ${answer_avatar_list.innerHTML}
                 </div>
             </div>
             <div class="cardquestion__rightpart--body">
@@ -95,9 +115,7 @@ function createQuestionHtml() {
                 <div class="cardquestion__list-tag">
                     ${tag_list.innerHTML}
                 </div>
-                <button class="question__tags--relativePost" type="button">
-                    <ion-icon name="chevron-forward-outline"></ion-icon>
-                </button>
+                ${open_relativePost_btn}
             </div>
         </div>
     </div>
@@ -116,6 +134,7 @@ question_next_btn.addEventListener("click", (e) => {
     all_index_element[current_index].style.display = "flex";
     if (current_index == all_index_element.length - 1) {
         question_next_btn.disabled = true;
+        question_previous_btn.disabled = false;
     } else {
         question_next_btn.disabled = false;
         question_previous_btn.disabled = false;
@@ -130,6 +149,7 @@ question_previous_btn.addEventListener("click", (e) => {
         question_previous_btn.disabled = false;
         question_next_btn.disabled = false;
     } else {
+        question_next_btn.disabled = false;
         question_previous_btn.disabled = true;
     }
 });
@@ -156,6 +176,10 @@ function setEventRelativePost() {
                 (data_response) => {
                     console.log(data_response);
                     const questions_data = data_response.all_relative_posts;
+                    const relativePost_list_wrap = document.getElementById(
+                        "question-rightpart-list-relativepost"
+                    );
+                    relativePost_list_wrap.innerHTML = "";
                     relative_post.insertResponseToNodeId(
                         (_node_id = "question-rightpart-list-relativepost"),
                         (_response = questions_data),
@@ -166,12 +190,12 @@ function setEventRelativePost() {
         });
     });
 }
-function createRelativePost(){
+function createRelativePost() {
     return `
     <div class="postrelative__card--wrap">
         <div class="relative__post--header">
             <p>
-                <a href="">${this.title}</a>
+                <a href="/post/${this.post_id}">${this.title}</a>
             </p>
         </div>
         <div class="relative__post--body">
@@ -198,5 +222,5 @@ function createRelativePost(){
             </p>
         </div>
     </div>
-    `
+    `;
 }

@@ -9,6 +9,7 @@ use App\Http\Controllers\QuestionController;
 use App\Http\Controllers\Reply_answerController;
 use App\Http\Controllers\Reply_commentController;
 use App\Http\Controllers\SeriesController;
+use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,7 @@ Route::resource('/reply-answer', Reply_answerController::class);
 Route::resource('/profile', ProfileController::class);
 Route::resource('/series', SeriesController::class);
 Route::resource('/follow', FollowController::class);
+Route::resource('/tag', TagController::class);
 
 Route::get('/question-list/{index}', [QuestionController::class, 'getQuestions']);
 Route::get('/post-relative/{tag}', [QuestionController::class, 'getRelativePost']);
