@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TagController extends Controller
 {
@@ -45,7 +46,49 @@ class TagController extends Controller
      */
     public function show($id)
     {
-        return view('tag.view-tag');
+        $relative_posts = DB::select(
+            "SELECT *, p.id AS post_id
+             FROM posts p, tags t, tag_contents tc, users u
+             WHERE t.id = $id
+             AND tc.tag_id = t.tag_code
+             AND tc.content_id::integer = p.id
+             AND p.creator::integer = u.id
+            "
+        );
+        $relative_questions = DB::select(
+            "SELECT *, q.id AS question_id
+             FROM questions q, tags t, tag_contents tc, users u
+             WHERE t.id = $id
+             AND tc.tag_id = t.tag_code
+             AND tc.content_id::integer = q.id
+             AND q.questioner::integer = u.id
+            "
+        );
+        $content_creators = DB::select(
+            "SELECT *
+             FROM tags t, tag_contents tc, users u, posts p
+             WHERE t.id = $id
+             AND t.tag_code = tc.tag_id
+             AND tc.content_id::integer = p.id
+             AND p.creator::integer = u.id
+            "
+        );
+        $tag_series = DB::select(
+            "SELECT *, s.name AS series_name
+             FROM series s, posts p, series_posts sp, tags t, tag_contents tc
+             WHERE sp.series_id = s.id
+             AND t.id = $id
+             AND t.tag_code = tc.tag_id
+             AND sp.post_id = p.id
+             AND tc.content_id::integer = p.id
+            "
+        );
+        return view('tag.view-tag', [
+            'relative_posts' => $relative_posts,
+            'relative_questions' => $relative_questions,
+            'content_creators' => $content_creators,
+            'tag_series' => $tag_series
+        ]);
     }
 
     /**

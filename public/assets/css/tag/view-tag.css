@@ -41,6 +41,11 @@
     border-radius: 20px;
     background-color: transparent;
     cursor: pointer;
+    transition: 100ms linear;
+}
+#tagVw-follow:hover{
+    background-color: var(--color-2);
+    color: white;
 }
 #tagVw-tag-description {
     text-align: justify;
@@ -169,4 +174,24 @@
     border-top: 1px solid var(--gray-soft);
     padding: 10px 0;
     cursor: pointer;
+}
+#tagVw-content-post{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.tagVw__content--option{
+    width: 0;
+    height: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.tagVw__content--option:target{
+    width: 100%;
+    height: 100%;
+}
+#tagVw-content-creator{
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Series;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SeriesController extends Controller
 {
@@ -42,8 +43,16 @@ class SeriesController extends Controller
         $new_series->creator = $user_id;
         $new_series->save();
 
+        $relatest_series = DB::select(
+            "SELECT *
+             FROM series
+             ORDER BY id DESC
+             LIMIT 1
+            "
+        )[0];
+
         return response()->json([
-            'series_information'=>$request->series_name
+            'relatest_series'=>$relatest_series,
         ]);
     }
 

@@ -87,6 +87,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         $user_id = Auth::user()->id;
         // todo: store new post
         $new_post = new Post;
@@ -281,6 +282,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
+        // return $id;
         $corresponding_post = DB::select(
             "SELECT *
              FROM posts
@@ -303,8 +305,8 @@ class PostController extends Controller
             "
         );
         // return $all_series;
-
-        foreach ($all_series as $series) {
+        for ($i = 0; $i < sizeof($all_series); $i++) {
+            $series = $all_series[$i];
             $series_of_post_in_list_series = DB::select(
                 "SELECT series_id
                  FROM series_posts

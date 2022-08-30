@@ -55,33 +55,4 @@
             </div>
         </div>
     </form>
-    <script>
-        const csrf_token = document.querySelector('[name="_token"]').value
-        // const list_series = document.getElementById('edit-series-list')
-        const add_series_box = document.getElementById('edit-add-series-box')
-
-        document.getElementById('edit-add-series-btn').addEventListener('click', e => {
-            const series_name = document.getElementById('edit-add-new-series');
-            const ajax = new XMLHttpRequest();
-            ajax.open('POST', 'http://127.0.0.1:8000/series')
-            ajax.setRequestHeader('Content-type', 'application/x-www-form-urlencoded')
-            ajax.send(`_token=${csrf_token}&series_name=${series_name.value}`)
-            ajax.onreadystatechange = function() {
-                if (this.readyState == 4 & this.status == 200 && this.responseText) {
-                    const data_response = JSON.parse(this.responseText)
-                    const {
-                        series_information
-                    } = data_response
-                    const series_html = `
-                    <div class="series__element">
-                        <label for="input-series-element">${series_information}</label>
-                        <input type="checkbox" name="series_element" id="">
-                    </div>
-                    `
-                    add_series_box.insertAdjacentHTML('afterend', series_html)
-                }
-            }
-        })
-
-    </script>
 @endsection

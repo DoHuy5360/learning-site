@@ -197,7 +197,7 @@
                                 <div class="profile__following--infomation">
                                     <div class="profile__following--name">
                                         <a href="" class="underline__none">{{ $following->name }}</a>
-                                        <button class="profile__follow--btn">Theo dõi</button>
+                                        <button class="profile__follow--btn" type="button">Theo dõi</button>
                                     </div>
                                     <div class="profile__following--index">
                                         <div class="profile__following">
@@ -229,7 +229,7 @@
                                 <div class="profile__following--infomation">
                                     <div class="profile__following--name">
                                         <a href="" class="underline__none">{{ $follower->name }}</a>
-                                        <button class="profile__follow--btn">Theo dõi</button>
+                                        <button class="profile__follow--btn" type="button">Theo dõi</button>
                                     </div>
                                     <div class="profile__following--index">
                                         <div class="profile__following">
