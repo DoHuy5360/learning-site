@@ -50,7 +50,7 @@ class QuestionController extends Controller
             // todo: Lấy danh sách tags của câu hỏi này
             $question_id = $target_question->question_id;
             $relative_tag = DB::select(
-                "SELECT t.name
+                "SELECT t.name, t.id
                  FROM tags t, tag_contents tc
                  WHERE t.tag_code = tc.tag_id
                  AND tc.content_id::integer = $question_id
@@ -207,12 +207,20 @@ class QuestionController extends Controller
     public function show($id)
     {
         $corresponding_question = DB::select(
-            "SELECT *
-             FROM questions, users
-             WHERE questions.questioner = users.id
-             AND questions.id = $id
+            "SELECT *, q.id AS question_id
+             FROM questions q, users u
+             WHERE q.questioner = u.id
+             AND q.id = $id
             "
         )[0];
+        $relative_tags = DB::select(
+            "SELECT t.name, t.id
+             FROM tags t, tag_contents tc
+             WHERE tc.content_id::integer = $corresponding_question->question_id
+             AND tc.tag_id = t.tag_code
+            "
+        );
+        // return $corresponding_question;
         $all_answers = DB::select(
             "SELECT *
              FROM question_answers, users
@@ -222,6 +230,7 @@ class QuestionController extends Controller
         );
         return view('question.view-question', [
             'corresponding_question' => $corresponding_question,
+            'relative_tags' => $relative_tags,
             'question_id' => $id,
             'all_answers' => $all_answers,
         ]);

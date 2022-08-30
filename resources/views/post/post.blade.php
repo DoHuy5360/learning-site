@@ -33,7 +33,7 @@
                                 </div>
                                 <div class="post__card--footer">
                                     @foreach ($post->tags as $tag)
-                                        <a href="" class="post__card--tag">{{ $tag->name }}</a>
+                                        <a href="{{ route('tag.show', $tag->id) }}" class="post__card--tag">{{ $tag->name }}</a>
                                     @endforeach
                                 </div>
                             </div>

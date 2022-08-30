@@ -39,7 +39,9 @@
                                 <h1>{{ $corresponding_question->title }}</h1>
                             </div>
                             <div id="quesVw-ques_tag-lv3-ls">
-                                <span><a href="" class="underline__none">question tag</a></span>
+                                @foreach ($relative_tags as $tag)
+                                    <a href="{{ route('tag.show', $tag->id) }}" class="underline__none">{{ $tag->name }}</a>
+                                @endforeach
                             </div>
                             <div id="quesVw-ques_question-lv4-wr">
                                 {{ $corresponding_question->content }}
@@ -111,7 +113,7 @@
                             </div>
                         </form>
                     </div>
-                    <div id="quesVw-reply-list"  data-answer-code="{{ $corresponding_question->question_code }}"></div>
+                    <div id="quesVw-reply-list" data-answer-code="{{ $corresponding_question->question_code }}"></div>
                 </div>
             </div>
             <!-- todo answer start -->
@@ -183,12 +185,12 @@
         let close_form_btn = document.getElementById('quesVw-btn-close-form')
         create_comment_btn.addEventListener('click', e => {
             // chat_form.setAttribute('action','http://127.0.0.1:8000/question-comment')
-            chat_form.setAttribute('data-mesage-type','comment')
+            chat_form.setAttribute('data-mesage-type', 'comment')
             chat_form.classList.add('chat_active')
         })
         create_answer_btn.addEventListener('click', e => {
             // chat_form.setAttribute('action','http://127.0.0.1:8000/reply-answer')
-            chat_form.setAttribute('data-mesage-type','answer')
+            chat_form.setAttribute('data-mesage-type', 'answer')
             chat_form.classList.add('chat_active')
         })
         close_form_btn.addEventListener('click', e => {

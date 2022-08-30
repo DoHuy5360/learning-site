@@ -63,10 +63,12 @@
 #quesVw-ques_tag-lv3-ls {
     margin: 10px 0;
 }
-#quesVw-ques_tag-lv3-ls span {
-    border: 1px solid;
-    padding: 2px 5px;
+#quesVw-ques_tag-lv3-ls a {
+    text-decoration: unset;
+    border: 1px solid var(--color-2);
+    padding: 2px 10px;
     border-radius: 20px;
+    transition: 100ms linear;
     font-size: 13px;
 }
 #quesVw-aut_social-lv4-wr {

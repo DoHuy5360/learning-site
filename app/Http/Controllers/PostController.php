@@ -34,7 +34,7 @@ class PostController extends Controller
         //todo: push all relative tags to the corresponding post
         foreach ($all_posts as $post) {
             $relative_tag = DB::select(
-                "SELECT t.name
+                "SELECT t.name, t.id
                  FROM tags t, tag_contents tc
                  WHERE t.tag_code = tc.tag_id
                  AND tc.content_id::integer = {$post->post_id}

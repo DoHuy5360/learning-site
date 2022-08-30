@@ -13,14 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tags', function (Blueprint $table) {
+        Schema::create('codes', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('tag_code',10);
-            $table->string('name');
-            $table->integer('creator');
-            $table->string('type');
-            $table->text('tag_description')->nullable()->default("Chưa cập nhật thông tin");
+            $table->string('code');
         });
     }
 
@@ -31,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('codes');
     }
 };

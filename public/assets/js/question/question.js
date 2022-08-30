@@ -47,7 +47,7 @@ function createQuestionHtml() {
     if (this.tags.length != 0) {
         this.tags.forEach((tag) => {
             const tag_link = document.createElement("a");
-            tag_link.setAttribute("href", "#");
+            tag_link.setAttribute("href", `/tag/${tag.id}`);
             tag_link.textContent = tag.name;
             tag_list.appendChild(tag_link);
         });

@@ -1,4 +1,7 @@
 <?php
+
+use Illuminate\Support\Facades\DB;
+
 function remove_sign($str)
 {
     $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
@@ -17,19 +20,30 @@ function remove_sign($str)
     $str = preg_replace("/(Đ)/", 'D', $str);
     $str = preg_replace("/(\“|\”|\‘|\’|\,|\!|\&|\;|\@|\#|\%|\~|\`|\=|\_|\'|\]|\[|\}|\{|\)|\(|\+|\^)/", '-', $str);
     $str = preg_replace("/( )/", '-', $str);
-    $str = preg_replace("/\?/",'', $str);
+    $str = preg_replace("/\?/", '', $str);
     return $str;
 }
-function generate_code($code_length=10)
+function generate_code($code_length = 10)
 {
-    $str_code = "";
-
+    $all_codes = DB::select(
+        "SELECT code
+         FROM codes
+        "
+    );
+    $array_codes = [];
+    foreach ($all_codes as $code) {
+        array_push($array_codes, $code->code);
+    }
     $alphachar = array_merge(range('A', 'Z'), range('a', 'z'), range(0, 9));
     $alphachar_length = sizeof($alphachar);
-    for ($i = 0; $i < $code_length; $i++) {
-        $rand_num = rand(0, $alphachar_length - 1);
-        $rand_char = $alphachar[$rand_num];
-        $str_code .= $rand_char;
-    };
+    shuffle($alphachar);
+    do {
+        $str_code = "";
+        for ($i = 0; $i < $code_length; $i++) {
+            $rand_num = rand(0, $alphachar_length - 1);
+            $rand_char = $alphachar[$rand_num];
+            $str_code .= $rand_char;
+        };
+    } while (in_array($str_code, $array_codes));
     return $str_code;
 }

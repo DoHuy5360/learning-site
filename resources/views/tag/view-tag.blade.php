@@ -3,34 +3,22 @@
 @section('style')
     <link rel="stylesheet" href="{{ asset('assets/css/tag/view-tag.css') }}">
 @endsection
+@section('script')
+    <script src="{{ asset('assets/js/tag/view-tag.js') }}"></script>
+@endsection
 @section('content')
     <div id="tagVw-wrap-all">
         <div id="tagVw-header-wrap">
             <div id="tagVw-tag-info">
                 <img src="https://bit.ly/3pbRb8m" id="tagVw-avatar" alt="">
                 <div id="tagVw-wrap-name">
-                    <div id="tagVw-name">Tag Name</div>
+                    <div id="tagVw-name">{{ $tag_info->name }}</div>
                     <button id="tagVw-follow" type="button">Theo Doi</button>
                 </div>
             </div>
             <div id="tagVw-tag-description">
-                <p id="tagVw-big-letters">L</p>
-                <p id="tagVw-paragraph">
-                    orem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci aliquid quos perspiciatis soluta itaque, inventore, delectus tenetur magni unde eum et. Provident, iusto ratione
-                    consectetur enim minima atque harum obcaecati?
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci aliquid quos perspiciatis soluta itaque, inventore, delectus tenetur magni unde eum et. Provident, iusto ratione
-                    consectetur enim minima atque harum obcaecati?
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci aliquid quos perspiciatis soluta itaque, inventore, delectus tenetur magni unde eum et. Provident, iusto ratione
-                    consectetur enim minima atque harum obcaecati?
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci aliquid quos perspiciatis soluta itaque, inventore, delectus tenetur magni unde eum et. Provident, iusto ratione
-                    consectetur enim minima atque harum obcaecati?
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci aliquid quos perspiciatis soluta itaque, inventore, delectus tenetur magni unde eum et. Provident, iusto ratione
-                    consectetur enim minima atque harum obcaecati?
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci aliquid quos perspiciatis soluta itaque, inventore, delectus tenetur magni unde eum et. Provident, iusto ratione
-                    consectetur enim minima atque harum obcaecati?
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Adipisci aliquid quos perspiciatis soluta itaque, inventore, delectus tenetur magni unde eum et. Provident, iusto ratione
-                    consectetur enim minima atque harum obcaecati?
-                </p>
+                <p id="tagVw-big-letters"></p>
+                <p id="tagVw-paragraph">{{ $tag_info->tag_description }}</p>
             </div>
         </div>
         <div id="tagVw-body-wrap">

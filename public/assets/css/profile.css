@@ -161,3 +161,8 @@
     background-color: var(--color-2);
     color: white;
 }
+#profile-tag-table{
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+}

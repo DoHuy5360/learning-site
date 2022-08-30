@@ -55,7 +55,7 @@
                                     </div>
                                     <div class="post__card--footer">
                                         @foreach ($post->tags as $tag)
-                                            <a href="" class="post__card--tag">{{ $tag->name }}</a>
+                                            <a href="{{ route('tag.show', $tag->id) }}" class="post__card--tag">{{ $tag->name }}</a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -145,42 +145,7 @@
                                             <div id="quesVw-ques_question-lv4-wr">
                                                 <p>{{ $answer->content }}</p>
                                             </div>
-                                            {{-- <div class="quesVw-answer_comment_field-bellow-wr">
-                                            <button class="quesVw-answer_comment-btn" type="button">Bình luận cho câu trả lời này ...</button>
-                                        </div> --}}
                                         </div>
-                                        {{-- <div id="quesVw-ques_author-right-wr">
-                                        <div id="quesVw-aut_info-lv1-wr">
-                                            <img src="{{ $user_informations->avatar }}" alt="" />
-                                            <div id="quesVw-auth_info-right-wr">
-                                                <a href="" id="quesVw-aut_name-top" class="underline__none">{{ $user_informations->name }}</a>
-                                                <span id="quesVw-aut_email-bottom">{{ $user_informations->email }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="author__interact--wr">
-                                            <div class="author__infor--wr">
-                                                <div class="group__index">
-                                                    <ion-icon name="star-outline"></ion-icon>
-                                                    <span>453</span>
-                                                </div>
-                                                <div class="group__index">
-                                                    <ion-icon name="person-add-outline"></ion-icon>
-                                                    <span>453</span>
-                                                </div>
-                                                <div class="group__index">
-                                                    <ion-icon name="help-outline"></ion-icon>
-                                                    <span>453</span>
-                                                </div>
-                                                <div class="group__index">
-                                                    <ion-icon name="paper-plane-outline"></ion-icon>
-                                                    <span>453</span>
-                                                </div>
-                                            </div>
-                                            <form action="" id="quesVw-aut_follow-form" method="post">
-                                                <button type="submit">Theo Dõi</button>
-                                            </form>
-                                        </div>
-                                    </div> --}}
                                     </div>
                                 </div>
 
@@ -254,7 +219,7 @@
                     </div>
                     <div id="profile-tag-table" class="profile__table--display">
                         @foreach ($user_tags as $tag)
-                                <a href="" class="profileVw-tag-table underline__none">{{ $tag->name }}</a>
+                            <a href="" class="profileVw-tag-table underline__none">{{ $tag->name }}</a>
                         @endforeach
                     </div>
                     {{-- <div id="profile-reputaion-table" class="profile__table--display">#a9</div> --}}

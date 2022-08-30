@@ -46,6 +46,12 @@ class TagController extends Controller
      */
     public function show($id)
     {
+        $tag_info = DB::select(
+            "SELECT *
+             FROM tags t
+             WHERE t.id =$id
+            "
+        )[0];
         $relative_posts = DB::select(
             "SELECT *, p.id AS post_id
              FROM posts p, tags t, tag_contents tc, users u
@@ -84,10 +90,11 @@ class TagController extends Controller
             "
         );
         return view('tag.view-tag', [
+            'tag_info' => $tag_info,
             'relative_posts' => $relative_posts,
             'relative_questions' => $relative_questions,
+            'tag_series' => $tag_series,
             'content_creators' => $content_creators,
-            'tag_series' => $tag_series
         ]);
     }
 
