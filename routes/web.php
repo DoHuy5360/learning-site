@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookmarkController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\Post_commentController;
 use App\Http\Controllers\PostController;
@@ -35,6 +36,7 @@ Route::resource('/profile', ProfileController::class);
 Route::resource('/series', SeriesController::class);
 Route::resource('/follow', FollowController::class);
 Route::resource('/tag', TagController::class);
+Route::resource('/bookmark', BookmarkController::class);
 
 Route::get('/question-list/{index}', [QuestionController::class, 'getQuestions']);
 Route::get('/post-relative/{tag}', [QuestionController::class, 'getRelativePost']);

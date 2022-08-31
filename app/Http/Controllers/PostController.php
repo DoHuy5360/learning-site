@@ -21,6 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        $user_id = Auth::user()->id;
         //todo: get all post but not contain any tags
         $all_posts = DB::select(
             "SELECT *, p.id AS post_id
@@ -32,7 +33,8 @@ class PostController extends Controller
         // return $all_posts;
 
         //todo: push all relative tags to the corresponding post
-        foreach ($all_posts as $post) {
+        for ($i=0; $i < sizeOf($all_posts); $i++) {
+            $post = $all_posts[$i];
             $relative_tag = DB::select(
                 "SELECT t.name, t.id
                  FROM tags t, tag_contents tc
@@ -41,8 +43,15 @@ class PostController extends Controller
                  AND t.type = 'post'
                 "
             );
-            $post_index = array_search($post, $all_posts);
-            $all_posts[$post_index]->tags = $relative_tag;
+            $post->tags = $relative_tag;
+            $is_bookmarked = DB::select(
+                "SELECT id
+                 FROM bookmarks b
+                 WHERE b.content_id = $post->post_id
+                 AND b.bookmarker = $user_id
+                "
+            );
+            $post->bookmarked = $is_bookmarked;
         }
         // return $all_posts;
         $all_questions = DB::select(
@@ -52,6 +61,7 @@ class PostController extends Controller
              ORDER BY q.id DESC
             "
         );
+        
         return view('post.post', [
             'all_posts' => $all_posts,
             'all_questions' => $all_questions,

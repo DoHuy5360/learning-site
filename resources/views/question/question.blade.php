@@ -1,6 +1,5 @@
 @extends('layouts.header-footer-public')
 @section('script')
-    <script src="{{ asset('assets/js/ajax.js') }}"></script>
     <script src="{{ asset('assets/js/question/question.js') }}"></script>
 @endsection
 @section('content')

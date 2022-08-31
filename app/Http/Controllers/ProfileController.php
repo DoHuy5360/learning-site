@@ -46,11 +46,11 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $user_id = Auth::user()->id;
+        // $user_id = Auth::user()->id;
         $user_informations = DB::select(
             "SELECT *
              FROM users u
-             WHERE u.id = $user_id
+             WHERE u.id = $id
             "
         )[0];
         $user_posts = DB::select(
@@ -86,14 +86,14 @@ class ProfileController extends Controller
                     q.title,
                     q.id AS question_id
              FROM question_answers qa, questions q
-             WHERE qa.replier::integer = $user_id
+             WHERE qa.replier::integer = $id
              AND qa.content_type = q.id
             "
         );
         $user_tags = DB::select(
             "SELECT name
              FROM tags
-             WHERE creator::integer = $user_id
+             WHERE creator::integer = $id
             "
         );
         // return $user_tags;
@@ -115,10 +115,17 @@ class ProfileController extends Controller
             $series_element->relative_posts = $relative_posts_series;
         }
         // return $user_series;
+        $user_bookmarks = DB::select(
+            "SELECT *
+             FROM bookmarks b, posts p
+             WHERE b.bookmarker = $id
+             AND b.content_id = p.id
+            "
+        );
         $user_following = DB::select(
             "SELECT *
              FROM follows f, users u
-             WHERE f.follower = $user_id
+             WHERE f.follower = $id
              AND f.followed = u.id
             "
         );
@@ -127,7 +134,7 @@ class ProfileController extends Controller
             "SELECT *
              FROM follows f, users u
              WHERE f.follower = u.id
-             AND f.followed = $user_id
+             AND f.followed = $id
             "
         );
         // return $user_follower;
@@ -135,14 +142,14 @@ class ProfileController extends Controller
         $amount_post = DB::select(
             "SELECT COUNT(*)
              FROM posts
-             WHERE creator::integer = $user_id
+             WHERE creator::integer = $id
             "
         )[0]->count;
         // return $amount_post;
         $amount_tag = DB::select(
             "SELECT COUNT(*)
              FROM tags
-             WHERE creator::integer = $user_id
+             WHERE creator::integer = $id
             "
         )[0]->count;
         // return $amount_tag;
@@ -158,6 +165,7 @@ class ProfileController extends Controller
             'amount_following'=> $amount_following,
             'amount_post' => $amount_post,
             'amount_tag' => $amount_tag,
+            'user_bookmarks' => $user_bookmarks,
         ]);
     }
 

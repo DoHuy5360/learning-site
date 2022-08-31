@@ -59,6 +59,8 @@
 }
 .post__card--username {
     text-decoration: unset;
+    color: var(--color-2);
+    font-weight: bold;
 }
 .post__card--username:hover {
     text-decoration: underline;
@@ -79,11 +81,18 @@
     text-decoration: underline;
 }
 .post__card--tag {
-    border: 1px solid var(--color-1);
-    padding: 2px 10px;
+    outline: 1px solid var(--color-2);
+    color: var(--color-2);
+    border: unset;
+    padding: 1px 10px 2px 10px;
     border-radius: 20px;
     font-size: 13px;
     text-decoration: unset;
+    transition: 100ms linear;
+}
+.post__card--tag:hover{
+    background-color: var(--color-2);
+    color: white;
 }
 /* ----------------------- start right */
 #body-content-right {
@@ -139,4 +148,10 @@
 }
 .question__card--username:hover {
     text-decoration: underline;
+}
+.postPs__bookmark--btn,
+.postPs__unbookmark--btn
+{
+    all: unset;
+    cursor: pointer;
 }

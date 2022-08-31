@@ -1,4 +1,7 @@
 @extends('layouts.header-footer-public')
+@section('script')
+    <script src="{{ asset('assets/js/post/post.js') }}"></script>
+@endsection
 @section('content')
     <h1 id="welcome">Chào mừng đến với Learning Site</h1>
     @if ($message = Session::get('success'))
@@ -24,7 +27,23 @@
                                     <div class="post__created--time">{{ $post->created_at }}</div>
                                     <div class="post-reading-time"><span>Đọc trong </span>{{ $post->time }}</div>
                                     <ion-icon name="link-outline"></ion-icon>
-                                    <ion-icon name="bookmark-outline"></ion-icon>
+                                    <div class="postPs__bookmark--field">
+                                        <form action="{{ route('bookmark.store') }}" class="postPs__bookmark--form" style="display: {{ empty($post->bookmarked) ? 'block' : 'none' }};" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="content_id" value="{{ $post->post_id }}">
+                                            <input type="hidden" name="type" value="post">
+                                            <button class="postPs__bookmark--btn" type="submit">
+                                                <ion-icon name="bookmark-outline"></ion-icon>
+                                            </button>
+                                        </form>
+                                        <form action="" class="postPs__unbookmark--form" style="display: {{ !empty($post->bookmarked) ? 'block' : 'none' }};" data-bookmark-id="{{ $post->post_id }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="postPs__unbookmark--btn" type="sumit">
+                                                <ion-icon name="bookmark"></ion-icon>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
                                 <div class="post__card--body">
                                     <h2 class="post__card--title">

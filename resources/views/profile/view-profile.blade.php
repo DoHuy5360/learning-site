@@ -152,7 +152,13 @@
                             </div>
                         @endforeach
                     </div>
-                    <div id="profile-bookmark-table" class="profile__table--display">#a5</div>
+                    <div id="profile-bookmark-table" class="profile__table--display">
+                        @foreach ($user_bookmarks as $bookmark)
+                            <p>
+                                {{ $bookmark->title }}
+                            </p>
+                        @endforeach
+                    </div>
                     <div id="profile-following-table" class="profile__table--display">
                         @foreach ($user_following as $following)
                             <div class="profile__following--wrap">

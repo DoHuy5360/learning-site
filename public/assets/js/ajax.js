@@ -11,7 +11,7 @@ class AJAX {
     /**
      * @param {String} _method Phương thức GET, POST
      * @param {String} _path Tên của luồng đi /route
-     * @param {Function} _callback Hàm này dùng để nhận Response
+     * @param {Function} _callback Đối sô là Response
      */
     createAjax(_method, _path, _form, _callback) {
         const ajax = new XMLHttpRequest();
