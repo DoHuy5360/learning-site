@@ -20,7 +20,8 @@ return new class extends Migration
             $table->string('name');
             $table->integer('creator');
             $table->string('type');
-            $table->text('tag_description')->nullable()->default("Chưa cập nhật thông tin");
+            $table->text('tag_description')->nullable()->default("Thẻ này chưa được cập nhật thông tin, nhằm đảm bảo tính chính xác, trường thông tin này chỉ được cập nhật bởi người quản trị (Admin).");
+            $table->text('tag_avatar')->nullable();
         });
     }
 

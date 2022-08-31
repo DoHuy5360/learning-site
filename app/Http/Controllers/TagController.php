@@ -14,7 +14,14 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $all_tags = DB::select(
+            "SELECT *
+             FROM tags
+            "
+        );
+        return view('tag.tag', [
+            'all_tags' => $all_tags,
+        ]);
     }
 
     /**
@@ -89,12 +96,22 @@ class TagController extends Controller
              AND tc.content_id::integer = p.id
             "
         );
+        $popular_tags = DB::select(
+            "SELECT t.id, t.name, COUNT(p.id) AS amount_posts
+             FROM posts p, tags t, tag_contents tc
+             WHERE p.id = tc.content_id::integer
+             AND t.tag_code = tc.tag_id
+             GROUP BY t.id
+             LIMIT 10
+            "
+        );
         return view('tag.view-tag', [
             'tag_info' => $tag_info,
             'relative_posts' => $relative_posts,
             'relative_questions' => $relative_questions,
             'tag_series' => $tag_series,
             'content_creators' => $content_creators,
+            'popular_tags' => $popular_tags,
         ]);
     }
 

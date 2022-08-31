@@ -1,0 +1,106 @@
+#tagTg-wrap-all {
+    width: var(--width-align);
+    margin: 20px auto;
+}
+#tagTg-header-wrap {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+}
+#tagTg-amount-tag {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    white-space: nowrap;
+}
+#tagTg-body {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 100px;
+    margin-top: 100px;
+}
+.tagTg__card--wrap {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+.tagTg__card--follow {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.tagTg__card--image {
+    width: 100px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.tagTg__card--info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 100%;
+}
+.tagTg__card--name{
+    text-decoration: unset;
+    font-weight: bold;
+    font-size: 20px;
+    color: var(--color-2);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tagTg__card--followBtn{
+    color: var(--color-2);
+    outline: 1px solid var(--color-2);
+    border: 1px solid;
+    padding: 2px 10px;
+    border-radius: 20px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 100ms linear;
+}
+.tagTg__card--followBtn:hover{
+    background-color: var(--color-2);
+    color: white;
+}
+.tagTg__card--index {
+    display: flex;
+    flex-direction: column;
+}
+.tagTg__index--element {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+}
+.tagTg__index--element span {
+    height: 1px;
+    width: 100%;
+    background-color: var(--gray-soft);
+}
+.tagTg__index--name {
+    justify-self: end;
+    white-space: nowrap;
+}
+#tagTg-search-btn,
+#tagTg-sort-btn{
+    border: 1px solid var(--gray-soft);
+    border-radius: 3px;
+    background-color: transparent;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+#tagTg-search-type,
+#tagTg-sort-type{
+    display: flex;
+    gap: 5px;
+    white-space: nowrap;
+}
+.tagTg__option--bar{
+    white-space: nowrap;
+}
+.tagTg__underline{
+    background-color: var(--gray-soft);
+    height: 1px;
+    width: 100%;
+}

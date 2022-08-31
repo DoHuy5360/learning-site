@@ -152,51 +152,41 @@
             <div id="tagVw-right-part">
                 <div id="tagVw-content-first">
                     <div id="tagVw-tag-name">
-                        <span>Tag name</span>
+                        <span>Số liệu về <b>{{ $tag_info->name }}</b></span>
                         <span></span>
                     </div>
                     <div id="tagVw-tag-index">
                         <div class="tagVw__index--wrap">
-                            <div class="tagVw__index--amount">425</div>
-                            <p class="tagVw__index--name">Bai Viet</p>
+                            <div class="tagVw__index--amount">{{ sizeOf($relative_posts) }}</div>
+                            <p class="tagVw__index--name">Bài viết</p>
                         </div>
                         <div class="tagVw__index--wrap">
-                            <div class="tagVw__index--amount">2525</div>
-                            <p class="tagVw__index--name">Cau Hoi</p>
+                            <div class="tagVw__index--amount">{{ sizeOf($relative_questions) }}</div>
+                            <p class="tagVw__index--name">Câu hỏi</p>
                         </div>
                         <div class="tagVw__index--wrap">
-                            <div class="tagVw__index--amount">23562</div>
-                            <p class="tagVw__index--name">Nguoi theo doi</p>
+                            <div class="tagVw__index--amount">{{ sizeOf($content_creators) }}</div>
+                            <p class="tagVw__index--name">Người tạo nội dung</p>
                         </div>
                     </div>
                 </div>
                 <div id="tagVw-content-second">
                     <div id="tagVw-tag-popular">
-                        <span>Tag pho bien</span>
+                        <span><b>Top 10</b> thẻ phổ biến</span>
                         <span></span>
                     </div>
                     <div id="tagVw-list-tag">
-                        <div class="tagVw__tag--others">
-                            <div class="tagVw__others--name">Javascript</div>
-                            <div class="tagVw__others--amount">3924</div>
-                        </div>
-                        <div class="tagVw__tag--others">
-                            <div class="tagVw__others--name">PHP</div>
-                            <div class="tagVw__others--amount">2420</div>
-                        </div>
-                        <div class="tagVw__tag--others">
-                            <div class="tagVw__others--name">Python</div>
-                            <div class="tagVw__others--amount">5984</div>
-                        </div>
-                        <div class="tagVw__tag--others">
-                            <div class="tagVw__others--name">HTML</div>
-                            <div class="tagVw__others--amount">59585</div>
-                        </div>
+                        @foreach ($popular_tags as $tag)
+                            <a href="{{ route('tag.show',$tag->id) }}" class="tagVw__tag--others">
+                                <div class="tagVw__others--name">{{ $tag->name }}</div>
+                                <div class="tagVw__others--amount">{{ $tag->amount_posts }}</div>
+                            </a>
+                        @endforeach
                     </div>
-                    <div id="tagVw-all-tag-link">
+                    <a href="{{ route('tag.index') }}" id="tagVw-all-tag-link">
                         <ion-icon name="pricetags-outline"></ion-icon>
                         <span>Xem tat ca tag</span>
-                    </div>
+                    </a>
                 </div>
 
             </div>

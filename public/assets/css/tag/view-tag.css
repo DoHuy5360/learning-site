@@ -28,6 +28,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    padding-bottom: 1px;
 }
 #tagVw-name {
     font-size: 30px;
@@ -36,8 +37,9 @@
 }
 #tagVw-follow {
     color: var(--color-2);
-    border: 1px solid var(--color-2);
-    padding: 0 5px;
+    outline: 1px solid var(--color-2);
+    border: unset;
+    padding: 2px 10px;
     border-radius: 20px;
     background-color: transparent;
     cursor: pointer;
@@ -146,25 +148,38 @@
 #tagVw-list-tag {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
+    gap: 6px;
 }
 .tagVw__tag--others {
     display: flex;
     border-radius: 20px;
     overflow: hidden;
-    outline: 1px solid var(--color-2);
+    outline: 2px solid var(--color-2);
     align-items: center;
     font-size: 13px;
     cursor: pointer;
+    text-decoration: unset;
 }
 .tagVw__others--name {
     padding: 2px 8px;
+    color: var(--color-2);
+    font-weight: bold;
+    transition: 100ms linear;
 }
 .tagVw__others--amount {
     background-color: var(--color-2);
     padding: 2px 8px;
     color: white;
     height: 100%;
+    transition: 100ms linear;
+}
+.tagVw__tag--others:hover .tagVw__others--name{
+    background-color: var(--color-2);
+    color: white;
+}
+.tagVw__tag--others:hover .tagVw__others--amount{
+    background-color: white;
+    color: var(--color-2);
 }
 #tagVw-all-tag-link {
     display: flex;
@@ -175,6 +190,7 @@
     border-top: 1px solid var(--gray-soft);
     padding: 10px 0;
     cursor: pointer;
+    text-decoration: unset;
 }
 #tagVw-content-post {
     display: flex;
