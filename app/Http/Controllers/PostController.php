@@ -38,28 +38,28 @@ class PostController extends Controller
         // return $all_posts;
 
         //todo: push all relative tags to the corresponding post
-        for ($i = 0; $i < sizeOf($all_posts); $i++) {
-            $post = $all_posts[$i];
-            $relative_tag = DB::select(
-                "SELECT t.name, t.id
-                 FROM tags t, tag_contents tc
-                 WHERE t.tag_code = tc.tag_id
-                 AND tc.content_id::integer = {$post->post_id}
-                 AND t.type = 'post'
-                "
-            );
-            $post->tags = $relative_tag;
-            if ($user) {
-                $is_bookmarked = DB::select(
-                    "SELECT id
-                     FROM bookmarks b
-                     WHERE b.content_id = $post->post_id
-                     AND b.bookmarker = $user->id
-                    "
-                );
-                $post->bookmarked = $is_bookmarked;
-            }
-        }
+        // for ($i = 0; $i < sizeOf($all_posts); $i++) {
+        //     $post = $all_posts[$i];
+        //     $relative_tag = DB::select(
+        //         "SELECT t.name, t.id
+        //          FROM tags t, tag_contents tc
+        //          WHERE t.tag_code = tc.tag_id
+        //          AND tc.content_id::integer = {$post->post_id}
+        //          AND t.type = 'post'
+        //         "
+        //     );
+        //     $post->tags = $relative_tag;
+        //     if ($user) {
+        //         $is_bookmarked = DB::select(
+        //             "SELECT id
+        //              FROM bookmarks b
+        //              WHERE b.content_id = $post->post_id
+        //              AND b.bookmarker = $user->id
+        //             "
+        //         );
+        //         $post->bookmarked = $is_bookmarked;
+        //     }
+        // }
         // return $all_posts;
         $all_questions = DB::select(
             "SELECT *, q.id AS question_id
@@ -68,14 +68,67 @@ class PostController extends Controller
              ORDER BY q.id DESC
             "
         );
+        $all_posts_length = round(sizeof($all_posts) / 7);
         $is_login = $user ? true : false;
         return view('post.post', [
             'all_posts' => $all_posts,
             'all_questions' => $all_questions,
             'is_login' => $is_login,
+            'all_posts_length'=>$all_posts_length,
         ]);
     }
-
+    public function getPosts($index)
+    {
+        // return $index;
+        try {
+            $user = Auth::user();
+        } catch (\Throwable $th) {
+            $user = false;
+        }
+        $range = 7;
+        $start = ($index - 1) * $range;
+        $all_posts = DB::select(
+            "SELECT *, p.id AS post_id
+             FROM posts p, users u
+             WHERE p.creator::integer = u.id
+             ORDER BY p.id DESC
+             LIMIT $range OFFSET $start
+            "
+        );
+        // return $all_posts;
+        for ($i = 0; $i < sizeof($all_posts); $i++) {
+            $target_post = $all_posts[$i];
+            // todo: Lấy danh sách tags của bài viết này
+            $post_id = $target_post->post_id;
+            $relative_tag = DB::select(
+                "SELECT t.name, t.id
+                 FROM tags t, tag_contents tc
+                 WHERE t.tag_code = tc.tag_id
+                 AND tc.content_id::integer = $post_id
+                "
+            );
+            $target_post->tags = $relative_tag;
+            if ($user) {
+                $is_bookmarked = DB::select(
+                    "SELECT id
+                     FROM bookmarks b
+                     WHERE b.content_id = $target_post->post_id
+                     AND b.bookmarker = $user->id
+                    "
+                );
+                $target_post->bookmarked = $is_bookmarked;
+            }
+            $target_post->is_login = $user ? true : false;
+            $target_post->csrf = csrf_token();
+        }
+        // return $all_posts;
+        return response()->json(
+            [
+                'all_posts' => $all_posts,
+                // 'is_login' => $is_login,
+            ]
+        );
+    }
     /**
      * Show the form for creating a new resource.
      *

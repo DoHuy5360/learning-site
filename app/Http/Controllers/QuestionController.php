@@ -20,13 +20,14 @@ class QuestionController extends Controller
     {
         // return $all_questions;
 
-        $all_questions_length = DB::select(
-            "SELECT COUNT(*)
-             FROM questions, users
-             WHERE questions.questioner = users.id
+        $all_questions = DB::select(
+            "SELECT q.id
+             FROM questions q, users u
+             WHERE q.questioner = u.id
             "
-        )[0]->count / 7;
+        );
         // return $all_questions_length;
+        $all_questions_length = round(sizeof($all_questions) / 7);
         return view('question.question', [
             'all_questions_length' => $all_questions_length,
         ]);

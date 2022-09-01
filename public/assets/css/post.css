@@ -35,6 +35,7 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+    height: 750px;
 }
 .post__card--wrap {
     display: grid;
@@ -153,4 +154,26 @@
 .postPs__unbookmark--btn {
     all: unset;
     cursor: pointer;
+}
+.post__card--footer {
+    display: flex;
+    gap: 5px;
+}
+.post__card--wrap {
+    animation: posts_animation 300ms linear;
+    transform: translateX(0);
+    visibility: visible;
+}
+@keyframes posts_animation {
+    0% {
+        transform: translateY(-50%);
+        visibility: hidden;
+    }
+    50% {
+        visibility: hidden;
+    }
+    100% {
+        transform: translateX(0);
+        visibility: visible;
+    }
 }

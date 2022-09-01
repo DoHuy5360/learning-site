@@ -32,7 +32,7 @@ list_index_questions.forEach((index) => {
             (_form = undefined),
             (data_response) => {
                 const questions_data = data_response.all_questions;
-                first_n_questions.insertResponseToNodeId(
+                n_questions.insertResponseToNodeId(
                     (_node_id = "question-list-wrap"),
                     (_response = questions_data),
                     (_createHtml = createQuestionHtml)

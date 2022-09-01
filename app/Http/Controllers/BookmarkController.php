@@ -46,7 +46,7 @@ class BookmarkController extends Controller
         $new_bookmark->save();
         return response()->json(
             [
-                'status' => 'Bookmarking failure.'
+                'status' => 'Bookmarking successfuly.'
             ]
         );
     }
@@ -101,7 +101,7 @@ class BookmarkController extends Controller
         );
         return response()->json(
             [
-                'status' => 'Bookmarking successfuly.'
+                'status' => 'Unbookmarking successfuly.'
             ]
         );
     }
