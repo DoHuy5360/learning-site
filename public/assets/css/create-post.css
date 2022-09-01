@@ -39,17 +39,20 @@
     display: flex;
     gap: 5px;
     align-items: center;
+    padding: 0 5px;
 }
 .editor__tag--box{
     display: flex;
     align-items: center;
     gap: 5px;
     border: 1px solid var(--gray-soft);
-    border-radius: 5px;
-    height: 30px;
+    border-radius: 20px;
+    padding: 2px 0;
+    background-color: var(--gray-light);
 }
 .editor__tag--name{
     padding-left: 5px;
+    font-size: 13px;
 }
 .editor__tag--remove{
     all: unset;

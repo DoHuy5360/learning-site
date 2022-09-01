@@ -90,7 +90,7 @@
     text-decoration: unset;
     transition: 100ms linear;
 }
-.post__card--tag:hover{
+.post__card--tag:hover {
     background-color: var(--color-2);
     color: white;
 }
@@ -150,8 +150,7 @@
     text-decoration: underline;
 }
 .postPs__bookmark--btn,
-.postPs__unbookmark--btn
-{
+.postPs__unbookmark--btn {
     all: unset;
     cursor: pointer;
 }

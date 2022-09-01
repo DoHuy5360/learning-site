@@ -11,6 +11,7 @@ first_n_questions.createAjax(
             (_createHtml = createQuestionHtml)
         );
         setEventRelativePost();
+        createExplainLabel()
     }
 );
 let first_index_questions = document.querySelector(".index__questions");
@@ -55,20 +56,23 @@ function createQuestionHtml() {
         const relativePost_btn = document.createElement("button");
         relativePost_btn.setAttribute("class", "question__tags--relativePost");
         relativePost_btn.setAttribute("type", "button");
-        relativePost_btn.innerHTML =
-        '<ion-icon name="newspaper-outline"></ion-icon>';
+        relativePost_btn.innerHTML = `
+            <div data-explain-label="Hiển thị các bài viết liên quan">
+                <ion-icon name="newspaper-outline"></ion-icon>
+            </div>
+        `;
         relativePost_btn_wrap.appendChild(relativePost_btn);
         open_relativePost_btn = relativePost_btn_wrap.innerHTML;
     } else {
         open_relativePost_btn = "";
     }
     const answer_avatar_list = document.createElement("div");
-    this.answers.forEach(answer => {
-        const avatar_answer = document.createElement('img')
-        avatar_answer.setAttribute('src',answer.avatar)
-        avatar_answer.setAttribute('title',answer.name)
-        answer_avatar_list.appendChild(avatar_answer)
-    })
+    this.answers.forEach((answer) => {
+        const avatar_answer = document.createElement("img");
+        avatar_answer.setAttribute("src", answer.avatar);
+        avatar_answer.setAttribute("title", answer.name);
+        answer_avatar_list.appendChild(avatar_answer);
+    });
     return `
     <div class="card__question--wrap">
         <div class="card__question--leftpart">

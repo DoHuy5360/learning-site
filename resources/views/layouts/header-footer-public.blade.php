@@ -155,6 +155,7 @@
     ></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="{{ asset('assets/js/ajax.js') }}"></script>
+    <script src="{{ asset('assets/js/explain.js') }}"></script>
     @yield('script')
 </body>
 

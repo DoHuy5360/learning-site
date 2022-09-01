@@ -15,28 +15,44 @@
     flex-direction: column;
     gap: 5px;
 }
-#create-question-title-input,
-#create-question-tag-input {
+#create-question-title-input {
     width: 100%;
     padding: 5px 10px;
     height: 100%;
     height: 30px;
     font-size: 16px;
     outline: unset;
+    border: 1px solid var(--gray-soft);
+}
+#create-question-tag-input{
+    border: unset;
+    border-left: 1px solid var(--gray-soft);
+    width: 100%;
+    outline: unset;
+    font-size: 16px;
+    height: 100%;
+    padding: 5px 10px;
 }
 #create-question-input-tag-field {
     display: flex;
     gap: 20px;
+    height: 30px;
 }
 #editor-input-tag {
     width: 100%;
     height: inherit;
+    border: 1px solid var(--gray-soft);
 }
 #send-request-to-store-question {
     white-space: nowrap;
     padding: 0 10px;
     height: 30px;
     cursor: pointer;
+    background-color: var(--color-3);
+    border: unset;
+    height: 100%;
+    border-radius: 5px;
+    font-size: 13px;
 }
 #editor-board-wrap {
     display: block;

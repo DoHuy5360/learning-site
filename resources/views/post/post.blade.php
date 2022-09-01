@@ -27,23 +27,26 @@
                                     <div class="post__created--time">{{ $post->created_at }}</div>
                                     <div class="post-reading-time"><span>Đọc trong </span>{{ $post->time }}</div>
                                     <ion-icon name="link-outline"></ion-icon>
-                                    <div class="postPs__bookmark--field">
-                                        <form action="{{ route('bookmark.store') }}" class="postPs__bookmark--form" style="display: {{ empty($post->bookmarked) ? 'block' : 'none' }};" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="content_id" value="{{ $post->post_id }}">
-                                            <input type="hidden" name="type" value="post">
-                                            <button class="postPs__bookmark--btn" type="submit">
-                                                <ion-icon name="bookmark-outline"></ion-icon>
-                                            </button>
-                                        </form>
-                                        <form action="" class="postPs__unbookmark--form" style="display: {{ !empty($post->bookmarked) ? 'block' : 'none' }};" data-bookmark-id="{{ $post->post_id }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="postPs__unbookmark--btn" type="sumit">
-                                                <ion-icon name="bookmark"></ion-icon>
-                                            </button>
-                                        </form>
-                                    </div>
+                                    @if ($is_login)
+                                        <div class="postPs__bookmark--field">
+                                            <form class="postPs__bookmark--form" style="display: {{ empty($post->bookmarked) ? 'block' : 'none' }};" data-explain-label="Nhấp chuột để lưu lại" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="content_id" value="{{ $post->post_id }}">
+                                                <input type="hidden" name="type" value="post">
+                                                <button class="postPs__bookmark--btn" type="submit">
+                                                    <ion-icon name="bookmark-outline"></ion-icon>
+                                                </button>
+                                            </form>
+                                            <form class="postPs__unbookmark--form" style="display: {{ !empty($post->bookmarked) ? 'block' : 'none' }};"
+                                                data-bookmark-id="{{ $post->post_id }}" data-explain-label="Nhấp chuột để bỏ lưu" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button class="postPs__unbookmark--btn" type="submit">
+                                                    <ion-icon name="bookmark"></ion-icon>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    @endif
                                 </div>
                                 <div class="post__card--body">
                                     <h2 class="post__card--title">
@@ -64,7 +67,7 @@
         <div id="body-part-right">
             <div id="body-content-right">
                 <h2 class="body__link--wrap">
-                    <a href="" class="body__link--redirect">Các câu hỏi mới nhất</a>
+                    <a href="{{ route('question.index') }}" class="body__link--redirect">Các câu hỏi mới nhất</a>
                     <span></span>
                 </h2>
                 <div class="body__question--wrap">
