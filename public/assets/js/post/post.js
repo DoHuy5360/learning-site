@@ -95,7 +95,7 @@ function createPostHtml() {
         </div>
         <div class="post__card--wrapcontent">
             <div class="post__card--header">
-                <a href="" class="post__card--username"> ${this.name} </a>
+                <a href="/profile/${this.author_id}" class="post__card--username"> ${this.name} </a>
                 <div class="post__created--time">${this.created_at}</div>
                 <div class="post-reading-time"><span>Đọc trong </span>${this.time}</div>
                 <ion-icon name="link-outline"></ion-icon>

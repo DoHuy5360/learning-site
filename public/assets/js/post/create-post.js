@@ -84,12 +84,12 @@ function addEventCheckboxSeries() {
             const data_series_id = series.getAttribute("data-series-id");
             if (e.currentTarget.checked) {
                 series_selected_aray.push(data_series_id);
-                console.log(series_selected_aray);
+                // console.log(series_selected_aray);
             } else {
                 const series_index =
                     series_selected_aray.indexOf(data_series_id);
                 series_selected_aray.splice(series_index, 1);
-                console.log(series_selected_aray);
+                // console.log(series_selected_aray);
             }
         });
     });

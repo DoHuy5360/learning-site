@@ -93,10 +93,12 @@ class BookmarkController extends Controller
      */
     public function destroy($id)
     {
+        $user_id = Auth::user()->id;
         DB::delete(
             "DELETE
              FROM bookmarks
              WHERE content_id = $id
+             AND bookmarker = $user_id
             "
         );
         return response()->json(

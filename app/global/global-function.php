@@ -1,6 +1,60 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+
+function countIndex()
+{
+    $user = Auth::user();
+    $index = new stdClass;
+    $index->bookmark = DB::select(
+        "SELECT COUNT(id)
+         FROM bookmarks
+         WHERE bookmarker = $user->id
+        "
+    )[0]->count;
+    $index->tag = DB::select(
+        "SELECT COUNT(id)
+         FROM tags
+         WHERE creator::integer = $user->id
+        "
+    )[0]->count;
+    $index->post = DB::select(
+        "SELECT COUNT(id)
+         FROM posts
+         WHERE creator::integer = $user->id
+        "
+    )[0]->count; 
+    $index->following = DB::select(
+        "SELECT COUNT(f.id)
+         FROM follows f, users u
+         WHERE f.follower = $user->id
+         AND f.followed = u.id 
+        "
+    )[0]->count;
+    $index->follower = DB::select(
+        "SELECT COUNT(f.id)
+         FROM follows f, users u
+         WHERE f.follower = u.id
+         AND f.followed = $user->id
+        "
+    )[0]->count;
+    $index->question = DB::select(
+        "SELECT COUNT(q.id)
+         FROM questions q, users u
+         WHERE q.questioner = $user->id
+         AND u.id = $user->id
+        "
+    )[0]->count;
+    $index->answer = DB::select(
+        "SELECT COUNT(q.id)
+         FROM question_answers qa, questions q
+         WHERE qa.replier::integer = $user->id
+         AND qa.content_type = q.id
+        "
+    )[0]->count;
+    return $index;
+}
 
 function remove_sign($str)
 {

@@ -180,7 +180,7 @@
     padding: 5px;
 }
 .quesVw-ans_ans_field-top-wr {
-    border-top: 1px solid;
+    border-top: 1px solid var(--gray-soft);
     padding: 10px 0;
 }
 .quesVw-ans_wrap-top-wr {

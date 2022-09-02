@@ -1,4 +1,7 @@
 @extends('layouts.header-footer-create')
+@section('script')
+    <script src="{{ asset('assets/js/profile/view-profile.js') }}"></script>
+@endsection
 @section('content')
     <div id="profile-wrap-all">
         <div id="profile-header-wrap">
@@ -7,7 +10,9 @@
                     <img src="{{ $user_informations->avatar }}" alt="" />
                     <div id="profile-name-edit-wrap">
                         <span>{{ $user_informations->name }}</span>
-                        <a href="">Edit</a>
+                        @if ($is_owner)
+                            <a href="">Edit</a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -15,16 +20,16 @@
         <div id="profile-menu-wrap">
             <div class="align-width">
                 <div id="profile-list-option">
-                    <a href="#profile-post-table" class="profile-option">Bai Viet</a>
-                    <a href="#profile-series-table" class="profile-option">Series</a>
-                    <a href="#profile-question-table" class="profile-option">Cau Hoi</a>
-                    <a href="#profile-answer-table" class="profile-option">Cau Tra Loi</a>
-                    <a href="#profile-bookmark-table" class="profile-option">Bookmark</a>
-                    <a href="#profile-following-table" class="profile-option">Dang Theo Doi</a>
-                    <a href="#profile-follower-table" class="profile-option">Nguoi Theo Doi</a>
-                    <a href="#profile-tag-table" class="profile-option">The</a>
+                    <a href="#profile-post-table" class="profile-option">Bài viết</a>
+                    <a href="#profile-series-table" class="profile-option">Chuỗi bài viết</a>
+                    <a href="#profile-question-table" class="profile-option">Câu hỏi</a>
+                    <a href="#profile-answer-table" class="profile-option">Câu trả lời</a>
+                    <a href="#profile-bookmark-table" class="profile-option">Đánh dấu</a>
+                    <a href="#profile-following-table" class="profile-option">Đang theo dõi</a>
+                    <a href="#profile-follower-table" class="profile-option">Người theo dõi</a>
+                    <a href="#profile-tag-table" class="profile-option">Thẻ</a>
                     {{-- <a href="#profile-reputaion-table" class="profile-option">Reputations</a> --}}
-                    <a href="#aprofile-contact-table" class="profile-option">Lien He</a>
+                    <a href="#aprofile-contact-table" class="profile-option">Liên hệ</a>
                 </div>
             </div>
         </div>
@@ -64,14 +69,28 @@
                     </div>
                     <div id="profile-series-table" class="profile__table--display">
                         @foreach ($user_series as $series)
-                            <span>
-                                {{ $series->name }}
-                            </span>
-                            <ul>
-                                @foreach ($series->relative_posts as $post)
-                                    <li>{{ $post->title }}</li>
-                                @endforeach
-                            </ul>
+                            <div class="profileVw__series--wrap">
+                                <div class="profileVw__series--title">
+                                    <div class="profileVw__series--name">
+                                        {{ $series->name }}
+                                    </div>
+                                    <div class="profileVw__series--created">
+                                        {{ $series->created_at }}
+                                    </div>
+                                    <div class="profileVw__series--seperate">/</div>
+                                    <div class="profileVw__series--amount-posts">
+                                        <span>{{ sizeOf($series->relative_posts) }}</span>
+                                        <ion-icon name="reader-outline"></ion-icon>
+                                    </div>
+                                </div>
+                                <ol class="profileVw__series--posts">
+                                    @foreach ($series->relative_posts as $post)
+                                        <a href="{{ route('post.show', $post->id) }}" class="profileVw__posts--link">
+                                            <li>{{ $post->title }}</li>
+                                        </a>
+                                    @endforeach
+                                </ol>
+                            </div>
                         @endforeach
                     </div>
                     <div id="profile-question-table" class="profile__table--display">
@@ -111,7 +130,8 @@
                                         </div>
                                         <ion-icon name="arrow-undo-outline"></ion-icon>
                                         <div class="cardquestion__list--helper">
-                                            <img src="./assets/avatar.png" alt="" />
+                                            <img src="https://bit.ly/3pbRb8m
+                                            " alt="" />
                                         </div>
                                     </div>
                                     <div class="cardquestion__rightpart--body">
@@ -170,6 +190,9 @@
                                         <a href="" class="underline__none">{{ $following->name }}</a>
                                         <button class="profile__follow--btn" type="button">Theo dõi</button>
                                     </div>
+                                    <div class="profile__following--email">
+                                        {{ $following->email }}
+                                    </div>
                                     <div class="profile__following--index">
                                         <div class="profile__following">
                                             <ion-icon name="star-outline"></ion-icon>
@@ -183,9 +206,6 @@
                                             <ion-icon name="person-add-outline"></ion-icon>
                                             <span>33</span>
                                         </div>
-                                    </div>
-                                    <div class="profile__following--email">
-                                        {{ $following->email }}
                                     </div>
                                 </div>
                             </div>
@@ -202,6 +222,9 @@
                                         <a href="" class="underline__none">{{ $follower->name }}</a>
                                         <button class="profile__follow--btn" type="button">Theo dõi</button>
                                     </div>
+                                    <div class="profile__following--email">
+                                        {{ $follower->email }}
+                                    </div>
                                     <div class="profile__following--index">
                                         <div class="profile__following">
                                             <ion-icon name="star-outline"></ion-icon>
@@ -215,9 +238,6 @@
                                             <ion-icon name="person-add-outline"></ion-icon>
                                             <span>33</span>
                                         </div>
-                                    </div>
-                                    <div class="profile__following--email">
-                                        {{ $follower->email }}
                                     </div>
                                 </div>
                             </div>
@@ -233,10 +253,11 @@
                 </div>
                 <div id="profile-display-right">
                     <div id="profile-index-table">
+                        @php
+                            $count = countIndex();
+                        @endphp
                         <div class="profile__index--row">
-                            <div class="profile__index--name">
-                                Tổng số lượt xem bài viết
-                            </div>
+                            <div class="profile__index--name">Lượt xem các bài viết</div>
                             <div class="profile__index--index">1443</div>
                         </div>
                         {{-- <div class="profile__index--row">
@@ -246,42 +267,32 @@
                             <div class="profile__index--index">34</div>
                         </div> --}}
                         <div class="profile__index--row">
-                            <div class="profile__index--name">
-                                Số lượng thẻ
-                            </div>
-                            <div class="profile__index--index">{{ $amount_tag }}</div>
+                            <div class="profile__index--name">Đang được theo dõi</div>
+                            <div class="profile__index--index">{{ $count->follower }}</div>
                         </div>
                         <div class="profile__index--row">
-                            <div class="profile__index--name">
-                                Đang theo dõi các người dùng
-                            </div>
-                            <div class="profile__index--index">{{ $amount_following }}</div>
+                            <div class="profile__index--name">Đang theo dõi</div>
+                            <div class="profile__index--index">{{ $count->following }}</div>
                         </div>
                         <div class="profile__index--row">
-                            <div class="profile__index--name">
-                                Các người dùng đang theo dõi
-                            </div>
-                            <div class="profile__index--index">1414</div>
+                            <div class="profile__index--name">Câu trả lời</div>
+                            <div class="profile__index--index">{{ $count->answer }}</div>
+                        </div>
+                        <div class="profile__index--row">
+                            <div class="profile__index--name">Đánh dấu</div>
+                            <div class="profile__index--index">{{ $count->bookmark }}</div>
+                        </div>
+                        <div class="profile__index--row">
+                            <div class="profile__index--name">Câu hỏi</div>
+                            <div class="profile__index--index">{{ $count->question }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Bài viết</div>
-                            <div class="profile__index--index">{{ $amount_post }}</div>
+                            <div class="profile__index--index">{{ $count->post }}</div>
                         </div>
                         <div class="profile__index--row">
-                            <div class="profile__index--name">Bookmark</div>
-                            <div class="profile__index--index">43</div>
-                        </div>
-                        <div class="profile__index--row">
-                            <div class="profile__index--name">
-                                Tổng số câu hỏi
-                            </div>
-                            <div class="profile__index--index">14393</div>
-                        </div>
-                        <div class="profile__index--row">
-                            <div class="profile__index--name">
-                                Tổng số câu trả lời
-                            </div>
-                            <div class="profile__index--index">1493749</div>
+                            <div class="profile__index--name">Thẻ</div>
+                            <div class="profile__index--index">{{ $count->tag }}</div>
                         </div>
                     </div>
                 </div>

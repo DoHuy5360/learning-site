@@ -46,7 +46,7 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        // $user_id = Auth::user()->id;
+        $user_id = Auth::user()->id;
         $user_informations = DB::select(
             "SELECT *
              FROM users u
@@ -57,6 +57,7 @@ class ProfileController extends Controller
             "SELECT * 
              FROM users u, posts p
              WHERE u.id = p.creator::integer
+             AND p.creator::integer = $id
             "
         );
         //todo: push all relative tags to the corresponding post 
@@ -74,9 +75,10 @@ class ProfileController extends Controller
         }
         // return $user_posts;
         $user_questions = DB::select(
-            "SELECT *, questions.id AS question_id
-             FROM questions, users
-             WHERE questions.questioner = users.id
+            "SELECT *, q.id AS question_id
+             FROM questions q, users u
+             WHERE q.questioner = $id
+             AND u.id = $id
             "
         );
         $user_answers = DB::select(
@@ -90,6 +92,7 @@ class ProfileController extends Controller
              AND qa.content_type = q.id
             "
         );
+        $is_owner = $user_id == $id ? true : false;
         $user_tags = DB::select(
             "SELECT name
              FROM tags
@@ -101,12 +104,14 @@ class ProfileController extends Controller
         $user_series = DB::select(
             "SELECT *
              FROM series
+             WHERE creator = $id
             "
         );
+        // return $user_series;
         for ($i = 0; $i < sizeof($user_series); $i++) {
             $series_element = $user_series[$i];
             $relative_posts_series = DB::select(
-                "SELECT p.title, p.time, p.created_at
+                "SELECT p.title, p.time, p.created_at, p.id
                  FROM posts p, series_posts sp
                  WHERE sp.series_id = $series_element->id
                  AND sp.post_id = p.id                
@@ -122,6 +127,7 @@ class ProfileController extends Controller
              AND b.content_id = p.id
             "
         );
+        // return $user_bookmarks;
         $user_following = DB::select(
             "SELECT *
              FROM follows f, users u
@@ -138,21 +144,7 @@ class ProfileController extends Controller
             "
         );
         // return $user_follower;
-        $amount_following = sizeof($user_following);
-        $amount_post = DB::select(
-            "SELECT COUNT(*)
-             FROM posts
-             WHERE creator::integer = $id
-            "
-        )[0]->count;
-        // return $amount_post;
-        $amount_tag = DB::select(
-            "SELECT COUNT(*)
-             FROM tags
-             WHERE creator::integer = $id
-            "
-        )[0]->count;
-        // return $amount_tag;
+
         return view('profile.view-profile', [
             'user_informations' => $user_informations,
             'user_posts' => $user_posts,
@@ -162,10 +154,8 @@ class ProfileController extends Controller
             'user_series' => $user_series,
             'user_following' => $user_following,
             'user_follower' => $user_follower,
-            'amount_following'=> $amount_following,
-            'amount_post' => $amount_post,
-            'amount_tag' => $amount_tag,
             'user_bookmarks' => $user_bookmarks,
+            'is_owner' => $is_owner,
         ]);
     }
 

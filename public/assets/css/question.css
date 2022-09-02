@@ -37,7 +37,7 @@
 .card__question--wrap {
     display: grid;
     grid-template-columns: 200px auto;
-    border-bottom: 1px solid var(--gray-hard);
+    border-bottom: 1px solid var(--gray-soft);
     padding: 10px 0 20px 0;
     animation: question_animation 300ms linear;
     transform: translateX(0);

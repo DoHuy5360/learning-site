@@ -88,7 +88,7 @@ class PostController extends Controller
         $range = 7;
         $start = ($index - 1) * $range;
         $all_posts = DB::select(
-            "SELECT *, p.id AS post_id
+            "SELECT *, p.id AS post_id, u.id AS author_id
              FROM posts p, users u
              WHERE p.creator::integer = u.id
              ORDER BY p.id DESC
