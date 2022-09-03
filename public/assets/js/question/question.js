@@ -5,13 +5,14 @@ first_n_questions.createAjax(
     (_form = undefined),
     (data_response) => {
         const questions_data = data_response.all_questions;
+        // console.log(questions_data);
         first_n_questions.insertResponseToNodeId(
             (_node_id = "question-list-wrap"),
             (_response = questions_data),
             (_createHtml = createQuestionHtml)
         );
         setEventRelativePost();
-        createExplainLabel()
+        createExplainLabel();
     }
 );
 let first_index_questions = document.querySelector(".index__questions");
@@ -44,7 +45,6 @@ list_index_questions.forEach((index) => {
 });
 function createQuestionHtml() {
     const tag_list = document.createElement("div");
-    let open_relativePost_btn;
     if (this.tags.length != 0) {
         this.tags.forEach((tag) => {
             const tag_link = document.createElement("a");
@@ -52,6 +52,9 @@ function createQuestionHtml() {
             tag_link.textContent = tag.name;
             tag_list.appendChild(tag_link);
         });
+    }
+    let open_relativePost_btn;
+    if (this.have_relative_posts) {
         const relativePost_btn_wrap = document.createElement("div");
         const relativePost_btn = document.createElement("button");
         relativePost_btn.setAttribute("class", "question__tags--relativePost");

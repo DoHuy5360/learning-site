@@ -1,4 +1,7 @@
-body::-webkit-scrollbar{
+* {
+    scroll-behavior: smooth;
+}
+body::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
@@ -24,7 +27,7 @@ body::-webkit-scrollbar{
     font-size: 30px;
     gap: 20px;
 }
-#post-view-hidden-avatar{
+#post-view-hidden-avatar {
     width: 100%;
     opacity: 0;
     object-fit: contain;
@@ -77,17 +80,33 @@ body::-webkit-scrollbar{
 #postVw-follow-btn {
     background-color: transparent;
     padding: 3px 7px;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: grab;
+    transition: 200ms linear;
 }
-#postVw-unfollow-btn{
+#postVw-unfollow-btn {
     color: var(--red-light);
     border: 1px solid var(--red-light);
 }
-#postVw-follow-btn{
+#postVw-follow-btn {
     color: var(--green-dark);
     border: 1px solid var(--green-dark);
 }
+#postVw-unfollow-btn:hover {
+    color: white;
+    background-color: var(--red-light);
+}
+#postVw-follow-btn:hover {
+    color: white;
+    background-color: var(--green-dark);
+}
+#postVw-unfollow-btn:active {
+    background-color: white;
+}
+#postVw-follow-btn:active {
+    background-color: white;
+}
+
 #post-view-author-left-footer {
     display: flex;
     gap: 10px;
@@ -98,18 +117,18 @@ body::-webkit-scrollbar{
     gap: 5px;
     align-items: center;
 }
-#postVw-option-setting{
+#postVw-option-setting {
     margin-left: auto;
 }
-#postVw-option-setting label{
+#postVw-option-setting label {
     cursor: pointer;
     position: relative;
 }
-#postVw-setting-btn{
+#postVw-setting-btn {
     all: unset;
     cursor: pointer;
 }
-#setting-box{
+#setting-box {
     display: flex;
     flex-direction: column;
     overflow: hidden;
@@ -119,11 +138,11 @@ body::-webkit-scrollbar{
     transition: 100ms linear;
     transform: scale(0);
 }
-#postVw-setting-btn:checked + label > #setting-box{
+#postVw-setting-btn:checked + label > #setting-box {
     transform: scale(1);
     box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
 }
-.postVw-option-btn{
+.postVw-option-btn {
     white-space: nowrap;
     text-decoration: unset;
     color: var(--gray-hard);
@@ -134,11 +153,11 @@ body::-webkit-scrollbar{
     align-items: center;
     gap: 5px;
 }
-.postVw-option-btn button{
+.postVw-option-btn button {
     padding: 5px 10px;
     all: unset;
 }
-.postVw-option-btn:hover{
+.postVw-option-btn:hover {
     color: var(--color-1);
     background-color: var(--gray-light);
 }
@@ -198,10 +217,13 @@ body::-webkit-scrollbar{
 #post-view-menu-element-list a {
     text-decoration: unset;
     font-size: 13px;
-    color: var(--color-1);
+    color: var(--gray-hard);
     transition: 100ms linear;
 }
-.title__active{
+#post-view-menu-element-list a:hover {
+    color: var(--color-1);
+}
+.title__active {
     color: var(--color-2) !important;
     border-left: 5px solid var(--color-2);
     font-weight: bold;
@@ -218,7 +240,7 @@ body::-webkit-scrollbar{
     gap: 10px;
     padding: 5px;
 }
-#post-view-relative-file-list p{
+#post-view-relative-file-list p {
     font-size: 13px;
 }
 .postview__file--element {
@@ -236,7 +258,7 @@ body::-webkit-scrollbar{
     text-decoration: unset;
     color: var(--color-1);
 }
-.postview__file--element button{
+.postview__file--element button {
     border: 1px solid var(--gray-hard);
     background-color: var(--color-4);
     border-radius: 3px;
@@ -251,15 +273,27 @@ body::-webkit-scrollbar{
     flex-direction: column;
     gap: 30px;
 }
-.postview__card--postrelative-header {
+.postview__card--postrelative-title {
+    font-size: 20px;
+    font-weight: bold;
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;
     word-break: break-word;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
+    text-decoration: unset;
+    color: black;
+    transition: 100ms linear;
 }
-#post-view-relative-post-wrap{
+.postview__card--postrelative-title:hover {
+    color: var(--color-2);
+}
+.postview__card--postrelative-time-to-read {
+    font-size: 10px;
+    color: var(--gray-hard);
+}
+#post-view-relative-post-wrap {
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -274,9 +308,10 @@ body::-webkit-scrollbar{
     padding: 10px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 5px;
     width: calc(100% / 4);
     box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    justify-content: space-between;
 }
 .postview__card--postrelative-footer {
     display: flex;
@@ -285,16 +320,19 @@ body::-webkit-scrollbar{
 .postview__card--postrelative-author-index {
     display: flex;
     gap: 10px;
+    font-size: 11px;
 }
-.postview__card--postrelative-author-index p {
+.postview__card--postrelative-author-index div {
     display: flex;
     align-items: center;
     gap: 5px;
 }
 .postview__card--postrelative-author-name {
     text-decoration: unset;
-    font-weight: bold;
     color: var(--color-2);
+    font-size: 15px;
+    border-top: 1px solid var(--gray-soft);
+    padding-top: 5px;
 }
 /* todo -------------- start comment  */
 #post-view-comment-wrap {
@@ -328,15 +366,22 @@ body::-webkit-scrollbar{
     border: 1px solid var(--gray-hard);
     border-radius: inherit;
 }
-#post-view-user-comment-field button {
-    background-color: var(--color-3);
+#post-view-submit-comment-btn {
+    background-color: transparent;
     border: 1px solid var(--color-2);
-    padding: 10px 20px;
+    padding: 5px 10px;
     width: fit-content;
-    display: inline-block;
-    font-weight: bold;
     align-self: end;
     cursor: pointer;
+    border-radius: 20px;
+    transition: 100ms linear;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+#post-view-submit-comment-btn:hover {
+    color: white;
+    background-color: var(--color-2);
 }
 #post-view-all-comment-list {
     display: flex;
@@ -354,6 +399,22 @@ body::-webkit-scrollbar{
     box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
     -webkit-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
     -moz-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    transform: translateX(0);
+    visibility: visible;
+    animation: post_comment_animation 300ms linear;
+}
+@keyframes post_comment_animation {
+    0% {
+        transform: translateY(-50%);
+        visibility: hidden;
+    }
+    50% {
+        visibility: hidden;
+    }
+    100% {
+        transform: translateX(0);
+        visibility: visible;
+    }
 }
 .postview__card--user-header {
     display: flex;
@@ -407,13 +468,71 @@ body::-webkit-scrollbar{
     flex-direction: column;
     gap: 30px;
 }
-.postview__tag--element {
-    border: 1px solid var(--color-2);
-    padding: 2px 10px;
-    border-radius: 20px;
+.postVw__series--otherpost {
+    color: var(--gray-hard);
     font-size: 13px;
-}
-.postview__tag--element a {
     text-decoration: unset;
+    padding: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+.postVw__series--otherpost:hover {
     color: var(--color-1);
+}
+#postVw-comment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.postVw__reply--form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: start;
+}
+.reply__box--input {
+    width: 100%;
+    min-height: 100px;
+    max-height: 300px;
+    outline: unset;
+    padding: 10px;
+    border-radius: 5px;
+    resize: vertical;
+    border: 1px solid var(--gray-hard);
+}
+.postVw__reply--option {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.postVw__reply--btn,
+.postVw__reply--close {
+    border: unset;
+    background-color: transparent;
+    color: black;
+    border-radius: 20px;
+    padding: 5px 10px;
+    width: fit-content;
+    transition: 100ms linear;
+    cursor: pointer;
+}
+.postVw__reply--btn {
+    border: 1px solid var(--green-dark);
+}
+.postVw__reply--close {
+    border: 1px solid var(--red-light);
+}
+.postVw__reply--btn:hover {
+    background-color: var(--green-dark);
+    color: white;
+}
+.postVw__reply--close:hover {
+    background-color: var(--red-light);
+    color: white;
+}
+.postVw__author--name{
+    color: var(--color-2);
+    text-decoration: unset;
 }

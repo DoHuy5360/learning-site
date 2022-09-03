@@ -30,13 +30,13 @@
                             <ion-icon name="chevron-back-outline"></ion-icon>
                         </button>
                         <div id="question-wrap-box-index">
-                            @for ($wrap = 0; $wrap < $all_questions_length; $wrap += 10)
+                            @for ($wrap = 0; $wrap <= $all_questions_length; $wrap += 10)
                                 <div class="index__questions--wrap">
                                     @for ($ascending = 1; $ascending < 11; $ascending++)
                                         @php
                                             $question_index = $wrap + $ascending;
                                         @endphp
-                                        @if ($question_index < $all_questions_length + 1)
+                                        @if ($question_index <= $all_questions_length + 1)
                                             <div class="index__questions" data-questions-index="{{ $question_index }}">
                                                 {{ $question_index }}
                                             </div>

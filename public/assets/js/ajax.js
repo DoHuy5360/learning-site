@@ -31,13 +31,28 @@ class AJAX {
     /**
      * @param {String} _node_id Chỉ nhận Id của Node muốn chèn HTML vào
      * @param {Array} _response Mảng chứa các đối tượng [ { }, { }, ... ]
-     * @param {Function} _createHtml Tên của 1 hàm mà nó trả về HTML
+     * @param {Function} _html_content Tên của 1 hàm mà nó trả về HTML
      */
-    insertResponseToNodeId(_node_id, _response, _createHtml) {
+    insertResponseToNodeId(_node_id, _response, _html_content) {
         const node_id = document.getElementById(_node_id);
         _response.forEach((object_data) => {
-            const html = _createHtml.call(object_data);
+            const html = _html_content.call(object_data);
             node_id.insertAdjacentHTML("beforeend", html);
         });
+    }
+    insertResponseToNodeData(
+        _data_name,
+        _data_value,
+        _response,
+        _html_content,
+        _position
+    ) {
+        const node_data = document.querySelector(
+            `[${_data_name}="${_data_value}"]`
+            );
+        if(node_data){
+            const html = _html_content.call(_response);
+            node_data.insertAdjacentHTML(_position, html);
+        }
     }
 }

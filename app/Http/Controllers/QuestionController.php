@@ -46,6 +46,17 @@ class QuestionController extends Controller
             "
         );
         // return $all_questions;
+        $array_tag_name = [];
+        $all_tag_name = DB::select(
+            "SELECT t.name
+             FROM tags t
+             WHERE t.type = 'post'
+            "
+        );
+        foreach ($all_tag_name as $tag) {
+            array_push($array_tag_name, $tag->name);
+        }
+        // return $array_tag_name;
         for ($i = 0; $i < sizeof($all_questions); $i++) {
             $target_question = $all_questions[$i];
             // todo: Lấy danh sách tags của câu hỏi này
@@ -58,6 +69,13 @@ class QuestionController extends Controller
                 "
             );
             $target_question->tags = $relative_tag;
+            $target_question->have_relative_posts = false;
+            foreach ($relative_tag as $tag) {
+                if(in_array($tag->name, $array_tag_name)){
+                    $target_question->have_relative_posts = true;
+                    break;
+                }
+            }
             // todo: Lấy danh sách người trả lời câu hỏi này
             $anser_question = DB::select(
                 "SELECT DISTINCT ON (u.id) *
@@ -196,7 +214,7 @@ class QuestionController extends Controller
             }
         }
 
-        return redirect()->back()->with("success", "Câu hỏi đã được công bố.");
+        return redirect()->route('question.show', $recent_question->id)->with("success", "Câu hỏi đã được công bố.");
     }
 
     /**

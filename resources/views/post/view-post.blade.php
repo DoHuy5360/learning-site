@@ -1,4 +1,7 @@
 @extends('layouts.header-footer-public')
+@section('script')
+    <script src="{{ asset('assets/js/view-post.js') }}"></script>
+@endsection
 @section('content')
     @if ($message = Session::get('success'))
         <div class="success-message">{{ $message }}</div>
@@ -13,7 +16,24 @@
                             <span>238</span>
                             <ion-icon name="star-outline"></ion-icon>
                         </div>
-                        <ion-icon name="bookmark-outline"></ion-icon>
+                        <div class="postPs__bookmark--field">
+                            <form class="postPs__bookmark--form" style="display: {{ empty($is_bookmarked) ? 'block' : 'none' }};" data-explain-label="Nhấp chuột để lưu lại" method="POST">
+                                @csrf
+                                <input type="hidden" name="content_id" value="{{ $corresponding_post->post_id }}">
+                                <input type="hidden" name="type" value="post">
+                                <button class="postPs__bookmark--btn" type="submit">
+                                    <ion-icon name="bookmark-outline"></ion-icon>
+                                </button>
+                            </form>
+                            <form class="postPs__unbookmark--form" style="display: {{ !empty($is_bookmarked) ? 'block' : 'none' }};" data-bookmark-id="{{ $corresponding_post->post_id }}"
+                                data-explain-label="Nhấp chuột để bỏ lưu" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="postPs__unbookmark--btn" type="submit">
+                                    <ion-icon name="bookmark"></ion-icon>
+                                </button>
+                            </form>
+                        </div>
                         <ion-icon name="link-outline"></ion-icon>
                         <ion-icon name="alert-circle-outline"></ion-icon>
                     </div>
@@ -28,14 +48,15 @@
                                 <div id="post-view-author-left-header">
                                     <a href="">{{ $corresponding_post->name }}</a>
                                     <p>{{ $corresponding_post->email }}</p>
-                                    <form action="{{ route('follow.destroy', $corresponding_post->user_id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};" method="POST">
+                                    <form action="{{ route('follow.destroy', $corresponding_post->author_id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};"
+                                        method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button id="postVw-unfollow-btn" type="submit">Hủy theo dõi</button>
                                     </form>
                                     <form action="{{ route('follow.store') }}" id="postVw-follow-form" style="display:{{ !$is_following ? 'block' : 'none' }};" method="POST">
                                         @csrf
-                                        <input type="hidden" name="followed" value="{{ $corresponding_post->user_id }}">
+                                        <input type="hidden" name="followed" value="{{ $corresponding_post->author_id }}">
                                         <button id="postVw-follow-btn" type="submit">Theo dõi</button>
                                     </form>
                                 </div>
@@ -110,9 +131,7 @@
                         </div>
                         <div id="post-view-main-content-footer">
                             @foreach ($relative_tag as $tag)
-                                <p class="postview__tag--element">
-                                    <a href="">{{ $tag->name }}</a>
-                                </p>
+                                <a class="post__card--tag" href="{{ route('tag.show', $tag->id) }}">{{ $tag->name }}</a>
                             @endforeach
                         </div>
                     </div>
@@ -132,10 +151,10 @@
                                     <p>{{ $series->name }}</p>
                                     <span></span>
                                 </div>
-                                <div id="post-view-relative-post-series">
+                                <div class="postVw__relativePost--series">
                                     @foreach ($series->relative_posts as $post)
-                                        <a class="underline__none" href="{{ route('post.show', remove_sign($post->title) . '|' . $post->post_id) }}">
-                                            <p>{{ $post->title }}</p>
+                                        <a class="postVw__series--otherpost" href="{{ route('post.show', remove_sign($post->title) . '|' . $post->post_id) }}">
+                                            {{ $post->title }}
                                         </a>
                                     @endforeach
                                 </div>
@@ -175,37 +194,35 @@
                     <div id="post-view-author-orther-list">
                         @foreach ($relative_post as $post)
                             <div class="postview__card--postrelative">
-                                <a class="underline__none" href="{{ url('/post') . '/' . remove_sign($post->title) . '|' . $post->id }}">
-                                    <div class="postview__card--postrelative-header">
-                                        {{ $post->title }}
+                                <div class="postview__card--headerWrap">
+                                    <div class="postview__card--postrelative-time-to-read">
+                                        Đọc trong {{ $post->time }}
                                     </div>
-                                </a>
+                                    <a class="postview__card--postrelative-title" href="{{ url('/post') . '/' . remove_sign($post->title) . '|' . $post->id }}">
+                                        {{ $post->title }}
+                                    </a>
+                                </div>
                                 <div class="postview__card--postrelative-footer">
                                     <a href="" class="postview__card--postrelative-author-name">
                                         {{ $corresponding_post->name }}
                                     </a>
-                                    <div class="postview__card--postrelative-time-to-read">
-                                        <p>
-                                            Đọc trong {{ $post->time }}
-                                        </p>
-                                    </div>
                                     <div class="postview__card--postrelative-author-index">
-                                        <p>
+                                        <div>
                                             <ion-icon name="eye-outline"></ion-icon>
                                             <span>0</span>
-                                        </p>
-                                        <p>
+                                        </div>
+                                        <div>
                                             <ion-icon name="star-outline"></ion-icon>
                                             <span>0</span>
-                                        </p>
-                                        <p>
+                                        </div>
+                                        <div>
                                             <ion-icon name="bookmark-outline"></ion-icon>
                                             <span>0</span>
-                                        </p>
-                                        <p>
+                                        </div>
+                                        <div>
                                             <ion-icon name="chatbubbles-outline"></ion-icon>
                                             <span>0</span>
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -222,15 +239,39 @@
                             @csrf
                             <input name="post_id" value="{{ $corresponding_post->post_id }}" type="hidden">
                             <textarea name="comment" id="postview-commnent-area" required></textarea>
-                            <button id="post-view-submit-comment-btn" type="submit">Bình luận
-                                <ion-icon name="paper-plane-outline"></ion-icon>
+                            <button id="post-view-submit-comment-btn" type="submit">
+                                <span>Bình luận</span>
+                                <ion-icon name="chatbubble-outline"></ion-icon>
                             </button>
                         </form>
-                        <iframe id="post-view-comment-frame" src="{{ 'http://127.0.0.1:8000/post-comment/' . $corresponding_post->post_id }}" frameborder="0"></iframe>
+                        <div id="postVw-comment-list" data-post-id="{{ $corresponding_post->post_id }}"></div>
+                        <div id="question-list-index-question">
+                            <button id="question-previous-index" type="button">
+                                <ion-icon name="chevron-back-outline"></ion-icon>
+                            </button>
+                            <div id="question-wrap-box-index">
+                                @for ($wrap = 0; $wrap <= $relative_comment_length; $wrap += 10)
+                                    <div class="index__questions--wrap">
+                                        @for ($ascending = 1; $ascending < 11; $ascending++)
+                                            @php
+                                                $post_index = $wrap + $ascending;
+                                            @endphp
+                                            @if ($post_index <= $relative_comment_length + 1)
+                                                <div class="index__questions" data-questions-index="{{ $post_index }}">
+                                                    {{ $post_index }}
+                                                </div>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                @endfor
+                            </div>
+                            <button id="question-next-index" type="button">
+                                <ion-icon name="chevron-forward-outline"></ion-icon>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="{{ asset('assets/js/view-post.js') }}"></script>
 @endsection

@@ -52,9 +52,9 @@ function createComment(
             <div class="postview__cardcomment--user-infor-header">
                 <a href="">${_user_name}</a>
                 <div class="postview__cardcomment--user-icon-list">
-                    <img src="./assets/avatar.png" alt="" />
-                    <img src="./assets/avatar.png" alt="" />
-                    <img src="./assets/avatar.png" alt="" />
+                    <img src="https://bit.ly/3pbRb8m" alt="" />
+                    <img src="https://bit.ly/3pbRb8m" alt="" />
+                    <img src="https://bit.ly/3pbRb8m" alt="" />
                     </div>
                     </div>
                     <div class="postview__cardcomment--user-infor-footer">

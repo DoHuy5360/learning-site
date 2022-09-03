@@ -33,6 +33,7 @@ list_index_posts.forEach((index) => {
             (_path = `/post-list/${data_post_id}`),
             (_form = undefined),
             (data_response) => {
+                // console.log(data_response);
                 const posts_data = data_response.all_posts;
                 n_posts.insertResponseToNodeId(
                     (_node_id = "post-list-wrap"),
@@ -74,6 +75,8 @@ function createPostHtml() {
                 </form>
             </div>
         `;
+    }else{
+        bookmark_html = ""
     }
     let wrap_tags;
     if (this.tags.length != 0) {

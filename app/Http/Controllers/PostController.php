@@ -74,7 +74,7 @@ class PostController extends Controller
             'all_posts' => $all_posts,
             'all_questions' => $all_questions,
             'is_login' => $is_login,
-            'all_posts_length'=>$all_posts_length,
+            'all_posts_length' => $all_posts_length,
         ]);
     }
     public function getPosts($index)
@@ -256,7 +256,7 @@ class PostController extends Controller
         $post_id = end($split_request);
         // return $post_id;
         $corresponding_post = DB::select(
-            "SELECT * , u.id as user_id, p.id as post_id
+            "SELECT * , u.id as author_id, p.id as post_id
              FROM users u, posts p
              WHERE p.id = {$post_id}
              AND p.creator::integer = u.id 
@@ -264,7 +264,7 @@ class PostController extends Controller
         )[0];
         // return $corresponding_post;
         $relative_tag = DB::select(
-            "SELECT t.name
+            "SELECT t.name, t.id
              FROM tags t, tag_contents tc
              WHERE t.tag_code = tc.tag_id
              AND tc.content_id::integer = {$post_id}
@@ -276,7 +276,7 @@ class PostController extends Controller
         $relative_post = DB::select(
             "SELECT *
              FROM posts
-             WHERE posts.creator = '{$corresponding_post->user_id}'
+             WHERE posts.creator = '{$corresponding_post->creator}'
              AND posts.id != $post_id::integer
             "
         );
@@ -284,8 +284,8 @@ class PostController extends Controller
 
         $relative_file = DB::select(
             "SELECT *
-             FROM files
-             WHERE files.belong = $post_id::integer
+             FROM files f
+             WHERE f.belong = $post_id::integer
             "
         );
         $series_posts = DB::select(
@@ -308,13 +308,13 @@ class PostController extends Controller
             $series_posts[$i]->relative_posts = $posts_of_series;
         }
         // return $series_posts;
-        $is_author = ($corresponding_post->creator == $user_id) ? true : false;
+        $is_author = ($corresponding_post->creator == $corresponding_post->creator) ? true : false;
         // return $is_author;
         $get_follower = DB::select(
             "SELECT *
-             FROM follows
-             WHERE followed = $corresponding_post->creator
-             AND follower = $user_id
+             FROM follows f, users u
+             WHERE f.followed = $corresponding_post->creator
+             AND f.follower = $user_id
             "
         );
         // return empty($get_follower);
@@ -329,9 +329,27 @@ class PostController extends Controller
         $amount_follower = DB::select(
             "SELECT COUNT(*)
              FROM follows
-             WHERE followed = $user_id
+             WHERE followed = $corresponding_post->creator
             "
         )[0]->count;
+
+        $is_bookmarked = DB::select(
+            "SELECT id
+             FROM bookmarks b
+             WHERE b.content_id = $corresponding_post->post_id
+             AND b.bookmarker = $user_id
+            "
+        );
+        $relative_comments = DB::select(
+            "SELECT *, pc.id as comment_id
+             FROM post_comments pc, users u
+             WHERE pc.for = $post_id
+             AND pc.replier = u.id
+             ORDER BY pc.id DESC
+            "
+        );
+        // return $relative_comments;
+        $relative_comment_length = round(sizeOf($relative_comments) / 7);
         return view('post.view-post', [
             'is_author' => $is_author,
             'corresponding_post' => $corresponding_post,
@@ -342,6 +360,8 @@ class PostController extends Controller
             'is_following' => $is_following,
             'amount_post' => $amount_post,
             'amount_follower' => $amount_follower,
+            'is_bookmarked' => $is_bookmarked,
+            'relative_comment_length' => $relative_comment_length,
         ]);
     }
 

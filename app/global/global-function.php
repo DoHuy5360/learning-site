@@ -101,3 +101,11 @@ function generate_code($code_length = 10)
     } while (in_array($str_code, $array_codes));
     return $str_code;
 }
+function getAllDataTable(){
+    $table = new stdClass();
+    $table->tag = DB::select(
+        "SELECT *
+         FROM tags
+        "
+    );
+}

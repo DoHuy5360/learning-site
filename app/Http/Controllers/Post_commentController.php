@@ -25,7 +25,6 @@ class Post_commentController extends Controller
      */
     public function create()
     {
-
     }
 
     /**
@@ -42,6 +41,22 @@ class Post_commentController extends Controller
         $new_comment->replier = Auth::user()->id;
         $new_comment->content = $request->comment;
         $new_comment->save();
+
+        $relatest_comment = DB::select(
+            "SELECT *
+             FROM post_comments pc, users u
+             WHERE pc.for = $request->post_id
+             AND pc.replier = u.id
+             ORDER BY pc.id DESC
+             LIMIT 1 OFFSET 0
+            "
+        );
+
+        return response()->json(
+            [
+                'relatest_comment' => $relatest_comment,
+            ]
+        );
     }
 
     /**
@@ -52,20 +67,30 @@ class Post_commentController extends Controller
      */
     public function show($id)
     {
-        $relative_comment = DB::select(
-            "SELECT *, post_comments.id as comment_id
-             FROM post_comments, users
-             WHERE post_comments.for = $id
-             AND post_comments.replier = users.id
-             ORDER BY post_comments.id DESC
+    }
+    function getComments($id, $index)
+    {
+        $range = 7;
+        $start = ($index - 1) * $range;
+        $relative_comments = DB::select(
+            "SELECT *, pc.id AS comment_id, u.id AS author_id
+             FROM post_comments pc, users u
+             WHERE pc.for = $id
+             AND pc.replier = u.id
+             ORDER BY pc.id DESC
+             LIMIT $range OFFSET $start
             "
         );
+        // return $relative_comment;
+        return response()->json(
+            [
+                'relative_comments' => $relative_comments,
+            ]
+        );
         return view('comment.view-comment', [
-            'relative_comment' => $relative_comment,
             'post_id' => $id,
         ]);
     }
-
     /**
      * Show the form for editing the specified resource.
      *

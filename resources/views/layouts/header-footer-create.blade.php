@@ -71,7 +71,9 @@
                                     <img id="header-user-avatar" src="{{ Auth::user()->avatar }}" alt="" draggable="false">
                                     <div id="user-management-list-wrap">
                                         <div id="user-management-list">
-                                            <button class="option__cell" type="button">Profile</button>
+                                            <a href="{{ route('profile.show', Auth::user()->id) }}">
+                                                <button class="option__cell" type="button">Profile</button>
+                                            </a>
                                             <button class="option__cell" type="button">Setting</button>
                                             <form id="form-logout" action="{{ route('logout') }}" method="post">
                                                 @csrf
@@ -104,6 +106,7 @@
         src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"
     ></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="{{ asset('assets/js/header.js') }}"></script>
     <script src="{{ asset('assets/js/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('assets/js/ajax.js') }}"></script>
 </body>

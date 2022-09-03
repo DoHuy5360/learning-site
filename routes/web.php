@@ -41,6 +41,7 @@ Route::resource('/bookmark', BookmarkController::class);
 Route::get('/question-list/{index}', [QuestionController::class, 'getQuestions']);
 Route::get('/post-relative/{tag}', [QuestionController::class, 'getRelativePost']);
 Route::get('/post-list/{index}', [PostController::class, 'getPosts']);
+Route::get('/post-comment/{id}/{index}', [Post_commentController::class, 'getComments']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

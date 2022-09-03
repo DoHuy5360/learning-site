@@ -22,7 +22,7 @@
                         <ion-icon name="chevron-back-outline"></ion-icon>
                     </button>
                     <div id="question-wrap-box-index">
-                        @for ($wrap = 0; $wrap < $all_posts_length; $wrap += 10)
+                        @for ($wrap = 0; $wrap <= $all_posts_length; $wrap += 10)
                             <div class="index__questions--wrap">
                                 @for ($ascending = 1; $ascending < 11; $ascending++)
                                     @php

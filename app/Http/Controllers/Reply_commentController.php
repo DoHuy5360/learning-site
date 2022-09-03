@@ -45,7 +45,21 @@ class Reply_commentController extends Controller
         $new_reply->comment_replier = Auth::user()->id;
         $new_reply->reply_content = $request->reply_content;
         $new_reply->save();
-        return redirect()->back();
+
+        $relatest_reply = DB::select(
+            "SELECT *, rc.reply_content AS content, rc.reply_code as comment_code
+             FROM reply_comments rc, users u
+             WHERE rc.content_type = $request->post_id
+             AND rc.comment_replier = u.id
+             ORDER BY rc.id DESC
+             LIMIT 1 OFFSET 0
+            "
+        );
+        return response()->json(
+            [
+                'relatest_reply' => $relatest_reply
+            ]
+        );
     }
 
     /**
@@ -56,17 +70,17 @@ class Reply_commentController extends Controller
      */
     public function show($id)
     {
-        $reply_relative = DB::select(
-            "SELECT DISTINCT ON (reply_comments.id) *
-             FROM reply_comments, post_comments, users
-             WHERE reply_comments.content_type = $id
-             AND reply_comments.comment_replier = users.id
-             ORDER BY reply_comments.id ASC
+        $relative_replies = DB::select(
+            "SELECT *, rc.reply_content AS content, rc.reply_code as comment_code
+             FROM reply_comments rc, users u
+             WHERE rc.content_type = $id
+             AND rc.comment_replier = u.id
+             ORDER BY rc.id ASC
             "
         );
-        // return $reply_relative;
+        // return $relative_replies;
         return response()->json([
-            "reply_information" => $reply_relative,
+            "relative_replies" => $relative_replies,
             "csrf" => csrf_token(),
         ]);
     }

@@ -3,6 +3,9 @@
     <script src="{{ asset('assets/js/question/view-question.js') }}"></script>
 @endsection
 @section('content')
+    @if ($message = Session::get('success'))
+        <div class="success-message">{{ $message }}</div>
+    @endif
     <div class="full-height">
         <div id="quesVw-contents-body-wr">
             <div id="quesVw-question-top-wr">
