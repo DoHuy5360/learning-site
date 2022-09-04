@@ -252,6 +252,7 @@ function createReplyBox() {
                             (_html_content = createCommentHtml),
                             (_position = "beforeend")
                         );
+                        createReplyBox();
                     }
                 );
             });

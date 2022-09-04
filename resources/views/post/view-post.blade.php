@@ -1,6 +1,6 @@
 @extends('layouts.header-footer-public')
 @section('script')
-    <script src="{{ asset('assets/js/view-post.js') }}"></script>
+    <script src="{{ asset('assets/js/post/view-post.js') }}"></script>
 @endsection
 @section('content')
     @if ($message = Session::get('success'))
@@ -67,38 +67,38 @@
                                     </p>
                                     <p class="post-view-user-index">
                                         <ion-icon name="person-add-outline"></ion-icon>
-                                        <span>{{ $amount_follower }}</span>
+                                        <x-post.index :post-id="$corresponding_post->post_id" type="follower"/>
                                     </p>
                                     <p class="post-view-user-index">
                                         <ion-icon name="paper-plane-outline"></ion-icon>
-                                        <span>{{ $amount_post }}</span>
+                                        <x-post.index :post-id="$corresponding_post->post_id" type="post"/>
                                     </p>
                                 </div>
                             </div>
                             <div id="post-view-card-author-right-part">
                                 <div id="post-view-author-right-header">
                                     <div id="post-view-created-at">
-                                        {{ $corresponding_post->created_at }}
+                                        <x-post.index :post-id="$corresponding_post->post_id" type="created_at"/>
                                     </div>
                                     <span>-</span>
                                     <div id="post-view-time-to-read">
                                         <p>
-                                            Mất {{ $corresponding_post->time }} để đọc
+                                        Mất <x-post.index :post-id="$corresponding_post->post_id" type="reading_time"/> để đọc
                                         </p>
                                     </div>
                                 </div>
                                 <div id="post-view-author-right-footer">
                                     <p class="post-view-user-index">
-                                        <ion-icon name="eye-outline"></ion-icon>
+                                        <ion-icon name="eye"></ion-icon>
                                         <span>0</span>
                                     </p>
                                     <p class="post-view-user-index">
-                                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                                        <span>0</span>
+                                        <ion-icon name="chatbubble"></ion-icon>
+                                        <x-post.index :post-id="$corresponding_post->post_id" type="comment"/>
                                     </p>
                                     <p class="post-view-user-index">
-                                        <ion-icon name="bookmark-outline"></ion-icon>
-                                        <span>0</span>
+                                        <ion-icon name="bookmark"></ion-icon>
+                                        <x-post.index :post-id="$corresponding_post->post_id" type="bookmark"/>
                                     </p>
                                     <div id="postVw-option-setting">
                                         <input id="postVw-setting-btn" type="checkbox" value="">
@@ -217,11 +217,11 @@
                                         </div>
                                         <div>
                                             <ion-icon name="bookmark-outline"></ion-icon>
-                                            <span>0</span>
+                                            <x-post.index :post-id="$post->post_id" type="bookmark"/>
                                         </div>
                                         <div>
                                             <ion-icon name="chatbubbles-outline"></ion-icon>
-                                            <span>0</span>
+                                            <x-post.index :post-id="$post->post_id" type="comment"/>
                                         </div>
                                     </div>
                                 </div>

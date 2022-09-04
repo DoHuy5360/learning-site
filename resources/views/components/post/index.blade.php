@@ -1,0 +1,1 @@
+<span>{{ $amount_index }}</span>

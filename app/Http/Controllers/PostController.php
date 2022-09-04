@@ -21,11 +21,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        try {
-            $user = Auth::user();
-        } catch (\Throwable $th) {
-            $user = false;
-        }
+        $user = Auth::check();
 
         //todo: get all post but not contain any tags
         $all_posts = DB::select(
@@ -274,10 +270,10 @@ class PostController extends Controller
         // return $relative_tag;
         //todo: push all relative tags to the corresponding post
         $relative_post = DB::select(
-            "SELECT *
-             FROM posts
-             WHERE posts.creator = '{$corresponding_post->creator}'
-             AND posts.id != $post_id::integer
+            "SELECT *, p.id as post_id
+             FROM posts p
+             WHERE p.creator::integer = $corresponding_post->creator
+             AND p.id != $post_id::integer
             "
         );
         // return $relative_post;
@@ -320,18 +316,6 @@ class PostController extends Controller
         // return empty($get_follower);
         $is_following = empty($get_follower) ? false : true;
         // return $is_following;
-        $amount_post = DB::select(
-            "SELECT COUNT(*)
-             FROM posts
-             WHERE creator::integer = $corresponding_post->creator
-            "
-        )[0]->count;
-        $amount_follower = DB::select(
-            "SELECT COUNT(*)
-             FROM follows
-             WHERE followed = $corresponding_post->creator
-            "
-        )[0]->count;
 
         $is_bookmarked = DB::select(
             "SELECT id
@@ -358,8 +342,6 @@ class PostController extends Controller
             'series_posts' => $series_posts,
             'relative_tag' => $relative_tag,
             'is_following' => $is_following,
-            'amount_post' => $amount_post,
-            'amount_follower' => $amount_follower,
             'is_bookmarked' => $is_bookmarked,
             'relative_comment_length' => $relative_comment_length,
         ]);

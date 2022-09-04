@@ -353,6 +353,8 @@ body::-webkit-scrollbar {
     gap: 10px;
     border: 1px solid var(--gray-light);
     border-radius: 5px;
+    background-color: white;
+    z-index: 9;
     box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
     -webkit-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
     -moz-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
@@ -520,9 +522,11 @@ body::-webkit-scrollbar {
 }
 .postVw__reply--btn {
     border: 1px solid var(--green-dark);
+    color: var(--green-dark);
 }
 .postVw__reply--close {
     border: 1px solid var(--red-light);
+    color: var(--red-light);
 }
 .postVw__reply--btn:hover {
     background-color: var(--green-dark);

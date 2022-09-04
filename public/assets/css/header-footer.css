@@ -30,16 +30,38 @@
 #header-logo {
     height: 60%;
 }
+#wrap-link{
+    display: flex;
+    height: 100%;
+    align-items: center;
+}
 .header__link--redirect {
     text-decoration: unset;
     background-color: unset;
     color: var(--color-4);
     padding: 10px;
     font-size: 13px;
+    height: fit-content;
+    white-space: nowrap;
+    position: relative;
 }
-.header__link--redirect:hover {
+.header__link--redirect:hover{
     color: var(--color-3);
-    border-bottom: 5px solid var(--color-3);
+}
+.header__link--redirect::after{
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 3px;
+    bottom: 0;
+    right: 0;
+    transition: 300ms linear;
+}
+.header__link--redirect:hover::after {
+    content: "";
+    left: 0;
+    width: 100%;
+    background-color: var(--color-3);
 }
 .header__part--center {
     position: relative;
