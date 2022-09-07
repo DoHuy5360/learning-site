@@ -1,4 +1,7 @@
 @extends('layouts.header-footer-create')
+@section('style')
+    <link rel="stylesheet" href="{{ asset('assets/css/tag/tag.css') }}">
+@endsection
 @section('script')
     <script src="{{ asset('assets/js/profile/view-profile.js') }}"></script>
 @endsection
@@ -10,9 +13,11 @@
                     <img src="{{ $user_informations->avatar }}" alt="" />
                     <div id="profile-name-edit-wrap">
                         <span>{{ $user_informations->name }}</span>
-                        @if ($is_owner)
-                            <a href="">Edit</a>
-                        @endif
+                        @auth
+                            @if ($user_informations->id == Auth::user()->id)
+                                <a href="">Edit</a>
+                            @endif
+                        @endauth
                     </div>
                 </div>
             </div>
@@ -28,8 +33,6 @@
                     <a href="#profile-following-table" class="profile-option">Đang theo dõi</a>
                     <a href="#profile-follower-table" class="profile-option">Người theo dõi</a>
                     <a href="#profile-tag-table" class="profile-option">Thẻ</a>
-                    {{-- <a href="#profile-reputaion-table" class="profile-option">Reputations</a> --}}
-                    <a href="#aprofile-contact-table" class="profile-option">Liên hệ</a>
                 </div>
             </div>
         </div>
@@ -48,7 +51,6 @@
                                         <div class="post__created--time">{{ $post->created_at }}</div>
                                         <div class="post-reading-time"><span>Đọc trong </span>{{ $post->time }}</div>
                                         <ion-icon name="link-outline"></ion-icon>
-                                        <ion-icon name="bookmark-outline"></ion-icon>
                                     </div>
                                     <div class="post__card--body">
                                         <h2 class="post__card--title">
@@ -95,11 +97,16 @@
                     </div>
                     <div id="profile-question-table" class="profile__table--display">
                         @foreach ($user_questions as $question)
+                            @php
+                                $current_question = new QuestionData($question->question_id);
+                                $question_info = $current_question->getQuestion();
+                                $author = $current_question->getAuthor();
+                            @endphp
                             <div class="card__question--wrap">
                                 <div class="card__question--leftpart">
                                     <div class="cardquestion__leftpart--header">
                                         <ion-icon name="time-outline"></ion-icon>
-                                        <p>{{ $question->created_at }}</p>
+                                        <p>{{ $question_info->created_at }}</p>
                                     </div>
                                     <div class="cardquestion__leftpart--footer">
                                         <div class="cardquestion__leftpart--index">
@@ -123,23 +130,24 @@
                                 <div class="card__question--rightpart">
                                     <div class="cardquestion__rightpart--header">
                                         <div class="cardquestion__author--avatar">
-                                            <img src="{{ $question->avatar }}" alt="" />
+                                            <img src="{{ $author->avatar }}" alt="" />
                                         </div>
                                         <div class="cardquestion__author--name">
-                                            <a href="">{{ $question->name }}</a>
+                                            <a href="{{ route('profile.show', $author->id) }}">{{ $author->name }}</a>
                                         </div>
                                         <ion-icon name="arrow-undo-outline"></ion-icon>
                                         <div class="cardquestion__list--helper">
-                                            <img src="https://bit.ly/3pbRb8m
-                                            " alt="" />
+                                            <img src="https://bit.ly/3pbRb8m" alt="" />
                                         </div>
                                     </div>
                                     <div class="cardquestion__rightpart--body">
-                                        <a href="{{ url('/question') . '/' . $question->question_id }}">{{ $question->title }}</a>
+                                        <a href="{{ route('question.show', $question_info->id) }}">{{ $question_info->title }}</a>
                                     </div>
                                     <div class="cardquestion__rightpart--footer">
                                         <div class="cardquestion__list-tag">
-                                            <a href="">HTML</a>
+                                            @foreach ($current_question->getTag() as $tag)
+                                                <a href="{{ route('tag.show', $tag->id) }}">{{ $tag->name }}</a>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </div>
@@ -174,9 +182,36 @@
                     </div>
                     <div id="profile-bookmark-table" class="profile__table--display">
                         @foreach ($user_bookmarks as $bookmark)
-                            <p>
-                                {{ $bookmark->title }}
-                            </p>
+                            @php
+                                $profileVwpost = new PostData($bookmark->post_id);
+                            @endphp
+                            <div class="post__card--wrap">
+                                <div class="post__card--useravatar">
+                                    <img src="{{ $bookmark->avatar }}" alt="" />
+                                </div>
+                                <div class="post__card--wrapcontent">
+                                    <div class="post__card--header">
+                                        <a href="" class="post__card--username"> {{ $bookmark->name }} </a>
+                                        <div class="post__created--time">{{ $bookmark->created_at }}</div>
+                                        <div class="post-reading-time"><span>Đọc trong </span>{{ $bookmark->time }}</div>
+                                        <ion-icon name="link-outline"></ion-icon>
+                                        <ion-icon name="bookmark-outline"></ion-icon>
+                                    </div>
+                                    <div class="post__card--body">
+                                        <h2 class="post__card--title">
+                                            @php
+                                                $convert_slug = remove_sign($bookmark->title);
+                                            @endphp
+                                            <a href="{{ url("/post/{$convert_slug}|{$bookmark->post_id}") }}">{{ $bookmark->title }}</a>
+                                        </h2>
+                                    </div>
+                                    <div class="post__card--footer">
+                                        @foreach ($profileVwpost->getTag() as $tag)
+                                            <a href="{{ route('tag.show', $tag->tag_id) }}" class="post__card--tag">{{ $tag->name }}</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </div>
                     <div id="profile-following-table" class="profile__table--display">
@@ -244,55 +279,80 @@
                         @endforeach
                     </div>
                     <div id="profile-tag-table" class="profile__table--display">
-                        @foreach ($user_tags as $tag)
-                            <a href="" class="profileVw-tag-table underline__none">{{ $tag->name }}</a>
+                        @php
+                            $profileVw_user = new UserData($user_informations->id);
+                        @endphp
+                        @foreach ($profileVw_user->getTag() as $tag)
+                            <div class="tagTg__card--wrap">
+                                <div class="tagTg__card--follow">
+                                    <img src="{{ isset($tag->tag_avatar) ? $tag->tag_avatar : 'https://bit.ly/3pbRb8m' }}" alt="" class="tagTg__card--image">
+                                    <button class="tagTg__card--followBtn" type="button">Theo dõi</button>
+                                </div>
+                                <div class="tagTg__card--info">
+                                    <a href="{{ route('tag.show', $tag->id) }}" class="tagTg__card--name">{{ $tag->name }}</a>
+                                    <div class="tagTg__card--index">
+                                        <div class="tagTg__index--element">
+                                            <div class="tagTg__index--amount">23234</div>
+                                            <span></span>
+                                            <div class="tagTg__index--name">Bài viết</div>
+                                        </div>
+                                        <div class="tagTg__index--element">
+                                            <div class="tagTg__index--amount">4839</div>
+                                            <span></span>
+                                            <div class="tagTg__index--name">Câu hỏi</div>
+                                        </div>
+                                        <div class="tagTg__index--element">
+                                            <div class="tagTg__index--amount">9384</div>
+                                            <span></span>
+                                            <div class="tagTg__index--name">Nhà sáng tạo</div>
+                                        </div>
+                                        <div class="tagTg__index--element">
+                                            <div class="tagTg__index--amount">349</div>
+                                            <span></span>
+                                            <div class="tagTg__index--name">Người theo dõi</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </div>
-                    {{-- <div id="profile-reputaion-table" class="profile__table--display">#a9</div> --}}
-                    <div id="aprofile-contact-table" class="profile__table--display">#a10</div>
                 </div>
                 <div id="profile-display-right">
                     <div id="profile-index-table">
                         @php
-                            $count = countIndex();
+                            $user = new UserData($user_informations->id);
                         @endphp
                         <div class="profile__index--row">
                             <div class="profile__index--name">Lượt xem các bài viết</div>
                             <div class="profile__index--index">1443</div>
                         </div>
-                        {{-- <div class="profile__index--row">
-                            <div class="profile__index--name">
-                                Reputations
-                            </div>
-                            <div class="profile__index--index">34</div>
-                        </div> --}}
                         <div class="profile__index--row">
                             <div class="profile__index--name">Đang được theo dõi</div>
-                            <div class="profile__index--index">{{ $count->follower }}</div>
+                            <div class="profile__index--index">{{ $user->getFollower(size: true) }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Đang theo dõi</div>
-                            <div class="profile__index--index">{{ $count->following }}</div>
+                            <div class="profile__index--index">{{ $user->getFollowing(size: true) }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Câu trả lời</div>
-                            <div class="profile__index--index">{{ $count->answer }}</div>
+                            <div class="profile__index--index">{{ $user->getAnswer(size: true) }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Đánh dấu</div>
-                            <div class="profile__index--index">{{ $count->bookmark }}</div>
+                            <div class="profile__index--index">{{ $user->getBookmark(size: true) }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Câu hỏi</div>
-                            <div class="profile__index--index">{{ $count->question }}</div>
+                            <div class="profile__index--index">{{ $user->getQuestion(size: true) }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Bài viết</div>
-                            <div class="profile__index--index">{{ $count->post }}</div>
+                            <div class="profile__index--index">{{ $user->getPost(size: true) }}</div>
                         </div>
                         <div class="profile__index--row">
                             <div class="profile__index--name">Thẻ</div>
-                            <div class="profile__index--index">{{ $count->tag }}</div>
+                            <div class="profile__index--index">{{ $user->getTag(size: true) }}</div>
                         </div>
                     </div>
                 </div>

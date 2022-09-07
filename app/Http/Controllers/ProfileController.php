@@ -46,7 +46,6 @@ class ProfileController extends Controller
      */
     public function show($id)
     {
-        $user_id = Auth::user()->id;
         $user_informations = DB::select(
             "SELECT *
              FROM users u
@@ -92,7 +91,6 @@ class ProfileController extends Controller
              AND qa.content_type = q.id
             "
         );
-        $is_owner = $user_id == $id ? true : false;
         $user_tags = DB::select(
             "SELECT name
              FROM tags
@@ -121,10 +119,12 @@ class ProfileController extends Controller
         }
         // return $user_series;
         $user_bookmarks = DB::select(
-            "SELECT *
-             FROM bookmarks b, posts p
+            "SELECT *, p.id AS post_id, b.id AS bookmark_id
+             FROM bookmarks b, posts p, users u
              WHERE b.bookmarker = $id
              AND b.content_id = p.id
+             AND p.creator::integer = u.id
+             ORDER BY b.id DESC
             "
         );
         // return $user_bookmarks;
@@ -155,7 +155,6 @@ class ProfileController extends Controller
             'user_following' => $user_following,
             'user_follower' => $user_follower,
             'user_bookmarks' => $user_bookmarks,
-            'is_owner' => $is_owner,
         ]);
     }
 

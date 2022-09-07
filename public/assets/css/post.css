@@ -84,6 +84,7 @@
 .post__card--tag {
     outline: 1px solid var(--color-2);
     color: var(--color-2);
+    background-color: transparent;
     border: unset;
     padding: 1px 10px 2px 10px;
     border-radius: 20px;

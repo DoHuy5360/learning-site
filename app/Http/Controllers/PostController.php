@@ -58,7 +58,7 @@ class PostController extends Controller
         // }
         // return $all_posts;
         $all_questions = DB::select(
-            "SELECT *, q.id AS question_id
+            "SELECT *, q.id AS question_id, u.id AS user_id
              FROM questions q, users u
              WHERE q.questioner = u.id
              ORDER BY q.id DESC
@@ -196,6 +196,7 @@ class PostController extends Controller
                 $new_tag->name = $tag_name;
                 $new_tag->creator = $user_id;
                 $new_tag->type = "post";
+                $new_tag->tag_description = "Thẻ này chưa được cập nhật thông tin, nhằm đảm bảo tính chính xác, trường thông tin này chỉ được cập nhật bởi người quản trị (Admin).";
                 $new_tag->save();
 
                 $new_tag_content = new TagContent;
@@ -247,7 +248,7 @@ class PostController extends Controller
      */
     public function show($name_id)
     {
-        $user_id = Auth::user()->id;
+
         $split_request = explode('|', $name_id);
         $post_id = end($split_request);
         // return $post_id;
@@ -259,6 +260,33 @@ class PostController extends Controller
             "
         )[0];
         // return $corresponding_post;
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
+            $get_follower = DB::select(
+                "SELECT *
+                 FROM follows f, users u
+                 WHERE f.followed = $corresponding_post->creator
+                 AND f.follower = $user_id
+                "
+            );
+            // return empty($get_follower);
+            $is_following = empty($get_follower) ? false : true;
+            // return $is_following;
+
+            $is_bookmarked = DB::select(
+                "SELECT id
+                 FROM bookmarks b
+                 WHERE b.content_id = $corresponding_post->post_id
+                 AND b.bookmarker = $user_id
+                "
+            );
+            // $is_author = ($corresponding_post->creator == $corresponding_post->creator) ? true : false;
+            // return $is_author;
+        } else {
+            $get_follower = false;
+            $is_bookmarked = false;
+            $is_following = false;
+        }
         $relative_tag = DB::select(
             "SELECT t.name, t.id
              FROM tags t, tag_contents tc
@@ -304,26 +332,7 @@ class PostController extends Controller
             $series_posts[$i]->relative_posts = $posts_of_series;
         }
         // return $series_posts;
-        $is_author = ($corresponding_post->creator == $corresponding_post->creator) ? true : false;
-        // return $is_author;
-        $get_follower = DB::select(
-            "SELECT *
-             FROM follows f, users u
-             WHERE f.followed = $corresponding_post->creator
-             AND f.follower = $user_id
-            "
-        );
-        // return empty($get_follower);
-        $is_following = empty($get_follower) ? false : true;
-        // return $is_following;
 
-        $is_bookmarked = DB::select(
-            "SELECT id
-             FROM bookmarks b
-             WHERE b.content_id = $corresponding_post->post_id
-             AND b.bookmarker = $user_id
-            "
-        );
         $relative_comments = DB::select(
             "SELECT *, pc.id as comment_id
              FROM post_comments pc, users u
@@ -335,7 +344,6 @@ class PostController extends Controller
         // return $relative_comments;
         $relative_comment_length = round(sizeOf($relative_comments) / 7);
         return view('post.view-post', [
-            'is_author' => $is_author,
             'corresponding_post' => $corresponding_post,
             'relative_post' => $relative_post,
             'relative_file' => $relative_file,

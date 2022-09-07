@@ -3,59 +3,298 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
-function countIndex()
+class UserData
 {
-    $user = Auth::user();
-    $index = new stdClass;
-    $index->bookmark = DB::select(
-        "SELECT COUNT(id)
-         FROM bookmarks
-         WHERE bookmarker = $user->id
-        "
-    )[0]->count;
-    $index->tag = DB::select(
-        "SELECT COUNT(id)
-         FROM tags
-         WHERE creator::integer = $user->id
-        "
-    )[0]->count;
-    $index->post = DB::select(
-        "SELECT COUNT(id)
-         FROM posts
-         WHERE creator::integer = $user->id
-        "
-    )[0]->count; 
-    $index->following = DB::select(
-        "SELECT COUNT(f.id)
-         FROM follows f, users u
-         WHERE f.follower = $user->id
-         AND f.followed = u.id 
-        "
-    )[0]->count;
-    $index->follower = DB::select(
-        "SELECT COUNT(f.id)
-         FROM follows f, users u
-         WHERE f.follower = u.id
-         AND f.followed = $user->id
-        "
-    )[0]->count;
-    $index->question = DB::select(
-        "SELECT COUNT(q.id)
-         FROM questions q, users u
-         WHERE q.questioner = $user->id
-         AND u.id = $user->id
-        "
-    )[0]->count;
-    $index->answer = DB::select(
-        "SELECT COUNT(q.id)
-         FROM question_answers qa, questions q
-         WHERE qa.replier::integer = $user->id
-         AND qa.content_type = q.id
-        "
-    )[0]->count;
-    return $index;
+    private $data;
+    /**
+     * Class constructor.
+     */
+    function __construct($userId)
+    {
+        $this->userId = $userId;
+    }
+    function getUser()
+    {
+        $user = DB::select(
+            "SELECT *
+             FROM users u
+             WHERE u.id = $this->userId
+            "
+        )[0];
+        return $user;
+    }
+    function getBookMark($size = false)
+    {
+        $bookmark = DB::select(
+            "SELECT *
+             FROM bookmarks b
+             WHERE b.bookmarker = $this->userId
+            "
+        );
+        if($size){
+            return sizeOf($bookmark);
+        }
+        return $bookmark;
+    }
+    function getTag($size = false)
+    {
+        $tag = DB::select(
+            "SELECT *
+             FROM tags
+             WHERE creator::integer = $this->userId
+            "
+        );
+        if($size){
+            return sizeOf($tag);
+        }
+        return $tag;
+    }
+    function getPost($size = false)
+    {
+        $post = DB::select(
+            "SELECT *
+             FROM posts
+             WHERE creator::integer = $this->userId
+            "
+        );
+        if ($size) {
+            return sizeof($post);
+        }
+        return $post;
+    }
+    function getFollowing($size = false)
+    {
+        $following = DB::select(
+            "SELECT *
+             FROM follows f, users u
+             WHERE f.follower = $this->userId
+             AND f.followed = u.id 
+            "
+        );
+        if($size){
+            return sizeOf($following);
+        }
+        return $following;
+    }
+    function getFollower($size = false)
+    {
+        $follower = DB::select(
+            "SELECT *
+             FROM follows f, users u
+             WHERE f.follower = u.id
+             AND f.followed = $this->userId
+            "
+        );
+        if ($size) {
+            return sizeof($follower);
+        }
+        return $follower;
+    }
+    function getQuestion($size = false)
+    {
+        $question = DB::select(
+            "SELECT *
+             FROM questions q, users u
+             WHERE q.questioner = $this->userId
+             AND u.id = $this->userId
+            "
+        );
+        if($size){
+            return sizeOf($question);
+        }
+        return $question;
+    }
+    function getAnswer($size = false)
+    {
+        $answer = DB::select(
+            "SELECT *
+             FROM question_answers qa, questions q
+             WHERE qa.replier::integer = $this->userId
+             AND qa.content_type = q.id
+            "
+        );
+        if($size){
+            return sizeOf($answer);
+        }
+        return $answer;
+    }
 }
-
+class PostData
+{
+    /**
+     * Class constructor.
+     */
+    function __construct($postId)
+    {
+        $this->postId = $postId;
+    }
+    function getPost($size = false)
+    {
+        $post = DB::select(
+            "SELECT *
+             FROM posts p
+             WHERE p.id = $this->postId
+             LIMIT 1
+            "
+        )[0];
+        return $post;
+    }
+    function getAuthor()
+    {
+        $author = DB::select(
+            "SELECT *
+             FROM posts p, users u
+             WHERE p.id = $this->postId
+             AND p.creator::integer = u.id
+            "
+        )[0];
+        return $author;
+    }
+    function getComment($size = false)
+    {
+        $comment = DB::select(
+            "SELECT *
+             FROM post_comments pc
+             WHERE pc.for = $this->postId
+            "
+        );
+        if ($size) {
+            return sizeof($comment);
+        }
+        return $comment;
+    }
+    function getReply($size = false)
+    {
+        $reply = DB::select(
+            "SELECT *
+             FROM reply_comments rc
+             WHERE rc.content_type = $this->postId
+            "
+        );
+        if ($size) {
+            return sizeOf($reply);
+        }
+        return $reply;
+    }
+    function getBookMark($size = false)
+    {
+        $bookmark = DB::select(
+            "SELECT *
+             FROM bookmarks b
+             WHERE b.content_id = $this->postId
+             AND b.type = 'post'
+            "
+        );
+        if ($size) {
+            return sizeOf($bookmark);
+        }
+        return $bookmark;
+    }
+    function getTag($size = false)
+    {
+        $tag = DB::select(
+            "SELECT *, t.id AS tag_id
+             FROM tags t, tag_contents tc
+             WHERE t.tag_code = tc.tag_id
+             AND tc.content_id::integer = $this->postId
+             AND t.type = 'post'
+            "
+        );
+        if ($size) {
+            return sizeOf($tag);
+        }
+        return $tag;
+    }
+    function get()
+    {
+        $the_post = DB::select(
+            "SELECT *
+             FROM posts p
+             WHERE p.id = $this->postId
+             LIMIT 1
+            "
+        )[0];
+        $author = DB::select(
+            "SELECT *
+             FROM users u
+             WHERE u.id = $the_post->creator::integer
+             LIMIT 1
+            "
+        )[0];
+        $all_posts = DB::select(
+            "SELECT COUNT(p.id)
+             FROM posts p
+             WHERE p.creator::integer = $author->id
+            "
+        );
+        $all_followers = DB::select(
+            "SELECT *
+             FROM follows f
+             WHERE f.followed = $the_post->creator
+            "
+        );
+        $all_comments = DB::select(
+            "SELECT *
+             FROM post_comments pc
+             WHERE pc.for = $the_post->id
+            "
+        );
+        $all_booksmarks = DB::select(
+            "SELECT *
+             FROM bookmarks b
+             WHERE b.content_id = $the_post->id
+             AND b.type = 'post'
+            "
+        );
+        $all_replies = DB::select(
+            "SELECT *
+             FROM reply_comments rc
+             WHERE rc.content_type = $the_post->id
+            "
+        );
+    }
+}
+class QuestionData{
+    /**
+     * Class constructor.
+     */
+    public function __construct($questionId)
+    {
+        $this->questionId = $questionId;
+    }
+    function getQuestion(){
+        $question = DB::select(
+            "SELECT *
+             FROM questions q
+             WHERE q.id = $this->questionId
+            "
+        )[0];
+        return $question;
+    }
+    function getAuthor(){
+        $author = DB::select(
+            "SELECT *
+             FROM users u, questions q
+             WHERE u.id = q.questioner
+             LIMIT 1
+            "
+        )[0];
+        return $author;
+    }
+    function getTag($size=false){
+        $tag = DB::select(
+            "SELECT *, t.id AS tag_id
+             FROM tags t, tag_contents tc
+             WHERE t.tag_code = tc.tag_id
+             AND tc.content_id::integer = $this->questionId
+            "
+        );
+        if($size){
+            return sizeOf($tag);
+        }
+        return $tag;
+    }
+}
 function remove_sign($str)
 {
     $str = preg_replace("/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/", 'a', $str);
@@ -100,12 +339,4 @@ function generate_code($code_length = 10)
         };
     } while (in_array($str_code, $array_codes));
     return $str_code;
-}
-function getAllDataTable(){
-    $table = new stdClass();
-    $table->tag = DB::select(
-        "SELECT *
-         FROM tags
-        "
-    );
 }

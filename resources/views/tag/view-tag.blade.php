@@ -61,9 +61,28 @@
                             </div>
                             <div id="tagVw-content-series" class="tagVw__content--option">
                                 @foreach ($tag_series as $series)
-                                    <p>
-                                        {{ $series->series_name }}
-                                    </p>
+                                    <div class="profileVw__series--wrap">
+                                        <div class="profileVw__series--title">
+                                            <div class="profileVw__series--name">
+                                                {{ $series->series_name }}
+                                            </div>
+                                            <div class="profileVw__series--created">
+                                                {{ $series->created_at }}
+                                            </div>
+                                            <div class="profileVw__series--seperate">/</div>
+                                            <div class="profileVw__series--amount-posts">
+                                                <span>{{ sizeOf($series->relative_posts) }}</span>
+                                                <ion-icon name="reader-outline"></ion-icon>
+                                            </div>
+                                        </div>
+                                        <ol class="profileVw__series--posts">
+                                            @foreach ($series->relative_posts as $post)
+                                                <a href="{{ route('post.show', $post->id) }}" class="profileVw__posts--link">
+                                                    <li>{{ $post->title }}</li>
+                                                </a>
+                                            @endforeach
+                                        </ol>
+                                    </div>
                                 @endforeach
                             </div>
                             <div id="tagVw-content-question" class="tagVw__content--option">
@@ -177,7 +196,7 @@
                     </div>
                     <div id="tagVw-list-tag">
                         @foreach ($popular_tags as $tag)
-                            <a href="{{ route('tag.show',$tag->id) }}" class="tagVw__tag--others">
+                            <a href="{{ route('tag.show', $tag->id) }}" class="tagVw__tag--others">
                                 <div class="tagVw__others--name">{{ $tag->name }}</div>
                                 <div class="tagVw__others--amount">{{ $tag->amount_posts }}</div>
                             </a>

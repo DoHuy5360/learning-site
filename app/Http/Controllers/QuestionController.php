@@ -71,7 +71,7 @@ class QuestionController extends Controller
             $target_question->tags = $relative_tag;
             $target_question->have_relative_posts = false;
             foreach ($relative_tag as $tag) {
-                if(in_array($tag->name, $array_tag_name)){
+                if (in_array($tag->name, $array_tag_name)) {
                     $target_question->have_relative_posts = true;
                     break;
                 }
@@ -226,12 +226,39 @@ class QuestionController extends Controller
     public function show($id)
     {
         $corresponding_question = DB::select(
-            "SELECT *, q.id AS question_id
+            "SELECT *, q.id AS question_id, u.id AS user_id
              FROM questions q, users u
              WHERE q.questioner = u.id
              AND q.id = $id
             "
         )[0];
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
+            $get_follower = DB::select(
+                "SELECT *
+                 FROM follows f, users u
+                 WHERE f.followed = $corresponding_question->questioner
+                 AND f.follower = $user_id
+                "
+            );
+            // return empty($get_follower);
+            $is_following = empty($get_follower) ? false : true;
+            // return $is_following;
+
+            $is_bookmarked = DB::select(
+                "SELECT id
+                 FROM bookmarks b
+                 WHERE b.content_id = $corresponding_question->question_id
+                 AND b.bookmarker = $user_id
+                "
+            );
+            // $is_author = ($corresponding_post->creator == $corresponding_post->creator) ? true : false;
+            // return $is_author;
+        } else {
+            $get_follower = false;
+            $is_bookmarked = false;
+            $is_following = false;
+        }
         $relative_tags = DB::select(
             "SELECT t.name, t.id
              FROM tags t, tag_contents tc
@@ -252,6 +279,7 @@ class QuestionController extends Controller
             'relative_tags' => $relative_tags,
             'question_id' => $id,
             'all_answers' => $all_answers,
+            'is_following' => $is_following,
         ]);
     }
 

@@ -87,7 +87,7 @@ class TagController extends Controller
             "
         );
         $tag_series = DB::select(
-            "SELECT *, s.name AS series_name
+            "SELECT *, s.id AS series_id, s.name AS series_name
              FROM series s, posts p, series_posts sp, tags t, tag_contents tc
              WHERE sp.series_id = s.id
              AND t.id = $id
@@ -96,6 +96,17 @@ class TagController extends Controller
              AND tc.content_id::integer = p.id
             "
         );
+        for ($i = 0; $i < sizeof($tag_series); $i++) {
+            $series_element = $tag_series[$i];
+            $relative_posts_series = DB::select(
+                "SELECT p.title, p.time, p.created_at, p.id
+                 FROM posts p, series_posts sp
+                 WHERE sp.series_id = $series_element->series_id
+                 AND sp.post_id = p.id                
+                "
+            );
+            $series_element->relative_posts = $relative_posts_series;
+        }
         $popular_tags = DB::select(
             "SELECT t.id, t.name, COUNT(p.id) AS amount_posts
              FROM posts p, tags t, tag_contents tc
@@ -105,6 +116,7 @@ class TagController extends Controller
              LIMIT 10
             "
         );
+        // return $tag_series;
         return view('tag.view-tag', [
             'tag_info' => $tag_info,
             'relative_posts' => $relative_posts,

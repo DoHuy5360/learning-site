@@ -52,9 +52,9 @@
 }
 .tagTg__card--followBtn{
     color: var(--color-2);
-    outline: 1px solid var(--color-2);
+    border: 1px solid var(--color-2);
     border: 1px solid;
-    padding: 2px 10px;
+    padding: 1px 10px 2px 10px;
     border-radius: 20px;
     background-color: transparent;
     cursor: pointer;

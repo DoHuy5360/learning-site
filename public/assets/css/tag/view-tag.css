@@ -161,7 +161,7 @@
     text-decoration: unset;
 }
 .tagVw__others--name {
-    padding: 2px 8px;
+    padding: 1px 8px 3px 8px;
     color: var(--color-2);
     font-weight: bold;
     transition: 100ms linear;
@@ -211,4 +211,9 @@
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
+}
+#tagVw-content-series{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

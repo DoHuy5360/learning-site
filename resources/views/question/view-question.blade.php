@@ -83,9 +83,22 @@
                                         <span>453</span>
                                     </div>
                                 </div>
-                                <form action="" id="quesVw-aut_follow-form" method="post">
-                                    <button type="submit">Theo Dõi</button>
-                                </form>
+                                @auth
+                                    <form action="{{ route('follow.destroy', $corresponding_question->user_id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button id="postVw-unfollow-btn" type="submit">Hủy theo dõi</button>
+                                    </form>
+                                    <form action="{{ route('follow.store') }}" id="postVw-follow-form" style="display:{{ !$is_following ? 'block' : 'none' }};" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="followed" value="{{ $corresponding_question->user_id }}">
+                                        <button class="postVw__follow--btn" type="submit">Theo dõi</button>
+                                    </form>
+                                @else
+                                    <a href="{{ route('login') }}">
+                                        <button class="postVw__follow--btn" type="button">Đăng nhập để theo dõi!</button>
+                                    </a>
+                                @endauth
                             </div>
                             <div id="quesVw-aut_bookquesVw-chat_form-wrM-lv3-wr">
                                 <form action="" id="quesVw-ques_bookmark-form" method="post">
@@ -120,7 +133,7 @@
                 </div>
             </div>
             <!-- todo answer start -->
-            <div class="quesVw-answer-bellow-wr">
+            {{-- <div class="quesVw-answer-bellow-wr">
                 <div id="quesVw-ans_info-right-wr">
                     @foreach ($all_answers as $answer)
                         <div class="quesVw-ans_ans_field-top-wr">
@@ -167,9 +180,23 @@
                                                     <span>453</span>
                                                 </div>
                                             </div>
-                                            <form action="" id="quesVw-aut_follow-form" method="post">
-                                                <button type="submit">Theo Dõi</button>
-                                            </form>
+                                            @auth
+                                                <form action="{{ route('follow.destroy', $user_info->id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};"
+                                                    method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button id="postVw-unfollow-btn" type="submit">Hủy theo dõi</button>
+                                                </form>
+                                                <form action="{{ route('follow.store') }}" id="postVw-follow-form" style="display:{{ !$is_following ? 'block' : 'none' }};" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="followed" value="{{ $user_info->id }}">
+                                                    <button class="postVw__follow--btn" type="submit">Theo dõi</button>
+                                                </form>
+                                            @else
+                                                <a href="{{ route('login') }}">
+                                                    <button class="postVw__follow--btn" type="button">Đăng nhập để theo dõi!</button>
+                                                </a>
+                                            @endauth
                                         </div>
                                     </div>
                                 </div>
@@ -178,7 +205,7 @@
                         </div>
                     @endforeach
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
     <script>

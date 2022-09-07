@@ -54,7 +54,7 @@
                         <div class="question__card--wrap">
                             <div class="question__card--header">
                                 <h2 class="question__card--title">
-                                    <a href="{{ url('/question') . '/' . $question->question_id }}">{{ $question->title }}</a>
+                                    <a href="{{ route('question.show',$question->question_id) }}">{{ $question->title }}</a>
                                 </h2>
                             </div>
                             <div class="question__card--body">
@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="question__card--footer">
-                                <a href="" class="question__card--username"> {{ $question->name }} </a>
+                                <a href="{{ route('profile.show',$question->user_id) }}" class="question__card--username"> {{ $question->name }} </a>
                             </div>
                         </div>
                     @endforeach
