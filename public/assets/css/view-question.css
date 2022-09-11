@@ -120,27 +120,33 @@
     padding: 10px 0 0 0;
     border-top: 1px solid;
 }
-#quesVw-chat_form-wr {
+#quesVw-comment_form-wr,
+#quesVw-answer_form-wr {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    height: 0;
+    display: none;
     overflow: hidden;
     transition: 300ms linear;
     opacity: 0;
     margin: 20px 0;
+    transition: 200ms linear;
 }
-#quesVw-chat_form-wr.chat_active {
-    height: fit-content;
+#quesVw-comment_form-wr.chat_active,
+#quesVw-answer_form-wr.chat_active {
+    display: block;
     opacity: 1;
 }
-#quesVw-chat_field-write {
+#quesVw-comment_field-write,
+#quesVw-answer_field-write {
+    width: 100%;
     resize: vertical;
     height: 100px;
     min-height: 100px;
     max-height: 300px;
     padding: 10px;
     outline: unset;
+    border-radius: 5px;
 }
 #quesVw-option_form-btn-wrap {
     display: flex;

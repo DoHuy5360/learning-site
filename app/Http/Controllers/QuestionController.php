@@ -268,10 +268,10 @@ class QuestionController extends Controller
         );
         // return $corresponding_question;
         $all_answers = DB::select(
-            "SELECT *
-             FROM question_answers, users
-             WHERE question_answers.content_type = $id
-             AND question_answers.replier = users.id
+            "SELECT *, u.id AS user_id
+             FROM question_answers qa, users u
+             WHERE qa.content_type = $id
+             AND qa.replier = u.id
             "
         );
         return view('question.view-question', [

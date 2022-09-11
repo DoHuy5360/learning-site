@@ -9,9 +9,9 @@ let question_content_converted = ConvertStringToHTML(
 );
 question_content.innerHTML = question_content_converted.innerHTML;
 // todo --------------------------------------------
-const question_id = document.getElementById("quesVw-question_id");
+let form_message;
+const QUESTION_ID = document.getElementById("quesVw-question_id");
 const csrf_token = document.querySelector('[name="_token"]');
-let chat_form_not_exist = true;
 function setEventForAllReplyAnswerBtn() {
     const all_reply_answer_btn = document.querySelectorAll(
         ".quesVw-answer_comment-btn"
@@ -19,59 +19,52 @@ function setEventForAllReplyAnswerBtn() {
     all_reply_answer_btn.forEach((btn) => {
         btn.addEventListener("click", (e) => {
             e.stopImmediatePropagation();
-            if (chat_form_not_exist) {
-                // todo : parent level 2 where is the place that the 'reply form' will appear inside
-                const parent_element_lv2 = e.target.parentNode.parentNode;
-                // todo : parent level 4 where is the place that have 'data-answer-code'
-                // todo : -> answer's 'data-answer-code' is destination of the 'reply form'
-                const parent_element_lv4 =
-                    e.target.parentNode.parentNode.parentNode.parentNode;
-                const answer_code =
-                    parent_element_lv4.getAttribute("data-answer-code");
-                // todo : -> for insert message form to the place we need
-                const comment_html = createAnswerComment(
-                    question_id.value,
-                    answer_code
-                );
-                parent_element_lv2.insertAdjacentHTML(
-                    "beforeend",
-                    comment_html
-                );
-                const form_message = document.querySelector(
-                        ".quesVw-comment_form-wr"
-                    ),
-                    close_comment_form = document.querySelector(
-                        ".quesVw-comment_form-close"
-                    );
-                close_comment_form.addEventListener("click", (e) => {
-                    form_message.remove();
-                    chat_form_not_exist = true;
-                });
-                form_message.addEventListener("submit", (e) => {
-                    e.preventDefault();
-                    const data_form = new FormData(form_message);
-                    const request_url = form_message.getAttribute("action");
-                    createAjax(
-                        (_method = "POST"),
-                        (_url = request_url),
-                        (_form = data_form),
-                        (_response_data) => {
-                            const reply_data = _response_data.reply_information;
-                            const reply_html = createReply.call(reply_data);
-                            const target_answer = document.querySelector(
-                                `[data-answer-code="${answer_code}"]`
-                            );
-                            target_answer.insertAdjacentHTML(
-                                "beforeend",
-                                reply_html
-                            );
-                            setEventForAllReplyAnswerBtn();
-                        }
-                    );
-                });
+            const parent_element_lv2 = e.target.parentNode.parentNode;
+            const parent_wrap_have_code =
+                e.target.parentNode.parentNode.parentNode.parentNode;
+            const answer_code =
+                parent_wrap_have_code.getAttribute("data-answer-code");
+            const reply_answer = createAnswerComment(
+                QUESTION_ID.value,
+                answer_code
+            );
+            if (!form_message) {
+                removeDuplicateReplyBox(parent_element_lv2, reply_answer, answer_code);
+            } else {
+                form_message.remove();
+                removeDuplicateReplyBox(parent_element_lv2, reply_answer, answer_code);
             }
-            chat_form_not_exist = false;
         });
+    });
+}
+//! ---------------------------- remove duplicate reply box -------------------
+function removeDuplicateReplyBox(parent_element_lv2, reply_answer, answer_code) {
+    parent_element_lv2.insertAdjacentHTML("beforeend", reply_answer);
+    const close_reply = document.querySelector(".quesVw-comment_form-close");
+    close_reply.addEventListener("click", (e) => {
+        e.target.parentNode.parentNode.remove();
+    });
+    form_message = document.querySelector(".quesVw-comment_form-wr");
+    form_message.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const data_form = new FormData(form_message);
+        const reply_obj = new AJAX();
+        reply_obj.createAjax(
+            (_method = "POST"),
+            (_url = "/reply-answer"),
+            (_form = data_form),
+            (response) => {
+                const reply_data = response.reply_information;
+                reply_obj.insertResponseToNodeData(
+                    (_data_name = "data-answer-code"),
+                    (_data_value = answer_code),
+                    (_response = reply_data),
+                    (_html_content = createReply),
+                    (_position = "beforeend")
+                );
+                setEventForAllReplyAnswerBtn();
+            }
+        );
     });
 }
 setEventForAllReplyAnswerBtn();
@@ -79,7 +72,7 @@ function createAnswerComment(_question_id, _reply_for) {
     // todo : reply request form injection
     // todo : -> avoid render multiple HTML elements
     return `
-    <form action="/reply-answer" class="quesVw-comment_form-wr" method="post">
+    <form action="" class="quesVw-comment_form-wr" method="post">
         <input type="hidden" name="_token" value="${csrf_token.value}">
         <input type="hidden" name="question_id" value="${_question_id}">
         <input type="hidden" name="reply_for" value="${_reply_for}">
@@ -92,54 +85,51 @@ function createAnswerComment(_question_id, _reply_for) {
     `;
 }
 
-// todo : sending comment request and display comment template
-const question_comment_form = document.getElementById("quesVw-chat_form-wr");
+//! ---------------------------- create answer box then display answer -------------------
+const question_answer_form = document.getElementById("quesVw-answer_form-wr");
+const answer_content = document.getElementById("quesVw-answer_field-write");
 const list_answer = document.getElementById("quesVw-ans_info-right-wr");
-question_comment_form.addEventListener("submit", (e) => {
-    // todo : stop page redirect when form is submitted
+question_answer_form.addEventListener("submit", (e) => {
     e.preventDefault();
-    // todo : create new request form action
+    const form_data = new FormData(question_answer_form);
+    const answer_obj = new AJAX();
+    answer_obj.createAjax(
+        (_method = "POST"),
+        (_url = "/question-comment"),
+        (_form = form_data),
+        (response) => {
+            const answer_info = response.data_answer;
+            const answer_html = createAnswer.call(
+                answer_info,
+                answer_content.value
+            );
+            list_answer.insertAdjacentHTML("afterbegin", answer_html);
+            setEventForAllReplyAnswerBtn();
+        }
+    );
+});
+//! ---------------------------- create comment box then display answer -------------------
+const question_comment_form = document.getElementById("quesVw-comment_form-wr");
+const comment_content = document.getElementById("quesVw-comment_field-write");
+const list_comment = document.getElementById("quesVw-reply-list");
+question_comment_form.addEventListener("submit", (e) => {
+    e.preventDefault();
     const form_data = new FormData(question_comment_form);
-    if (question_comment_form.getAttribute("data-mesage-type") == "answer") {
-        createAjax(
-            (_method = "POST"),
-            (_url = "http://127.0.0.1:8000/question-comment"),
-            (_form = form_data),
-            (_comment_information) => {
-                // todo : _comment_information contain response data from | route('question-comment.store') |
-                // todo : -> include comment information and user information who is create this one
-                const answer_content = document.getElementById(
-                    "quesVw-chat_field-write"
-                );
-                // todo : get content from textarea for display
-                // todo : -> Because render 'HTML texts' from database need 1 more step to display by Javasript convert
-                const answer_html = createAnswer.call(
-                    _comment_information.data_answer,
-                    answer_content.value
-                );
-                list_answer.insertAdjacentHTML("afterbegin", answer_html);
-            }
-        );
-    } else {
-        // todo: send reply question request and display reply template
-        createAjax(
-            (_method = "POST"),
-            (_url = "http://127.0.0.1:8000/reply-answer"),
-            (_form = form_data),
-            (_reply_information) => {
-                const reply_html = createReply.call(
-                    _reply_information.reply_information,
-                );
-                const reply_question_node = document.getElementById('quesVw-reply-list')
-                reply_question_node.insertAdjacentHTML("beforeend", reply_html);
-                setEventForAllReplyAnswerBtn();
-            }
-        );
-    }
+    const comment_obj = new AJAX();
+    comment_obj.createAjax(
+        (_method = "POST"),
+        (_url = "/reply-answer"),
+        (_form = form_data),
+        (response) => {
+            const comment_info = response.reply_information;
+            const comment_html = createReply.call(comment_info);
+            list_comment.insertAdjacentHTML("beforeend", comment_html);
+            setEventForAllReplyAnswerBtn();
+        }
+    );
 });
 
 function createAnswer(_answer) {
-    // todo : answer template html code?
     return `
     <div class="quesVw-ans_ans_field-top-wr">
         <div class="quesVw-ans_wrap-top-wr">
@@ -182,9 +172,6 @@ function createAnswer(_answer) {
                                 <span>453</span>
                             </div>
                         </div>
-                        <form action="" id="quesVw-aut_follow-form" method="post">
-                            <button type="submit">Theo Dõi</button>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -193,24 +180,21 @@ function createAnswer(_answer) {
     
     `;
 }
-// todo : display answer reply message
-createAjax(
+// ! ------------------------------------- display answer and reply message -----------------------------
+const display_reply = new AJAX();
+display_reply.createAjax(
     (_method = "GET"),
-    (_url = `http://127.0.0.1:8000/reply-answer/${question_id.value}`),
+    (_url = `/reply-answer/${QUESTION_ID.value}`),
     (_form = undefined),
-    (_array_reply_answer) => {
-        _array_reply_answer.all_reply.forEach((reply) => {
-            // todo : select the element which have 'data-answer-code'
-            // todo : -> to know where is the place that reply message will arrive
-            const target_answer = document.querySelector(
-                `[data-answer-code="${reply.reply_for}"]`
+    (response) => {
+        response.all_reply.forEach((reply) => {
+            display_reply.insertResponseToNodeData(
+                (_data_name = "data-answer-code"),
+                (_data_value = reply.reply_for),
+                (_response = reply),
+                (_html_content = createReply),
+                (_position = "beforeend")
             );
-            // console.log(reply.reply_for);
-            // console.log(target_answer);
-            // todo : passing [json||object] data to createReply() function by using call()
-            const reply_html = createReply.call(reply);
-            target_answer.insertAdjacentHTML("beforeend", reply_html);
-            // todo : Because reply comment message arrive later so we need to DOM selector again
             setEventForAllReplyAnswerBtn();
         });
     }
@@ -240,14 +224,38 @@ function createReply() {
 
     `;
 }
-function createAjax(_method, _url, _form, _callback) {
-    const ajax = new XMLHttpRequest();
-    ajax.open(_method, _url);
-    ajax.send(_form);
-    ajax.onreadystatechange = function () {
-        if (this.status == 200 && this.readyState == 4 && this.responseText) {
-            const data_response = JSON.parse(this.responseText);
-            _callback(data_response);
+// todo: ------------------------------------------- follow -------------------------
+const follow_form = document.getElementById("postVw-follow-form");
+follow_form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const follow_post = new AJAX();
+    const form_data = new FormData(follow_form);
+    follow_post.createAjax(
+        (_method = "POST"),
+        (_url = "/follow"),
+        (_form = form_data),
+        (response) => {
+            // console.log(response.response);
+            ``;
+            follow_form.style.display = "none";
+            unfollow_form.style.display = "block";
         }
-    };
-}
+    );
+});
+const unfollow_form = document.getElementById("postVw-unfollow-form");
+unfollow_form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const form_data = new FormData(unfollow_form);
+    const form_url = unfollow_form.getAttribute("action");
+    const unfollow_post = new AJAX();
+    unfollow_post.createAjax(
+        (_method = "POST"),
+        (_url = form_url),
+        (_form = form_data),
+        (response) => {
+            // console.log(response.response);
+            unfollow_form.style.display = "none";
+            follow_form.style.display = "block";
+        }
+    );
+});

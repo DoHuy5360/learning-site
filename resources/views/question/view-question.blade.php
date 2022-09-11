@@ -96,7 +96,7 @@
                                     </form>
                                 @else
                                     <a href="{{ route('login') }}">
-                                        <button class="postVw__follow--btn" type="button">Đăng nhập để theo dõi!</button>
+                                        <button class="postVw__follow--btn" type="button">Theo dõi</button>
                                     </a>
                                 @endauth
                             </div>
@@ -106,23 +106,27 @@
                                     <button type="submit">Lưu Trữ Câu Hỏi Này</button>
                                 </form>
                             </div>
-                            <div id="quesVw-aut_social-lv4-wr">
-                                <ion-icon name="logo-facebook"></ion-icon>
-                                <ion-icon name="logo-twitter"></ion-icon>
-                                <ion-icon name="logo-skype"></ion-icon>
-                                <ion-icon name="logo-twitch"></ion-icon>
-                            </div>
                         </div>
                     </div>
                     <div id="quesVw-comment_field-bellow-wr">
                         <button id="quesVw-open_comment-btn" type="button">Bình luận cho câu hỏi này ...</button>
                     </div>
                     <div id="quesVw-send_text-bottom-wr">
-                        <form action="" id="quesVw-chat_form-wr" method="post">
+                        <form action="" id="quesVw-answer_form-wr" method="post">
                             @csrf
                             <input id="quesVw-question_id" type="hidden" name="question_id" value="{{ $question_id }}">
                             <input type="hidden" name="reply_for" value="{{ $corresponding_question->question_code }}">
-                            <textarea name="content" id="quesVw-chat_field-write" cols="30" rows="10" placeholder="Ghi gi do"></textarea>
+                            <textarea name="content" id="quesVw-answer_field-write" cols="30" rows="10" placeholder="Bạn đang tạo câu trả lời!"></textarea>
+                            <div id="quesVw-option_form-btn-wrap">
+                                <button id="quesVw-btn-close-form" type="button">Close</button>
+                                <button class="quesVw-btn-send-form" type="submit">Send</button>
+                            </div>
+                        </form>
+                        <form action="" id="quesVw-comment_form-wr" method="post">
+                            @csrf
+                            <input id="quesVw-question_id" type="hidden" name="question_id" value="{{ $question_id }}">
+                            <input type="hidden" name="reply_for" value="{{ $corresponding_question->question_code }}">
+                            <textarea name="content" id="quesVw-comment_field-write" cols="30" rows="10" placeholder="Bạn đang tạo bình luận!"></textarea>
                             <div id="quesVw-option_form-btn-wrap">
                                 <button id="quesVw-btn-close-form" type="button">Close</button>
                                 <button class="quesVw-btn-send-form" type="submit">Send</button>
@@ -133,7 +137,7 @@
                 </div>
             </div>
             <!-- todo answer start -->
-            {{-- <div class="quesVw-answer-bellow-wr">
+            <div class="quesVw-answer-bellow-wr">
                 <div id="quesVw-ans_info-right-wr">
                     @foreach ($all_answers as $answer)
                         <div class="quesVw-ans_ans_field-top-wr">
@@ -180,23 +184,6 @@
                                                     <span>453</span>
                                                 </div>
                                             </div>
-                                            @auth
-                                                <form action="{{ route('follow.destroy', $user_info->id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button id="postVw-unfollow-btn" type="submit">Hủy theo dõi</button>
-                                                </form>
-                                                <form action="{{ route('follow.store') }}" id="postVw-follow-form" style="display:{{ !$is_following ? 'block' : 'none' }};" method="POST">
-                                                    @csrf
-                                                    <input type="hidden" name="followed" value="{{ $user_info->id }}">
-                                                    <button class="postVw__follow--btn" type="submit">Theo dõi</button>
-                                                </form>
-                                            @else
-                                                <a href="{{ route('login') }}">
-                                                    <button class="postVw__follow--btn" type="button">Đăng nhập để theo dõi!</button>
-                                                </a>
-                                            @endauth
                                         </div>
                                     </div>
                                 </div>
@@ -205,26 +192,28 @@
                         </div>
                     @endforeach
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
     <script>
         let create_comment_btn = document.getElementById('quesVw-open_comment-btn')
         let create_answer_btn = document.getElementById('quesVw-open_answer-btn')
-        let chat_form = document.getElementById('quesVw-chat_form-wr')
         let close_form_btn = document.getElementById('quesVw-btn-close-form')
+
+        let answer_form = document.getElementById('quesVw-answer_form-wr')
+        let comment_form = document.getElementById('quesVw-comment_form-wr')
+
         create_comment_btn.addEventListener('click', e => {
-            // chat_form.setAttribute('action','http://127.0.0.1:8000/question-comment')
-            chat_form.setAttribute('data-mesage-type', 'comment')
-            chat_form.classList.add('chat_active')
+            comment_form.classList.add('chat_active')
+            answer_form.classList.remove('chat_active')
         })
         create_answer_btn.addEventListener('click', e => {
-            // chat_form.setAttribute('action','http://127.0.0.1:8000/reply-answer')
-            chat_form.setAttribute('data-mesage-type', 'answer')
-            chat_form.classList.add('chat_active')
+            answer_form.classList.add('chat_active')
+            comment_form.classList.remove('chat_active')
         })
         close_form_btn.addEventListener('click', e => {
-            chat_form.classList.remove('chat_active')
+            answer_form.classList.remove('chat_active')
+            comment_form.classList.remove('chat_active')
         })
     </script>
 @endsection
