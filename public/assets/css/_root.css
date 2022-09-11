@@ -14,7 +14,7 @@
     --color-3: #a2dbfa;
     --color-4: #e8f0f2;
     --gray-light: #ededed;
-    --gray-soft: #D1D1D1;
+    --gray-soft: #d1d1d1;
     --gray-hard: #9b9b9b;
     --green-light: #b6ffb6;
     --green-dark: #2dd02d;
@@ -81,3 +81,37 @@ html {
     }
 }
 
+.loading__content {
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    transform: translate(-50%, -50%);
+}
+.text {
+    color: var(--color-3);
+    font-weight: bold;
+    font-size: 30px;
+    animation: jump 500ms infinite alternate;
+    animation-delay: var(--i);
+}
+.circle {
+    width: 8px;
+    height: 8px;
+    background-color: var(--color-3);
+    border-radius: 50%;
+    animation: jump 500ms infinite alternate;
+    animation-delay: var(--i);
+}
+@keyframes jump {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-30px);
+    }
+}

@@ -1,11 +1,27 @@
+const loading_html = `
+<<div class="loading__content">
+    <div class="text" style="--i: 10ms">L</div>
+    <div class="text" style="--i: 20ms">o</div>
+    <div class="text" style="--i: 30ms">a</div>
+    <div class="text" style="--i: 40ms">d</div>
+    <div class="text" style="--i: 50ms">i</div>
+    <div class="text" style="--i: 60ms">n</div>
+    <div class="text" style="--i: 70ms">g</div>
+    <div class="circle" style="--i: 80ms"></div>
+    <div class="circle" style="--i: 90ms"></div>
+    <div class="circle" style="--i: 100ms"></div>
+</div>
+`
+const list_questions = document.getElementById("question-list-wrap");
+list_questions.innerHTML = loading_html;
 const first_n_questions = new AJAX();
 first_n_questions.createAjax(
     (_method = "GET"),
     (_path = "/question-list/1"),
     (_form = undefined),
     (data_response) => {
+        list_questions.innerHTML = "";
         const questions_data = data_response.all_questions;
-        // console.log(questions_data);
         first_n_questions.insertResponseToNodeId(
             (_node_id = "question-list-wrap"),
             (_response = questions_data),
@@ -23,8 +39,7 @@ list_index_questions.forEach((index) => {
         first_index_questions.classList.remove("active");
         index.classList.add("active");
         first_index_questions = index;
-        const list_questions = document.getElementById("question-list-wrap");
-        list_questions.innerHTML = "";
+        list_questions.innerHTML = loading_html;
         const data_question_id = index.getAttribute("data-questions-index");
         const n_questions = new AJAX();
         n_questions.createAjax(
@@ -33,6 +48,7 @@ list_index_questions.forEach((index) => {
             (_form = undefined),
             (data_response) => {
                 const questions_data = data_response.all_questions;
+                list_questions.innerHTML = "";
                 n_questions.insertResponseToNodeId(
                     (_node_id = "question-list-wrap"),
                     (_response = questions_data),
@@ -48,7 +64,7 @@ function createQuestionHtml() {
     if (this.tags.length != 0) {
         this.tags.forEach((tag) => {
             const tag_link = document.createElement("a");
-            tag_link.setAttribute('class','post__card--tag')
+            tag_link.setAttribute("class", "post__card--tag");
             tag_link.setAttribute("href", `/tag/${tag.id}`);
             tag_link.textContent = tag.name;
             tag_list.appendChild(tag_link);

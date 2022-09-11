@@ -43,7 +43,7 @@
                             </div>
                             <div id="quesVw-ques_tag-lv3-ls">
                                 @foreach ($relative_tags as $tag)
-                                    <a href="{{ route('tag.show', $tag->id) }}" class="underline__none">{{ $tag->name }}</a>
+                                    <a href="{{ route('tag.show', $tag->id) }}" class="post__card--tag">{{ $tag->name }}</a>
                                 @endforeach
                             </div>
                             <div id="quesVw-ques_question-lv4-wr">
@@ -84,7 +84,8 @@
                                     </div>
                                 </div>
                                 @auth
-                                    <form action="{{ route('follow.destroy', $corresponding_question->user_id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};" method="POST">
+                                    <form action="{{ route('follow.destroy', $corresponding_question->user_id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};"
+                                        method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button id="postVw-unfollow-btn" type="submit">Hủy theo dõi</button>
@@ -118,7 +119,7 @@
                             <input type="hidden" name="reply_for" value="{{ $corresponding_question->question_code }}">
                             <textarea name="content" id="quesVw-answer_field-write" cols="30" rows="10" placeholder="Bạn đang tạo câu trả lời!"></textarea>
                             <div id="quesVw-option_form-btn-wrap">
-                                <button id="quesVw-btn-close-form" type="button">Close</button>
+                                <button class="quesVw-btn-close-form" type="button">Close</button>
                                 <button class="quesVw-btn-send-form" type="submit">Send</button>
                             </div>
                         </form>
@@ -128,7 +129,7 @@
                             <input type="hidden" name="reply_for" value="{{ $corresponding_question->question_code }}">
                             <textarea name="content" id="quesVw-comment_field-write" cols="30" rows="10" placeholder="Bạn đang tạo bình luận!"></textarea>
                             <div id="quesVw-option_form-btn-wrap">
-                                <button id="quesVw-btn-close-form" type="button">Close</button>
+                                <button class="quesVw-btn-close-form" type="button">Close</button>
                                 <button class="quesVw-btn-send-form" type="submit">Send</button>
                             </div>
                         </form>
@@ -198,7 +199,7 @@
     <script>
         let create_comment_btn = document.getElementById('quesVw-open_comment-btn')
         let create_answer_btn = document.getElementById('quesVw-open_answer-btn')
-        let close_form_btn = document.getElementById('quesVw-btn-close-form')
+        let close_form_btn = document.querySelectorAll('.quesVw-btn-close-form')
 
         let answer_form = document.getElementById('quesVw-answer_form-wr')
         let comment_form = document.getElementById('quesVw-comment_form-wr')
@@ -211,9 +212,12 @@
             answer_form.classList.add('chat_active')
             comment_form.classList.remove('chat_active')
         })
-        close_form_btn.addEventListener('click', e => {
-            answer_form.classList.remove('chat_active')
-            comment_form.classList.remove('chat_active')
+        close_form_btn.forEach(btn => {
+            btn.addEventListener('click', e => {
+                e.target.parentNode.parentNode.classList.remove('chat_active')
+                
+            })
+
         })
     </script>
 @endsection

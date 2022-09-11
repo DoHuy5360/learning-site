@@ -46,6 +46,13 @@
     background-color: lightblue;
     gap: 5px;
     justify-content: center;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 100ms linear;
+}
+#quesVw-ques_bookmark-form:hover{
+    color: white;
+    background-color: var(--color-2);
 }
 #quesVw-ques_bookmark-form button[type="submit"] {
     all: unset;
@@ -59,17 +66,6 @@
     display: flex;
     align-items: center;
     gap: 5px;
-    font-size: 13px;
-}
-#quesVw-ques_tag-lv3-ls {
-    margin: 10px 0;
-}
-#quesVw-ques_tag-lv3-ls a {
-    text-decoration: unset;
-    border: 1px solid var(--color-2);
-    padding: 2px 10px;
-    border-radius: 20px;
-    transition: 100ms linear;
     font-size: 13px;
 }
 #quesVw-aut_social-lv4-wr {
@@ -88,6 +84,12 @@
     background-color: lightblue;
     width: fit-content;
     cursor: pointer;
+    border-radius: 20px;
+    transition: 100ms linear;
+}
+#quesVw-open_answer-btn:hover{
+    color: white;
+    background-color: var(--color-2);
 }
 #quesVw-ques_author-right-wr {
     display: flex;
@@ -254,9 +256,9 @@
     gap: 5px;
 }
 #quesVw-comment_field-bellow-wr {
-    margin-top: 20px;
+    margin: 20px 0;
 }
-#quesVw-btn-close-form,
+.quesVw-btn-close-form,
 .quesVw-comment_form-close {
     border: unset;
     background-color: var(--red-light);

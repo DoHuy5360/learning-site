@@ -51,6 +51,7 @@
     flex-direction: column;
     gap: 20px;
     height: 1000px;
+    position: relative;
 }
 #question-list-wrap::-webkit-scrollbar {
     width: 0;
