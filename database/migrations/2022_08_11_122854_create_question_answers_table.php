@@ -21,7 +21,7 @@ return new class extends Migration
             $table->integer('replier');
             $table->text('content');
             $table->boolean('edited')->default(false);
-
+            $table->boolean('accepted')->default(false);
         });
     }
 

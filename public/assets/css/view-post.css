@@ -80,6 +80,7 @@ body::-webkit-scrollbar {
     border-radius: 20px;
     cursor: grab;
     transition: 200ms linear;
+    font-size: 13px;
 }
 #postVw-unfollow-btn {
     color: var(--red-light);

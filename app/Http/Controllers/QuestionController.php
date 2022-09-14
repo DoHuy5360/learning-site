@@ -143,6 +143,52 @@ class QuestionController extends Controller
             ]
         );
     }
+    public function acceptQuestion(Request $request)
+    {
+        DB::update(
+            "UPDATE question_answers
+             SET accepted = false
+             WHERE content_type = $request->question_id
+            "
+        );
+        DB::update(
+            "UPDATE question_answers
+             SET accepted = true
+             WHERE id = $request->answer_id
+            "
+        );
+        DB::update(
+            "UPDATE questions
+             SET solved = true
+             WHERE id = $request->question_id
+            "
+        );
+        return response()->json(
+            [
+                'response' => true
+            ]
+        );
+    }
+    public function unacceptQuestion(Request $request)
+    {
+        DB::update(
+            "UPDATE question_answers
+             SET accepted = false
+             WHERE id = $request->answer_id
+            "
+        );
+        DB::update(
+            "UPDATE questions
+             SET solved = false
+             WHERE id = $request->question_id
+            "
+        );
+        return response()->json(
+            [
+                'response' => true
+            ]
+        );
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -226,7 +272,7 @@ class QuestionController extends Controller
     public function show($id)
     {
         $corresponding_question = DB::select(
-            "SELECT *, q.id AS question_id, u.id AS user_id
+            "SELECT *, q.id AS question_id, u.id AS author
              FROM questions q, users u
              WHERE q.questioner = u.id
              AND q.id = $id
@@ -268,7 +314,7 @@ class QuestionController extends Controller
         );
         // return $corresponding_question;
         $all_answers = DB::select(
-            "SELECT *, u.id AS user_id
+            "SELECT *, u.id AS user_id, qa.id AS answer_id
              FROM question_answers qa, users u
              WHERE qa.content_type = $id
              AND qa.replier = u.id

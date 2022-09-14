@@ -3,7 +3,7 @@ function createExplainLabel() {
     objects_explain.forEach((obj) => {
         obj.addEventListener("mouseover", (e) => {
             const is_exist_explain = obj.querySelector(".explain__box");
-            if (!is_exist_explain) {
+            // if (!is_exist_explain) {
                 const explain_content = obj.getAttribute("data-explain-label");
                 const explain_label = `
                 <div class="explain__box">
@@ -11,7 +11,7 @@ function createExplainLabel() {
                 </div>
             `;
                 obj.insertAdjacentHTML("afterbegin", explain_label);
-            }
+            // }
         });
         obj.addEventListener("mouseleave", (e) => {
             const explain_label = obj.querySelector(".explain__box");

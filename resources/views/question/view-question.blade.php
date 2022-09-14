@@ -84,7 +84,7 @@
                                     </div>
                                 </div>
                                 @auth
-                                    <form action="{{ route('follow.destroy', $corresponding_question->user_id) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};"
+                                    <form action="{{ route('follow.destroy', $corresponding_question->author) }}" id="postVw-unfollow-form" style="display:{{ $is_following ? 'block' : 'none' }};"
                                         method="POST">
                                         @csrf
                                         @method('DELETE')
@@ -92,7 +92,7 @@
                                     </form>
                                     <form action="{{ route('follow.store') }}" id="postVw-follow-form" style="display:{{ !$is_following ? 'block' : 'none' }};" method="POST">
                                         @csrf
-                                        <input type="hidden" name="followed" value="{{ $corresponding_question->user_id }}">
+                                        <input type="hidden" name="followed" value="{{ $corresponding_question->author }}">
                                         <button class="postVw__follow--btn" type="submit">Theo dõi</button>
                                     </form>
                                 @else
@@ -150,6 +150,36 @@
                                                 <ion-icon name="time-outline"></ion-icon>
                                                 <span>{{ $answer->created_at }}</span>
                                             </div>
+                                            @auth
+                                                @if ($corresponding_question->author == Auth::user()->id)
+                                                    <form action="" class="questionVw__accept--form" style="display: {{ $answer->accepted ? 'none' : 'block' }};"
+                                                        data-accept="{{ $answer->accepted ? 'true' : 'false' }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="question_id" value="{{ $question_id }}">
+                                                        <input type="hidden" name="answer_id" value="{{ $answer->answer_id }}">
+                                                        <button class="questionVw__accept--btn" type="submit">
+                                                            <span>Chấp thuận</span>
+                                                            <ion-icon name="checkmark-outline"></ion-icon>
+                                                        </button>
+                                                    </form>
+                                                    <form action="" class="questionVw__unaccept--form" style="display: {{ $answer->accepted ? 'block' : 'none' }};"
+                                                        data-accept="{{ $answer->accepted }}" method="POST">
+                                                        @csrf
+                                                        <input type="hidden" name="question_id" value="{{ $question_id }}">
+                                                        <input type="hidden" name="answer_id" value="{{ $answer->answer_id }}">
+                                                        <button class="questionVw__unaccept--btn" type="submit">
+                                                            <span>Chấp thuận</span>
+                                                            <ion-icon name="checkmark-outline"></ion-icon>
+                                                        </button>
+                                                    </form>
+                                                @endif
+                                            @endauth
+                                            @if ($answer->accepted)
+                                                <button class="questionVw__unaccept--btn" type="button" data-explain-label="Câu trả lời này đã giải đáp cho chủ thớt">
+                                                    <span>Đã xác minh</span>
+                                                    <ion-icon name="checkmark-outline"></ion-icon>
+                                                </button>
+                                            @endif
                                         </div>
                                         <div id="quesVw-ques_question-lv4-wr">
                                             <p>{{ $answer->content }}</p>
@@ -215,7 +245,7 @@
         close_form_btn.forEach(btn => {
             btn.addEventListener('click', e => {
                 e.target.parentNode.parentNode.classList.remove('chat_active')
-                
+
             })
 
         })

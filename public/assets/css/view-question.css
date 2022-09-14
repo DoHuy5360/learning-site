@@ -50,7 +50,7 @@
     cursor: pointer;
     transition: 100ms linear;
 }
-#quesVw-ques_bookmark-form:hover{
+#quesVw-ques_bookmark-form:hover {
     color: white;
     background-color: var(--color-2);
 }
@@ -87,7 +87,7 @@
     border-radius: 20px;
     transition: 100ms linear;
 }
-#quesVw-open_answer-btn:hover{
+#quesVw-open_answer-btn:hover {
     color: white;
     background-color: var(--color-2);
 }
@@ -274,4 +274,30 @@
     padding: 5px 10px;
     cursor: pointer;
     border-radius: 5px;
+}
+.questionVw__unaccept--btn,
+.questionVw__accept--btn {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    background-color: unset;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 100ms linear;
+    padding: 0 10px 1px 10px;
+    font-size: 13px;
+}
+.questionVw__unaccept--btn {
+    color: white;
+    border: 1px solid var(--green-dark);
+    background-color: var(--green-dark);
+}
+.questionVw__accept--btn{
+    color: var(--gray-hard);
+    border: 1px solid var(--gray-hard);
+}
+.questionVw__accept--btn:hover {
+    color: white;
+    border: 1px solid var(--green-dark);
+    background-color: var(--green-dark);
 }

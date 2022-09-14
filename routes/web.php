@@ -42,6 +42,8 @@ Route::get('/question-list/{index}', [QuestionController::class, 'getQuestions']
 Route::get('/post-relative/{tag}', [QuestionController::class, 'getRelativePost']);
 Route::get('/post-list/{index}', [PostController::class, 'getPosts']);
 Route::get('/post-comment/{id}/{index}', [Post_commentController::class, 'getComments']);
+Route::post('/accept', [QuestionController::class, 'acceptQuestion']);
+Route::post('/unaccept', [QuestionController::class, 'unacceptQuestion']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

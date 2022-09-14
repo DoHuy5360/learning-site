@@ -8,7 +8,7 @@ let question_content_converted = ConvertStringToHTML(
     question_content.innerText
 );
 question_content.innerHTML = question_content_converted.innerHTML;
-// todo --------------------------------------------
+// ! ----------------------------------------- Reply answer -------------------
 let form_message;
 const QUESTION_ID = document.getElementById("quesVw-question_id");
 const csrf_token = document.querySelector('[name="_token"]');
@@ -29,16 +29,28 @@ function setEventForAllReplyAnswerBtn() {
                 answer_code
             );
             if (!form_message) {
-                removeDuplicateReplyBox(parent_element_lv2, reply_answer, answer_code);
+                removeDuplicateReplyBox(
+                    parent_element_lv2,
+                    reply_answer,
+                    answer_code
+                );
             } else {
                 form_message.remove();
-                removeDuplicateReplyBox(parent_element_lv2, reply_answer, answer_code);
+                removeDuplicateReplyBox(
+                    parent_element_lv2,
+                    reply_answer,
+                    answer_code
+                );
             }
         });
     });
 }
-//! ---------------------------- remove duplicate reply box -------------------
-function removeDuplicateReplyBox(parent_element_lv2, reply_answer, answer_code) {
+//! ---------------------------- remove duplicate reply box function -------------------
+function removeDuplicateReplyBox(
+    parent_element_lv2,
+    reply_answer,
+    answer_code
+) {
     parent_element_lv2.insertAdjacentHTML("beforeend", reply_answer);
     const close_reply = document.querySelector(".quesVw-comment_form-close");
     close_reply.addEventListener("click", (e) => {
@@ -180,7 +192,7 @@ function createAnswer(_answer) {
     
     `;
 }
-// ! ------------------------------------- display answer and reply message -----------------------------
+// ! ------------------ display answer and reply message -----------------------------
 const display_reply = new AJAX();
 display_reply.createAjax(
     (_method = "GET"),
@@ -224,7 +236,68 @@ function createReply() {
 
     `;
 }
-// todo: ------------------------------------------- follow -------------------------
+// ! ------------------------------------------- accept answer -------------------------
+let accept_temporary;
+const all_form_accept = document.querySelectorAll(".questionVw__accept--form");
+const all_form_unaccept = document.querySelectorAll(
+    ".questionVw__unaccept--form"
+);
+if (all_form_accept && all_form_unaccept) {
+    all_form_accept.forEach((form) => {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const form_data = new FormData(form);
+            const accept_obj = new AJAX();
+            accept_obj.createAjax(
+                (_method = "POST"),
+                (_path = "/accept"),
+                (_form = form_data),
+                (response) => {
+                    form.style.display = "none";
+                    const unaccept_form = form.parentNode.querySelector(
+                        ".questionVw__unaccept--form"
+                    );
+                    unaccept_form.style.display = "block";
+                    if (accept_temporary) {
+                        accept_temporary.style.display = "none";
+                        accept_temporary.parentNode.querySelector(
+                            ".questionVw__accept--form"
+                        ).style.display = "block";
+                        accept_temporary = unaccept_form;
+                    } else {
+                        accept_temporary = unaccept_form;
+                    }
+                }
+            );
+        });
+        if (form.getAttribute("data-accept") == "true") {
+            accept_temporary = form.parentNode.querySelector(
+                ".questionVw__unaccept--form"
+            );
+        }
+    });
+}
+all_form_unaccept.forEach((form) => {
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const form_data = new FormData(form);
+        const unaccept_obj = new AJAX();
+        unaccept_obj.createAjax(
+            (_method = "POST"),
+            (_path = "/unaccept"),
+            (_form = form_data),
+            (response) => {
+                form.style.display = "none";
+                const accept_form = form.parentNode.querySelector(
+                    ".questionVw__accept--form"
+                );
+                accept_form.style.display = "block";
+                accept_temporary = null;
+            }
+        );
+    });
+});
+// ! ------------------------------------------- follow -------------------------
 const follow_form = document.getElementById("postVw-follow-form");
 follow_form.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -259,3 +332,4 @@ unfollow_form.addEventListener("submit", (e) => {
         }
     );
 });
+createExplainLabel()

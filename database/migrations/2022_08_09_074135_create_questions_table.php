@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('content');
             $table->text('slug')->nullable();
+            $table->boolean('solved')->default(false);
         });
         // \App\Models\Question::factory()->count(40)->create();
     }
