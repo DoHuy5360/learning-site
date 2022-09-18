@@ -173,6 +173,12 @@ class PostController extends Controller
              LIMIT 1
             "
         )[0];
+        Db::update(
+            "UPDATE posts
+             SET post_url = '/post/{$recent_post->id}'
+             WHERE id = $recent_post->id
+            "
+        );
         // todo: store tags
         $array_tags = explode(',', $request->tag);
         foreach ($array_tags as $tag_name) {
@@ -213,7 +219,7 @@ class PostController extends Controller
                 $name_file = $file->getClientOriginalName();
                 $extension_file = $file->getClientOriginalExtension();
                 $current_time = time();
-                $fixed_file = $current_time . "." . $name_file;
+                $fixed_file = $current_time . "_" . $name_file;
                 $dest_path = public_path("assets/files/{$user_id}/");
                 $file->move($dest_path, $fixed_file);
 

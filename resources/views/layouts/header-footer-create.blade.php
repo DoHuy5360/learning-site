@@ -109,6 +109,7 @@
     <script src="{{ asset('assets/js/header.js') }}"></script>
     <script src="{{ asset('assets/js/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('assets/js/ajax.js') }}"></script>
+    <script src="{{ asset('assets/js/copy-url.js') }}"></script>
 </body>
 
 </html>

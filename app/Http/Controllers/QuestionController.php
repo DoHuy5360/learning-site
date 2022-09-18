@@ -312,6 +312,12 @@ class QuestionController extends Controller
              AND tc.tag_id = t.tag_code
             "
         );
+        $relative_reply = DB::select(
+            "SELECT *
+             FROM reply_answers ra
+             WHERE ra.content_type = $corresponding_question->question_id
+            "
+        );
         // return $corresponding_question;
         $all_answers = DB::select(
             "SELECT *, u.id AS user_id, qa.id AS answer_id
@@ -320,12 +326,16 @@ class QuestionController extends Controller
              AND qa.replier = u.id
             "
         );
+        // return $relative_reply;
+        $all_discus = sizeof($all_answers) + sizeof($relative_reply);
+ 
         return view('question.view-question', [
             'corresponding_question' => $corresponding_question,
             'relative_tags' => $relative_tags,
             'question_id' => $id,
             'all_answers' => $all_answers,
             'is_following' => $is_following,
+            'all_discus' => $all_discus,
         ]);
     }
 

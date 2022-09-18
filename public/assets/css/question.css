@@ -119,7 +119,7 @@
 .cardquestion__rightpart--header img {
     width: 20px;
     aspect-ratio: 1;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 50%;
 }
 .cardquestion__list-tag {

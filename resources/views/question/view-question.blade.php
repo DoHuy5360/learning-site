@@ -11,7 +11,7 @@
             <div id="quesVw-question-top-wr">
                 <div id="quesVw-interact-left-wr">
                     <div id="quesVw-what-top" class="interact__icon">
-                        <ion-icon name="help-outline"></ion-icon>
+                        <ion-icon name="flag-outline"></ion-icon>
                     </div>
                     <div id="quesVw-help-bottom" class="interact__icon">
                         <ion-icon name="alert-circle-outline"></ion-icon>
@@ -35,7 +35,7 @@
                                 </div>
                                 <div class="group__index">
                                     <ion-icon name="chatbox-outline"></ion-icon>
-                                    <span>935</span>
+                                    <span>{{ $all_discus }}</span>
                                 </div>
                             </div>
                             <div id="quesVw-ques_title-lv2-wr">
@@ -173,13 +173,14 @@
                                                         </button>
                                                     </form>
                                                 @endif
+                                            @else
+                                                @if ($answer->accepted)
+                                                    <button class="questionVw__unaccept--btn" type="button" data-explain-label="Câu trả lời này đã giải đáp cho chủ thớt">
+                                                        <span>Đã xác minh</span>
+                                                        <ion-icon name="checkmark-outline"></ion-icon>
+                                                    </button>
+                                                @endif
                                             @endauth
-                                            @if ($answer->accepted)
-                                                <button class="questionVw__unaccept--btn" type="button" data-explain-label="Câu trả lời này đã giải đáp cho chủ thớt">
-                                                    <span>Đã xác minh</span>
-                                                    <ion-icon name="checkmark-outline"></ion-icon>
-                                                </button>
-                                            @endif
                                         </div>
                                         <div id="quesVw-ques_question-lv4-wr">
                                             <p>{{ $answer->content }}</p>

@@ -11,7 +11,7 @@ const loading_html = `
     <div class="circle" style="--i: 90ms"></div>
     <div class="circle" style="--i: 100ms"></div>
 </div>
-`
+`;
 const list_questions = document.getElementById("question-list-wrap");
 list_questions.innerHTML = loading_html;
 const first_n_questions = new AJAX();
@@ -93,6 +93,9 @@ function createQuestionHtml() {
         avatar_answer.setAttribute("title", answer.name);
         answer_avatar_list.appendChild(avatar_answer);
     });
+    const solved = this.solved
+        ? '<ion-icon style="color: var(--green-dark);" name="ribbon"></ion-icon>'
+        : '<ion-icon name="ribbon-outline"></ion-icon>';
     return `
     <div class="card__question--wrap">
         <div class="card__question--leftpart">
@@ -102,11 +105,11 @@ function createQuestionHtml() {
             </div>
             <div class="cardquestion__leftpart--footer">
                 <div class="cardquestion__leftpart--index">
-                    <ion-icon name="hand-left-outline"></ion-icon>
-                    <span>0</span>
+                    ${solved}
+                    <ion-icon name="bookmark-outline"></ion-icon>
                 </div>
                 <div class="cardquestion__leftpart--index">
-                    <ion-icon name="star-outline"></ion-icon>
+                    <ion-icon name="flag-outline"></ion-icon>
                     <span>0</span>
                 </div>
                 <div class="cardquestion__leftpart--index">

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->text('content');
             $table->string('time', 50)->nullable();
             $table->string('made', 10)->nullable();
+            $table->string('post_url')->nullable();
         });
     }
 

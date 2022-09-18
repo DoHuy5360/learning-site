@@ -8,6 +8,9 @@
     scroll-behavior: smooth;
     /* outline: 1px solid red; */
 }
+ion-icon{
+    transform: translateY(1px);
+}
 :root {
     --color-1: #053742;
     --color-2: #39a2db;
@@ -114,4 +117,17 @@ html {
     100% {
         transform: translateY(-30px);
     }
+}
+.copy__content--url{
+    cursor: pointer;
+}
+.copy__alert{
+    background-color: var(--green-dark);
+    position: absolute;
+    top: -10px;
+    right: 0;
+    color: white;
+    padding: 1px 5px;
+    border-radius: 20px;
+    font-size: 10px;
 }

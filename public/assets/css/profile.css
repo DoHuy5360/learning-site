@@ -20,6 +20,11 @@
     flex-direction: column;
     gap: 5px;
 }
+#profile-name-edit-wrap span{
+    font-size: 20px;
+    font-weight: 700;
+    white-space: nowrap;
+}
 #profile-name-edit-wrap a {
     text-decoration: unset;
     border: 1px solid;
@@ -129,7 +134,8 @@
 .profile__following--avatar {
     width: 100px;
     aspect-ratio: 1;
-    object-fit: contain;
+    object-fit: cover;
+    border-radius: 50%;
 }
 .profile__following--infomation {
     display: flex;

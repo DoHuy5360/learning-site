@@ -47,7 +47,7 @@ class ProfileController extends Controller
     public function show($id)
     {
         $user_informations = DB::select(
-            "SELECT *
+            "SELECT *, u.id AS user_id
              FROM users u
              WHERE u.id = $id
             "
@@ -166,7 +166,9 @@ class ProfileController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('profile.edit-profile', [
+            'profile_id' => $id
+        ]);
     }
 
     /**
@@ -178,7 +180,23 @@ class ProfileController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        if ($request->hasFile('avatar')) {
+            $avatar_file = $request->file('avatar');
+            // $file_extension = $avatar_file->getClientOriginalExtension();
+            $fixed_name = 'avatar.png';
+            $dest_path = public_path("assets/avatar/{$id}/");
+            $avatar_file->move($dest_path, $fixed_name);
+
+            DB::update(
+                "UPDATE users
+                 SET avatar = 'assets/avatar/{$id}/avatar.png'
+                 WHERE id = $id
+                "
+            );
+            return redirect()->route('profile.show', $id);
+        } else {
+            return "Chưa có file";
+        }
     }
 
     /**

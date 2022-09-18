@@ -10,12 +10,12 @@
         <div id="profile-header-wrap">
             <div class="align-width">
                 <div id="profile-avatar-name-edit-wrap">
-                    <img src="{{ $user_informations->avatar }}" alt="" />
+                    <img src="{{ asset($user_informations->avatar) }}" alt="" />
                     <div id="profile-name-edit-wrap">
                         <span>{{ $user_informations->name }}</span>
                         @auth
-                            @if ($user_informations->id == Auth::user()->id)
-                                <a href="">Edit</a>
+                            @if ($user_informations->user_id == Auth::user()->id)
+                                <a href="{{ route('profile.edit', $user_informations->user_id) }}">Edit</a>
                             @endif
                         @endauth
                     </div>
@@ -43,7 +43,7 @@
                         @foreach ($user_posts as $post)
                             <div class="post__card--wrap">
                                 <div class="post__card--useravatar">
-                                    <img src="{{ $post->avatar }}" alt="" />
+                                    <img src="{{ asset($post->avatar) }}" alt="" />
                                 </div>
                                 <div class="post__card--wrapcontent">
                                     <div class="post__card--header">
@@ -130,7 +130,7 @@
                                 <div class="card__question--rightpart">
                                     <div class="cardquestion__rightpart--header">
                                         <div class="cardquestion__author--avatar">
-                                            <img src="{{ $author->avatar }}" alt="" />
+                                            <img src="{{ asset($author->avatar) }}" alt="" />
                                         </div>
                                         <div class="cardquestion__author--name">
                                             <a href="{{ route('profile.show', $author->id) }}">{{ $author->name }}</a>
@@ -187,7 +187,7 @@
                             @endphp
                             <div class="post__card--wrap">
                                 <div class="post__card--useravatar">
-                                    <img src="{{ $bookmark->avatar }}" alt="" />
+                                    <img src="{{ asset($bookmark->avatar) }}" alt="" />
                                 </div>
                                 <div class="post__card--wrapcontent">
                                     <div class="post__card--header">
@@ -218,7 +218,7 @@
                         @foreach ($user_following as $following)
                             <div class="profile__following--wrap">
                                 <div class="profile__following--wrapavatar">
-                                    <img class="profile__following--avatar" src="{{ $following->avatar }}" alt="">
+                                    <img class="profile__following--avatar" src="{{ asset($following->avatar) }}" alt="">
                                 </div>
                                 <div class="profile__following--infomation">
                                     <div class="profile__following--name">
@@ -250,7 +250,7 @@
                         @foreach ($user_follower as $follower)
                             <div class="profile__following--wrap">
                                 <div class="profile__following--wrapavatar">
-                                    <img class="profile__following--avatar" src="{{ $follower->avatar }}" alt="">
+                                    <img class="profile__following--avatar" src="{{ asset($follower->avatar) }}" alt="">
                                 </div>
                                 <div class="profile__following--infomation">
                                     <div class="profile__following--name">

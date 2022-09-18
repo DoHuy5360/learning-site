@@ -14,6 +14,7 @@ first_n_posts.createAjax(
         );
         setBookmarkEvent();
         createExplainLabel();
+        setCopyUrl()
     }
 );
 let first_index_posts = document.querySelector(".index__questions");
@@ -42,6 +43,7 @@ list_index_posts.forEach((index) => {
                 );
                 setBookmarkEvent();
                 createExplainLabel();
+                setCopyUrl()
             }
         );
     });
@@ -101,7 +103,9 @@ function createPostHtml() {
                 <a href="/profile/${this.author_id}" class="post__card--username"> ${this.name} </a>
                 <div class="post__created--time">${this.created_at}</div>
                 <div class="post-reading-time"><span>Đọc trong </span>${this.time}</div>
-                <ion-icon name="link-outline"></ion-icon>
+                <div class="copy__content--url" data-url="${window.location.origin + this.post_url}" data-explain-label="Ấn để copy link bài viết">
+                    <ion-icon name="link-outline"></ion-icon>
+                </div>
                 ${bookmark_html}
             </div>
             <div class="post__card--body">
