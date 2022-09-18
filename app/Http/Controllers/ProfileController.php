@@ -129,7 +129,7 @@ class ProfileController extends Controller
         );
         // return $user_bookmarks;
         $user_following = DB::select(
-            "SELECT *
+            "SELECT *, u.id AS following_id
              FROM follows f, users u
              WHERE f.follower = $id
              AND f.followed = u.id
@@ -137,7 +137,7 @@ class ProfileController extends Controller
         );
         // return $user_following;
         $user_follower = DB::select(
-            "SELECT *
+            "SELECT *, u.id AS follower_id
              FROM follows f, users u
              WHERE f.follower = u.id
              AND f.followed = $id

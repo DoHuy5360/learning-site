@@ -99,7 +99,7 @@
 #quesVw-aut_info-lv1-wr {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 10px;
 }
 #quesVw-aut_info-lv1-wr img {
     width: 100px;

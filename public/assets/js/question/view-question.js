@@ -159,7 +159,7 @@ function createAnswer(_answer) {
                 </div>
                 <div class="quesVw-ans_author-right-wr">
                     <div id="quesVw-aut_info-lv1-wr">
-                        <img src="${this.avatar}" alt="" />
+                        <img src="${window.location.origin + this.avatar}" alt="" />
                         <div id="quesVw-auth_info-right-wr">
                             <a href="" id="quesVw-aut_name-top" class="underline__none">${this.name}</a>
                             <span id="quesVw-aut_email-bottom">${this.email}</span>
@@ -228,7 +228,7 @@ function createReply() {
                 </div>
             </div>
             <div class="reply__author--right">
-                <img class="author__wrap--avatar" src="${this.avatar}" alt="" />
+                <img class="author__wrap--avatar" src="${window.location.origin + this.avatar}" alt="" />
                 <div class="author__wrap--name">${this.name}</div>
             </div>
         </div>

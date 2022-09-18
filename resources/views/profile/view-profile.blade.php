@@ -137,7 +137,9 @@
                                         </div>
                                         <ion-icon name="arrow-undo-outline"></ion-icon>
                                         <div class="cardquestion__list--helper">
-                                            <img src="https://bit.ly/3pbRb8m" alt="" />
+                                            @foreach ($current_question->getHelper() as $helper)
+                                                <img src="{{ asset($helper->avatar) }}" alt="" />
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="cardquestion__rightpart--body">
@@ -146,7 +148,7 @@
                                     <div class="cardquestion__rightpart--footer">
                                         <div class="cardquestion__list-tag">
                                             @foreach ($current_question->getTag() as $tag)
-                                                <a href="{{ route('tag.show', $tag->id) }}">{{ $tag->name }}</a>
+                                                <a href="{{ route('tag.show', $tag->tag_id) }}" class="post__card--tag">{{ $tag->name }}</a>
                                             @endforeach
                                         </div>
                                     </div>
@@ -222,7 +224,7 @@
                                 </div>
                                 <div class="profile__following--infomation">
                                     <div class="profile__following--name">
-                                        <a href="" class="underline__none">{{ $following->name }}</a>
+                                        <a href="{{ route('profile.show',$following->following_id) }}" class="underline__none">{{ $following->name }}</a>
                                         <button class="profile__follow--btn" type="button">Theo dõi</button>
                                     </div>
                                     <div class="profile__following--email">
@@ -254,7 +256,7 @@
                                 </div>
                                 <div class="profile__following--infomation">
                                     <div class="profile__following--name">
-                                        <a href="" class="underline__none">{{ $follower->name }}</a>
+                                        <a href="{{ route('profile.show',$follower->follower_id) }}" class="underline__none">{{ $follower->name }}</a>
                                         <button class="profile__follow--btn" type="button">Theo dõi</button>
                                     </div>
                                     <div class="profile__following--email">

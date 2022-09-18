@@ -17,7 +17,7 @@
             <div id="post-view-content-wrap">
                 <div id="post-view-side-bar-left">
                     <div id="post-view-side-bar-element">
-                        <img id="post-view-hidden-avatar" src="{{ $user_info->avatar }}" alt="" />
+                        <img id="post-view-hidden-avatar" src="{{ asset($user_info->avatar) }}" alt="" />
                         <div id="post-view-side-bar-left-star">
                             <span>238</span>
                             <ion-icon name="star-outline"></ion-icon>
@@ -51,7 +51,7 @@
                 <div id="post-view-content-left">
                     <div id="card-author-infomation">
                         <div id="post-view-author-avatar">
-                            <img src="{{ $user_info->avatar }}" alt="" />
+                            <img src="{{ asset($user_info->avatar) }}" alt="" />
                         </div>
                         <div id="post-view-author-info">
                             <div id="post-view-card-author-left-part">

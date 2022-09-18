@@ -58,7 +58,7 @@
                         </div>
                         <div class="quesVw-ans_author-right-wr">
                             <div id="quesVw-aut_info-lv1-wr">
-                                <img src="{{ $corresponding_question->avatar }}" alt="" />
+                                <img src="{{ asset($corresponding_question->avatar) }}" alt="" />
                                 <div id="quesVw-auth_info-right-wr">
                                     <a href="" id="quesVw-aut_name-top" class="underline__none">{{ $corresponding_question->name }}</a>
                                     <span id="quesVw-aut_email-bottom">{{ $corresponding_question->email }}</span>
@@ -191,7 +191,7 @@
                                     </div>
                                     <div id="quesVw-ques_author-right-wr">
                                         <div id="quesVw-aut_info-lv1-wr">
-                                            <img src="{{ $answer->avatar }}" alt="" />
+                                            <img src="{{ asset($answer->avatar) }}" alt="" />
                                             <div id="quesVw-auth_info-right-wr">
                                                 <a href="" id="quesVw-aut_name-top" class="underline__none">{{ $answer->name }}</a>
                                                 <span id="quesVw-aut_email-bottom">{{ $answer->email }}</span>

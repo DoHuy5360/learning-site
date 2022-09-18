@@ -294,6 +294,16 @@ class QuestionData{
         }
         return $tag;
     }
+    function getHelper(){
+        $helper = DB::select(
+            "SELECT DISTINCT ON (u.id) *
+             FROM question_answers qa, users u
+             WHERE qa.replier = u.id
+             AND qa.content_type = $this->questionId
+            "
+        );
+        return $helper;
+    }
 }
 function remove_sign($str)
 {

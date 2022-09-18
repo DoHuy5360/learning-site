@@ -26,8 +26,9 @@ body::-webkit-scrollbar {
 }
 #post-view-hidden-avatar {
     width: 100%;
+    aspect-ratio: 1;
     opacity: 0;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 50%;
     transition: 300ms linear;
 }
@@ -45,14 +46,19 @@ body::-webkit-scrollbar {
     flex-direction: column;
     gap: 10px;
 }
+#post-view-author-avatar{
+    display: flex;
+    align-items: center;
+}
 #post-view-author-avatar img {
     width: 40px;
     aspect-ratio: 1;
-    object-fit: contain;
+    object-fit: cover;
     border-radius: 50%;
 }
 #card-author-infomation {
     display: flex;
+    gap: 10px;
 }
 #post-view-author-info {
     width: 100%;

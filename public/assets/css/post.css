@@ -44,6 +44,10 @@
     border-radius: 5px;
     padding: 10px;
     border: 1px solid var(--color-4);
+    align-items: center;
+    box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    -webkit-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    -moz-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
 }
 .post__card--useravatar img {
     width: 100%;
@@ -79,6 +83,7 @@
 .post__card--title a {
     color: var(--color-1);
     text-decoration: unset;
+    font-size: 20px;
 }
 .post__card--title a:hover {
     text-decoration: underline;
@@ -90,7 +95,7 @@
     border: unset;
     padding: 1px 10px 2px 10px;
     border-radius: 20px;
-    font-size: 13px;
+    font-size: 12px;
     text-decoration: unset;
     transition: 100ms linear;
 }
@@ -122,6 +127,9 @@
     padding: 10px;
     display: grid;
     gap: 5px;
+    box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    -webkit-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
+    -moz-box-shadow: 0 0.125rem 0.25rem #1b1b1b13;
 }
 .question__card--title {
     font-size: 20px;
