@@ -44,7 +44,6 @@
     visibility: visible;
 }
 #question-list-wrap {
-    border: 1px solid var(--color-4);
     padding: 10px;
     border-radius: 5px;
     display: flex;
@@ -142,7 +141,7 @@
 }
 .postrelative__card--wrap {
     display: grid;
-    border-bottom: 1px solid var(--gray-hard);
+    border-bottom: 1px solid var(--gray-soft);
     padding: 10px 0;
     gap: 5px;
     animation: relativePost_animation 300ms linear;
@@ -190,6 +189,8 @@
     text-decoration: unset;
     font-size: 13px;
     color: var(--gray-hard);
+    color: var(--color-2);
+    font-weight: bold;
 }
 #question-list-index-question {
     display: flex;

@@ -177,8 +177,7 @@
 }
 
 .for_reply {
-    border: 1px solid var(--gray-soft);
-    border-radius: 5px;
+    border-left: 1px solid var(--gray-soft);
     padding: 5px;
 }
 .quesVw-ans_ans_field-top-wr {
@@ -234,7 +233,7 @@
 }
 .author__wrap--avatar {
     height: inherit;
-    object-fit: contain;
+    object-fit: cover;
     aspect-ratio: 1;
     border-radius: 50%;
 }

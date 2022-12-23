@@ -51,7 +51,7 @@
     align-items: center;
     gap: 5px;
     border: 1px solid var(--gray-soft);
-    border-radius: 20px;
+    border-radius: 3px;
     padding: 2px 0;
     background-color: var(--gray-light);
 }

@@ -68,7 +68,7 @@
                                     </a>
                                 </div>
                                 <div id="user-self-management">
-                                    <img id="header-user-avatar" src="{{ Auth::user()->avatar }}" alt="" draggable="false">
+                                    <img id="header-user-avatar" src="{{ asset(Auth::user()->avatar) }}" alt="" draggable="false">
                                     <div id="user-management-list-wrap">
                                         <div id="user-management-list">
                                             <a href="{{ route('profile.show', Auth::user()->id) }}">

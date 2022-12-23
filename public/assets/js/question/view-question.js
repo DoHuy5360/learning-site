@@ -159,10 +159,16 @@ function createAnswer(_answer) {
                 </div>
                 <div class="quesVw-ans_author-right-wr">
                     <div id="quesVw-aut_info-lv1-wr">
-                        <img src="${window.location.origin + this.avatar}" alt="" />
+                        <img src="${
+                            window.location.origin + this.avatar
+                        }" alt="" />
                         <div id="quesVw-auth_info-right-wr">
-                            <a href="" id="quesVw-aut_name-top" class="underline__none">${this.name}</a>
-                            <span id="quesVw-aut_email-bottom">${this.email}</span>
+                            <a href="" id="quesVw-aut_name-top" class="underline__none">${
+                                this.name
+                            }</a>
+                            <span id="quesVw-aut_email-bottom">${
+                                this.email
+                            }</span>
                         </div>
                     </div>
                     <div class="author__interact--wr">
@@ -214,7 +220,9 @@ display_reply.createAjax(
 function createReply() {
     // todo : reply answer html code
     return `
-    <div class="quesVw-ans_text-left-wr for_reply" data-answer-code="${this.reply_code}">
+    <div class="quesVw-ans_text-left-wr for_reply" data-answer-code="${
+        this.reply_code
+    }">
         <div class="quesVw-ans_detail-top-wr">
             <div class="reply__text--left">
                 <div>
@@ -228,7 +236,9 @@ function createReply() {
                 </div>
             </div>
             <div class="reply__author--right">
-                <img class="author__wrap--avatar" src="${window.location.origin + this.avatar}" alt="" />
+                <img class="author__wrap--avatar" src="${
+                    window.location.origin + "/" + this.avatar
+                }" alt="" />
                 <div class="author__wrap--name">${this.name}</div>
             </div>
         </div>
@@ -332,4 +342,4 @@ unfollow_form.addEventListener("submit", (e) => {
         }
     );
 });
-createExplainLabel()
+createExplainLabel();

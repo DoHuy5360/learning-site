@@ -286,8 +286,6 @@ class PostController extends Controller
                  AND b.bookmarker = $user_id
                 "
             );
-            // $is_author = ($corresponding_post->creator == $corresponding_post->creator) ? true : false;
-            // return $is_author;
         } else {
             $get_follower = false;
             $is_bookmarked = false;
@@ -308,6 +306,7 @@ class PostController extends Controller
              FROM posts p
              WHERE p.creator::integer = $corresponding_post->creator
              AND p.id != $post_id::integer
+             LIMIT 8
             "
         );
         // return $relative_post;
